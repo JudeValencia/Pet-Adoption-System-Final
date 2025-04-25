@@ -1,0 +1,4 @@
+933900,Jack,Dog,Alaskan Malamute,2,10,10,2022,M
+46915,Kuro,Cat,Siamese,3,11,11,2021,F
+969307,Kronos,Iguana,Chuckwalla,5,1,1,2020,M
+828308,Jerry,Mouse,House Mouse,1,11,11,2023,M
