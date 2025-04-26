@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -46,7 +47,7 @@ public class Main {
                     default -> System.out.println("Must Enter an Integer from 1 - 6");
                 }
             }
-            catch (ArithmeticException e) {
+            catch (InputMismatchException e) {
                 System.out.println("You can only print integers from 1 to 6");
             }
             catch (RuntimeException e) {

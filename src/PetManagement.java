@@ -250,8 +250,6 @@ public class PetManagement extends Pet implements ManagementFunctions {
         System.out.print("Enter Pet Type to search: ");
         String searchType = scanner.nextLine().trim();
 
-        // TODO: Create a function so that they can search for a specific breed or just look at the general info
-
         try (Scanner fileScanner = new Scanner(file)) {
             boolean found = false;
 
@@ -288,7 +286,8 @@ public class PetManagement extends Pet implements ManagementFunctions {
             if (!found) {
                 System.out.println("Pet not found.");
             }
-        } catch (FileNotFoundException e) {
+        }
+        catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -345,6 +344,5 @@ public class PetManagement extends Pet implements ManagementFunctions {
             throw new RuntimeException(e);
         }
     }
-
 
 }

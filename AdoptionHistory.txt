@@ -1,1 +1,19 @@
-933902 Francen Anne Garciano is requesting to adopt pet ID: 933900 (Jack) -Approved-
+--------------------------------------------------
+Request ID: 782433
+Customer Information:
+   Name: Martin Garciano
+   Age: 20
+   Contact Number: 09196623741
+   Occupation: Student
+   Home Type: Apartment
+   Has Other Pets: false
+Pet Information:
+   Pet ID: 933900
+   Name: Jack
+   Breed: Alaskan Malamute
+   Age: 2
+   Birthday: 10/10/2022
+   Gender: M
+
+Status: Approved
+--------------------------------------------------
