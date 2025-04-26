@@ -4,3 +4,4 @@
 503301,test1,12,M,test,12,12,2012,test,test,false,test,09123455
 53389,test2,12,F,test,1,1,2001,test,test,true,test,01223538
 39082,Roxanne Valencia,18,F,Cabulihan Ormoc City,2,17,2007,Student,Apartment,true,roxannedianovalencia@gmail.com,09123456789
+916691,Franz Josef Capua,19,M,Valencia,11,26,2005,Student,Apartment,false,franzcapua@gmail.com,09123456789

@@ -42,7 +42,8 @@ public class UserInterface extends PetManagement {
         System.out.println("| [3] Update Customer Information                 |");
         System.out.println("| [4] View Customer Details                       |");
         System.out.println("| [5] Approve Adoption Request                    |");
-        System.out.println("| [6] Back to Admin Panel                         |");
+        System.out.println("| [6] Reject Adoption Request                     |");
+        System.out.println("| [7] Back to Admin Panel                         |");
         System.out.println("+-------------------------------------------------+");
         System.out.print("Choose an option: ");
     }

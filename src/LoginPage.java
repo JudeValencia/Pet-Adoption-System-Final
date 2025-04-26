@@ -265,7 +265,7 @@ public class LoginPage extends CustomerManagement {
             System.out.print("Enter Home Type: ");
             setHomeType(scanner.nextLine());
 
-            System.out.print("Has Other Pet/s: ");
+            System.out.print("Has Other Pet/s (true/false): ");
             setHasOtherPets(scanner.nextBoolean());
             scanner.nextLine();
 

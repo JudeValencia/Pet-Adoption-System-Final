@@ -79,7 +79,8 @@ public class AdoptionManagement extends UserInterface {
                 case 3 -> customerManager.update();
                 case 4 -> customerManager.view();
                 case 5 -> approveAdoptionRequest();
-                case 6 -> {
+                case 6 -> rejectAdoptionRequest();
+                case 7 -> {
                     System.out.println("Exiting customer management menu...");
                     isRunning = false;
                 }
@@ -243,6 +244,71 @@ public class AdoptionManagement extends UserInterface {
         }
 
         System.out.println("Request ID " + requestIdToApprove + " approved. Pet removed from records.");
+    }
+
+    public void rejectAdoptionRequest() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the Request ID to reject: ");
+        String requestIdToReject = scanner.nextLine().trim();
+
+        // Read all requests from AdoptionRequest.txt
+        List<String> requests = new ArrayList<>();
+        boolean requestFound = false;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(adoptionRequest))) {
+            String line;
+            StringBuilder currentRequest = new StringBuilder();
+
+
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith("--------------------------------------------------")) {
+                    if (!currentRequest.isEmpty()) {
+                        // Check if this is the request to approve
+                        if (currentRequest.toString().contains("Request ID: " + requestIdToReject)) {
+                            requestFound = true;
+
+                            // Log to AdoptionHistory.txt
+                            try (BufferedWriter historyWriter = new BufferedWriter(new FileWriter(adoptionHistory, true))) {
+                                historyWriter.write(currentRequest.toString());
+                                historyWriter.newLine();
+                                historyWriter.write("Status: Rejected");
+                                historyWriter.newLine();
+                                historyWriter.write("--------------------------------------------------");
+                                historyWriter.newLine();
+                            }
+                        } else {
+                            // Keep other requests
+                            requests.add(currentRequest.toString());
+                        }
+                    }
+                    currentRequest = new StringBuilder();
+                } else {
+                    currentRequest.append(line).append("\n");
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading AdoptionRequest.txt: " + e.getMessage());
+            return;
+        }
+
+        if (!requestFound) {
+            System.out.println("Request ID " + requestIdToReject + " not found.");
+            return;
+        }
+
+
+        // Rewrite AdoptionRequest.txt without the rejected request
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(adoptionRequest, false))) {
+            for (String request : requests) {
+                writer.write(request);
+                writer.write("--------------------------------------------------");
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Error updating AdoptionRequest.txt: " + e.getMessage());
+        }
+
+        System.out.println("Request ID " + requestIdToReject + " rejected.");
     }
 
     private void removePetFromFile(int petId) {
@@ -502,10 +568,6 @@ public class AdoptionManagement extends UserInterface {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public int getRequestID() {
-        return requestID;
     }
 
     public void setRequestID(int requestID) {
