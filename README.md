@@ -7,6 +7,7 @@ Updates:
 
 TODO: 
   - Update UI (Kamo na ani gais, lamuch)
+  - Make a reject feature
   - Update Pet Database whenever an adoption request is approved (Working on it...)
   - Validations
   - Completely connect all features to build the full system
