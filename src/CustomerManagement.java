@@ -3,41 +3,48 @@ import java.security.SecureRandom;
 import java.util.*;
 
 /**
- * The CustomerManagement class provides functionalities for managing customer accounts
- * and related details. It extends the Customer class and implements the ManagementFunctions
- * interface to provide essential management operations such as adding, removing, updating,
- * and viewing customer accounts and information.
- *
- * This class also includes additional methods for creating customer accounts, generating
- * secure passwords, and performing account-related operations such as searching or removing
- * a customer account. It further allows retrieving customer-specific details, for instance,
- * fetching a customer's full name by their username.
+ * The CustomerManagement class is responsible for managing customer-related
+ * operations and functionalities. This class provides methods for creating,
+ * updating, viewing, and removing customer accounts, along with password
+ * generation and user authentication features. It extends functionality from
+ * the Customer class and implements abstract methods defined in the
+ * ManagementFunctions interface.
  *
  * Fields:
- * - file: Represents a file resource used for managing customers or accounts.
- * - file2: Represents another file resource specifically for account-related operations.
- * - LOWERCASE: A constant for storing lowercase alphabets (a-z).
- * - UPPERCASE: A constant for storing uppercase alphabets (A-Z).
- * - DIGITS: A constant for storing numeric digits (0-9).
- * - SPECIAL_CHARS: A constant for storing special characters (e.g., !, @, #, etc.).
- * - ALL_CHARACTERS: A combination of all character sets for password generation or validation.
- * - random: A Random instance for generating random values.
+ * - file: Represents a file object used for file manipulation.
+ * - file2: Represents a secondary file object used for account storage.
+ * - LOWERCASE, UPPERCASE, DIGITS, SPECIAL_CHARS: Constants used in password
+ *   generation to define character types.
+ * - ALL_CHARACTERS: Represents a collection of all characters used in password
+ *   generation.
+ * - random: A Random object used for generating random values.
  *
  * Methods:
- * - add(): An overridden method for adding customer-related information.
- * - remove(): An overridden method for removing customer-related information.
- * - update(): An overridden method for updating customer-related information.
- * - view(): An overridden method for viewing customer-related information.
- * - createAccount(): Creates a new account for a customer, generates a username and password,
- *   and writes the details to a file.
- * - generatePassword(int length): Generates a random password based on the specified length
- *   using predefined character sets.
- * - removeAccount(int customerIdToRemove): Removes a customer account by its unique identifier
- *   from the records.
- * - searchCustomerAccount(String username, String password): Searches for a customer account
- *   based on the provided username and password, and returns whether an account matches.
- * - getCustomerNameByUsername(String username): Retrieves the full name of the customer
- *   associated with the given username.
+ * - add(): Allows adding a new customer record or account.
+ * - remove(): Removes customer accounts or data.
+ * - update(): Updates customer details or account information.
+ * - view(): Allows viewing customer data or account details.
+ * - createAccount(): Creates a new customer account by generating a unique
+ *   username and secure password and storing it in a file.
+ * - generatePassword(int length): Generates a random, secure password with the
+ *   specified length.
+ * - removeAccount(int customerIdToRemove): Removes a specified customer
+ *   account from the stored accounts file, identified by the customer ID.
+ * - searchCustomerAccount(String username, String password): Searches for a
+ *   customer's account using their username and password. Returns a boolean
+ *   indicating whether the account exists.
+ * - getCustomerNameByUsername(String username): Retrieves and returns the
+ *   full name of a customer based on their username. Returns null if the
+ *   username is not found.
+ *
+ * Inheritance:
+ * This class inherits from the Customer class, which provides fields and
+ * methods for handling customer-related information such as personal details,
+ * address, and account credentials.
+ *
+ * Interface Implementation:
+ * Implements the ManagementFunctions interface, which defines abstract methods
+ * for adding, removing, updating, and viewing customer records.
  */
 public class CustomerManagement extends Customer implements ManagementFunctions {
 

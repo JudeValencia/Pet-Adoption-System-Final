@@ -16,9 +16,6 @@ import java.util.*;
  * - Password recovery and management.
  * - Displays an informational "About Us" section.
  * - Handles user input for login selection.
- *
- * The class is in-progress and includes TODOs for additional functionality such as
- * editing of usernames and passwords via overriding the update class.
  */
 public class LoginPage extends CustomerManagement {
 
@@ -54,6 +51,7 @@ public class LoginPage extends CustomerManagement {
         System.out.println();
 
     }
+
     public void logIn() {
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
@@ -133,6 +131,7 @@ public class LoginPage extends CustomerManagement {
         }
 
     }
+
     public void signUp() {
         add();
     }
@@ -215,6 +214,7 @@ public class LoginPage extends CustomerManagement {
             System.out.println("❌ Unable to write back to the account file.");
         }
     }
+
     @Override
     public void add() {
         Scanner scanner = new Scanner(System.in);

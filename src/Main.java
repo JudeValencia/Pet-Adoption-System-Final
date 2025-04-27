@@ -16,11 +16,13 @@ public class Main {
             if (username.equals("admin123")) {
                 System.out.println("Welcome, Administrator!");
                 adoptionManager.adminUserInterface();
-            } else {
+            }
+            else {
                 System.out.println("Welcome, " + username + "!");
                 adoptionManager.nonAdminUserInterface();
             }
-        } else {
+        }
+        else {
             System.out.println("Login failed or canceled.");
         }
     }

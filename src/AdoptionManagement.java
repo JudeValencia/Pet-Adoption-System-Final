@@ -4,10 +4,40 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * The AdoptionManagement class is responsible for managing the operations
+ * and functionalities within the pet adoption system. It extends the UserInterface
+ * class and provides additional functionalities specifically for handling the
+ * adoption process, customer management, pet management, and report generation.
+ *
+ * Fields:
+ * - loginPage: Handles user login and authentication.
+ * - customerManager: Manages customer-related data and operations.
+ * - adoptionReport: Stores and manages information for adoption reports.
+ * - adoptionRequest: Manages data for adoption requests.
+ * - adoptionHistory: Tracks historical data of past adoptions.
+ * - requestID: Stores the identification number of the current adoption request.
+ * - DEBUG_MODE: A flag to indicate system debugging mode.
+ *
+ * Methods:
+ * - Constructor AdoptionManagement(LoginPage loginPage): Initializes the AdoptionManagement class by injecting a LoginPage instance.
+ * - nonAdminUserInterface(): Displays the user interface for non-admin users and allows interaction.
+ * - adminUserInterface(): Displays the admin interface and provides access to admin-specific functionalities.
+ * - customerManagement(): Handles all operations related to customer management.
+ * - petManagement(): Manages all operations related to adding, updating, and removing pet records.
+ * - reportsManagement(): Handles generation of adoption and pet-related reports.
+ * - makeAdoptionRequest(): Facilitates the process for users to make an adoption request.
+ * - approveAdoptionRequest(): Approves a pending adoption request.
+ * - rejectAdoptionRequest(): Rejects an adoption request based on specific criteria.
+ * - removePetFromFile(int petId): Removes a pet record from the system by pet ID (private method).
+ * - searchPetForAdoption(int petID): Searches for a pet available for adoption using the pet's unique ID.
+ * - loadCustomerByUsername(String username): Helper method to load customer information by username (private method).
+ * - handleAdoptionReport(PDFGenerator pdfGenerator): Handles the generation of an adoption report (private method).
+ * - handleRemainingPetsReport(PDFGenerator pdfGenerator): Handles the generation of a report listing remaining pets in the system (private method).
+ * - view(): Overrides the view method of the parent UserInterface class to define specific behavior of this class.
+ * - setRequestID(int requestID): Sets the request ID for the current adoption request.
+ */
 public class AdoptionManagement extends UserInterface {
-    // TODO: Update pets.txt file whenever an adoption is approved (Done)
-    // TODO: Make a reject feature which also logs into the adoptionhistory and marks it as -rejected-
-
 
     private final LoginPage loginPage;
     CustomerManagement customerManager = new CustomerManagement();
@@ -20,6 +50,7 @@ public class AdoptionManagement extends UserInterface {
     public AdoptionManagement(LoginPage loginPage) {
         this.loginPage = loginPage;
     }
+
     public void nonAdminUserInterface() {
 
         // Use the injected loginPage instead of creating a new one
@@ -351,7 +382,6 @@ public class AdoptionManagement extends UserInterface {
         }
     }
 
-
     public void searchPetForAdoption(int petID) {
         // Variables to store pet details
         String petName = null;
@@ -454,7 +484,7 @@ public class AdoptionManagement extends UserInterface {
         }
     }
 
-    // --- NEW: Helper method to load customer data by username ---
+    // Helper method to load customer data by username ---
     private Customer loadCustomerByUsername(String username) {
         try (Scanner scanner = new Scanner(new File("Customer.txt"))) {
             while (scanner.hasNextLine()) {
