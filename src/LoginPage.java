@@ -22,8 +22,6 @@ import java.util.*;
  */
 public class LoginPage extends CustomerManagement {
 
-    // TODO:  Users should be able to edit their usernames and passwords in this class by overriding the update class. (Work in Progress)
-
 
     // Add this field to store the current logged-in username
     private String currentUsername;
@@ -92,7 +90,6 @@ public class LoginPage extends CustomerManagement {
                         logInInterfaceFooter();
 
                         if (username.equals("admin123") && password.equals("password123")) {
-                            System.out.println("Admin (Temporary Placeholder)");
                             isAuthenticated = true;
                             isRunning = false;
                             this.currentUsername = username; // Store admin username
@@ -111,7 +108,7 @@ public class LoginPage extends CustomerManagement {
                                     System.out.println();
 
                                     // Prompts the user if they want to change their password
-                                    System.out.println("Would you like to recover your password? (yes/no): ");
+                                    System.out.print("Would you like to recover your password? (yes/no): ");
                                     String choice = scanner.nextLine();
 
                                     if (choice.equalsIgnoreCase("yes")) {

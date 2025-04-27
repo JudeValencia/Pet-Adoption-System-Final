@@ -17,3 +17,21 @@ Pet Information:
 
 Status: Approved
 --------------------------------------------------
+Request ID: 65971
+Customer Information:
+   Name: dasdas
+   Age: 12
+   Contact Number: 09123456789
+   Occupation: sad
+   Home Type: sad
+   Has Other Pets: false
+Pet Information:
+   Pet ID: 969307
+   Name: Kronos
+   Breed: Chuckwalla
+   Age: 5
+   Birthday: 1/1/2020
+   Gender: M
+
+Status: Approved
+--------------------------------------------------

@@ -476,8 +476,6 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                         setCustomerID(customerId);
                         setAccount(accountName);
                         setPassword(accountPassword);
-
-                        System.out.println("Welcome " + accountName + "!");
                         return true;
                     }
                 }

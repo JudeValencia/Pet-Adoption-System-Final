@@ -36,3 +36,39 @@ Pet Information:
 
 Status: Rejected
 --------------------------------------------------
+Request ID: 65971
+Customer Information:
+   Name: dasdas
+   Age: 12
+   Contact Number: 09123456789
+   Occupation: sad
+   Home Type: sad
+   Has Other Pets: false
+Pet Information:
+   Pet ID: 969307
+   Name: Kronos
+   Breed: Chuckwalla
+   Age: 5
+   Birthday: 1/1/2020
+   Gender: M
+
+Status: Approved
+--------------------------------------------------
+Request ID: 580949
+Customer Information:
+   Name: dasdas
+   Age: 12
+   Contact Number: 09123456789
+   Occupation: sad
+   Home Type: sad
+   Has Other Pets: false
+Pet Information:
+   Pet ID: 46915
+   Name: Kuro
+   Breed: Siamese
+   Age: 3
+   Birthday: 11/11/2021
+   Gender: F
+
+Status: Rejected
+--------------------------------------------------

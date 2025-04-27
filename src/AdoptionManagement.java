@@ -8,40 +8,46 @@ public class AdoptionManagement extends UserInterface {
     // TODO: Update pets.txt file whenever an adoption is approved (Done)
     // TODO: Make a reject feature which also logs into the adoptionhistory and marks it as -rejected-
 
-    LoginPage loginPage = new LoginPage();
+
+    private final LoginPage loginPage;
     CustomerManagement customerManager = new CustomerManagement();
     private final File adoptionReport = new File("AdoptionReports.txt");
     private final File adoptionRequest = new File("AdoptionRequest.txt");
     private final File adoptionHistory = new File("AdoptionHistory.txt");
     int requestID;
 
+    // Constructor to inject LoginPage
+    public AdoptionManagement(LoginPage loginPage) {
+        this.loginPage = loginPage;
+    }
     public void nonAdminUserInterface() {
 
-        loginPage.logIn(); // TODO: Remove after testing (temporary)
-        // TODO: Place the logic of redirecting to the admin or client side in the main method
+        // Use the injected loginPage instead of creating a new one
+        String currentUsername = loginPage.getCurrentUsername();
+        if (currentUsername == null) {
+            System.out.println("❌ Error: No active session.");
+            return;
+        }
+
         Scanner scanner = new Scanner(System.in);
         int choice;
 
         do {
-            userInterface();
-
+            userInterface(); // Display menu
             choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             switch (choice) {
-                case 1 -> view();
-                case 2 -> makeAdoptionRequest();
-                case 3 -> reportsManagement();
+                case 1 -> view(); // View pets
+                case 2 -> makeAdoptionRequest(); // Use the persisted login state
+                case 3 -> searchPet();
                 case 4 -> System.out.println("Logging out...");
-                default -> System.out.println("Invalid option. Please try again.");
+                default -> System.out.println("Invalid option.");
             }
-
         } while (choice != 4);
     }
 
     public void adminUserInterface() {
-        loginPage.logIn(); // TODO: Remove after testing (temporary)
-        // TODO: Place the logic of redirecting to the admin or client side in the main method
 
         Scanner scanner = new Scanner(System.in);
         int choice;
@@ -75,12 +81,10 @@ public class AdoptionManagement extends UserInterface {
 
             switch (choice) {
                 case 1 -> customerManager.add();
-                case 2 -> customerManager.remove();
-                case 3 -> customerManager.update();
-                case 4 -> customerManager.view();
-                case 5 -> approveAdoptionRequest();
-                case 6 -> rejectAdoptionRequest();
-                case 7 -> {
+                case 2 -> customerManager.view();
+                case 3 -> approveAdoptionRequest();
+                case 4 -> rejectAdoptionRequest();
+                case 5 -> {
                     System.out.println("Exiting customer management menu...");
                     isRunning = false;
                 }

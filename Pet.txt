@@ -1,2 +1,3 @@
 46915,Kuro,Cat,Siamese,3,11,11,2021,F
-969307,Kronos,Iguana,Chuckwalla,5,1,1,2020,M
+216471,Master Splinter,Rat,Brown Rat (Mutant),50,3,8,1961,M
+660934,Jarob,Snake,Green Anaconda,3,10,10,2021,F
