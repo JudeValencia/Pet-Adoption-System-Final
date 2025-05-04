@@ -11,3 +11,5 @@ Updates:
 TODO: 
   - Update UI (Kamo na ani gais, lamuch)
   - Validations
+  - Format of Remaining Pets report
+  - Update the approval/rejection logic (Should show list of request ID's, Basic Information of the Customer and Pet. To fully review the request, the admin should use the                 search function by using the request ID)
