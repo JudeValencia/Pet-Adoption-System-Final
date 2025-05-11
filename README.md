@@ -5,8 +5,8 @@ Updates:
   - Complete Admin Functions
   - Added a PDF Generator (Report Making)
   - Updates pet.txt whenever an adoption request is approved
-  - Make a reject feature
-  - Update the approval/rejection logic 
+  - Made a reject feature
+  - Updatd the approval/rejection logic 
   - Completely connect all features to build the full system
 
 TODO: 
