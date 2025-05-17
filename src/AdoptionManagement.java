@@ -49,6 +49,7 @@
         private final File adoptionReport = new File("AdoptionReports.txt");
         private final File adoptionRequest = new File("AdoptionRequest.txt");
         private final File adoptionHistory = new File("AdoptionHistory.txt");
+        private final File remainingPetsReport = new File("RemainingPetsReport.txt");
         int requestID;
 
         // Constructor to inject LoginPage
@@ -546,26 +547,55 @@
         }
 
         private void handleRemainingPetsReport(PDFGenerator pdfGenerator) {
-            try {
-                // 1. Try default file first
-                String defaultFile = "Pet.txt";
+            try (BufferedReader reader = new BufferedReader(new FileReader("Pet.txt"));
+                 BufferedWriter writer = new BufferedWriter(new FileWriter(remainingPetsReport))){
 
-                // 2. Fallback to manual input ONLY if debugging
-                if (!new File(defaultFile).exists() && DEBUG_MODE) {
-                    System.out.print("[DEBUG] Enter Pet.txt path (or leave blank to cancel): ");
-                    String customPath = new Scanner(System.in).nextLine().trim();
-                    if (!customPath.isEmpty()) defaultFile = customPath;
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    if (line.trim().isEmpty()) continue;
+
+                    String[] petDetails = line.split(",");
+
+                    if (petDetails.length < 9) {
+                        System.err.println("Invalid data format: " + line);
+                    }
+
+                    String formatted = formatPetDate(petDetails);
+
+                    writer.write(formatted);
+                    writer.newLine();
+                    writer.newLine();
                 }
 
-                if (new File(defaultFile).exists()) {
-                    pdfGenerator.generateRemainingPetsReport(defaultFile);
+                writer.flush();
+
+                String defaultFile = "RemainingPetsReport.txt";
+
+                if (new File(String.valueOf(remainingPetsReport)).exists() &&
+                        new File(String.valueOf(remainingPetsReport)).length() > 0) {
+                    pdfGenerator.generateRemainingPetsReport(String.valueOf(remainingPetsReport));
                 } else {
-                    System.err.println("❌ Pet data file missing: " +
-                            new File(defaultFile).getAbsolutePath());
+                    System.err.println("❌ Failed to create report file: " +
+                            new File(String.valueOf(remainingPetsReport)).getAbsolutePath());
                 }
             } catch (Exception e) {
                 System.err.println("❌ Failed to generate report: " + e.getMessage());
+                e.printStackTrace();
             }
+        }
+
+        private static String formatPetDate(String[] petData) {
+            return "--------------------------------------------------\n" +
+                    "Pet Information:\n" +
+                    "   Pet ID: " + petData[0] + "\n" +
+                    "   Name: " + petData[1] + "\n" +
+                    "   Species: " + petData[2] + "\n" +
+                    "   Breed: " + petData[3] + "\n" +
+                    "   Age: " + petData[4] + "\n" +
+                    "   Birthday: " + petData[5] + "/" + petData[6] + "/" + petData[7] + "\n" +
+                    "   Gender: " + petData[8] + "\n" +
+                    "--------------------------------------------------";
         }
 
         @Override
@@ -605,7 +635,6 @@
         public void setRequestID(int requestID) {
             this.requestID = requestID;
         }
-
 
         public void viewAdoptionRequestSummaries() {
             try (BufferedReader reader = new BufferedReader(new FileReader(adoptionRequest))) {
@@ -710,8 +739,4 @@
                 default -> System.out.println("Invalid option.");
             }
         }
-
-
-        private static final boolean DEBUG_MODE = false; // Set to true only when debugging
-
     }
