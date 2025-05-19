@@ -66,15 +66,24 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
     public void add() {
         Scanner scanner = new Scanner(System.in);
         char gender;
+        String nameTemp;
 
         try {
+            Validation validator = new Validation();
+
             // sets a unique id to the customer
             Random random = new Random();
             int id = random.nextInt(1_000_000);
             setCustomerID(id);
 
-            System.out.print("Enter Name: ");
-            setName(scanner.nextLine());
+            do {
+                System.out.print("Enter Name: ");
+                nameTemp = scanner.nextLine();
+                validator.nameValidation(nameTemp);
+            } while (!validator.nameValidation(nameTemp)); // TODO: Make a looping statement
+                                                            // TODO: which indicates that the user entered an invalid name format
+            setName(nameTemp);
+
 
             System.out.print("Enter Age: ");
             setAge(scanner.nextInt());
@@ -109,7 +118,7 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
             System.out.print("Enter Home Type: ");
             setHomeType(scanner.nextLine());
 
-            System.out.print("Has Other Pet/s: ");
+            System.out.print("Has Other Pet/s(true/false): ");
             setHasOtherPets(scanner.nextBoolean());
             scanner.nextLine();
 
