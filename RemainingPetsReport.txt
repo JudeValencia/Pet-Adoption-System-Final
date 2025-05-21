@@ -1,22 +1,11 @@
 --------------------------------------------------
 Pet Information:
-   Pet ID: 46915
-   Name: Kuro
-   Species: Cat
-   Breed: Siamese
-   Age: 3
-   Birthday: 11/11/2021
-   Gender: F
---------------------------------------------------
-
---------------------------------------------------
-Pet Information:
-   Pet ID: 337202
-   Name: Leonardo
-   Species: Snapping Turtle
-   Breed: Ninja Turtle
-   Age: 2
-   Birthday: 2/2/2023
-   Gender: F
+   Pet ID: 703194
+   Name: Abby
+   Species: Starfish
+   Breed: None
+   Age: 100
+   Birthday: 12/12/1950
+   Gender: M
 --------------------------------------------------
 

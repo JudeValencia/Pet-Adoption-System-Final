@@ -1,2 +1,1 @@
-46915,Kuro,Cat,Siamese,3,11,11,2021,F
-337202,Leonardo,Snapping Turtle,Ninja Turtle,2,2,2,2023,F
+703194,Abby,Starfish,None,100,12,12,1950,M

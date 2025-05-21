@@ -26,16 +26,24 @@ public class PetManagement extends Pet implements ManagementFunctions {
     public void add() {
         Scanner scanner = new Scanner(System.in);
         char gender;
+        String nameTemp;
+        int birthMonthTemp, birthDayTemp, birthYearTemp, ageTemp;
 
         try {
+
+            Validation validator = new Validation();
 
             // sets a unique id to the pet
             Random random = new Random();
             int id = random.nextInt(1_000_000);
             setId(id);
 
-            System.out.print("Enter Name: ");
-            setName(scanner.nextLine());
+            do {
+                System.out.print("Enter Name: ");
+                nameTemp = scanner.nextLine();
+                validator.nameValidation(nameTemp);
+            } while (!validator.nameValidation(nameTemp));
+            setName(nameTemp);
 
             System.out.print("Enter Type: ");
             setType(scanner.nextLine());
@@ -43,17 +51,33 @@ public class PetManagement extends Pet implements ManagementFunctions {
             System.out.print("Enter Breed: ");
             setBreed(scanner.nextLine());
 
-            System.out.print("Enter Age: ");
-            setAge(scanner.nextInt());
+            do {
+                System.out.print("Enter Age: ");
+                ageTemp = scanner.nextInt();
+            } while(ageTemp < 0 || ageTemp > 200);
+            setAge(ageTemp);
+            scanner.nextLine();
 
-            System.out.print("Enter Birth Month: ");
-            setBirthMonth(scanner.nextInt());
+            do {
+                System.out.print("Enter Birth Month: ");
+                birthMonthTemp = scanner.nextInt();
+            } while (birthMonthTemp < 1 || birthMonthTemp > 12);
+            setBirthMonth(birthMonthTemp);
+            scanner.nextLine();
 
-            System.out.print("Enter Birth Day: ");
-            setBirthDay(scanner.nextInt());
+            do {
+                System.out.print("Enter Birth Day: ");
+                birthDayTemp = scanner.nextInt();
+            } while (birthDayTemp < 1 || birthDayTemp > 31);
+            setBirthDay(birthDayTemp);
+            scanner.nextLine();
 
-            System.out.print("Enter Birth Year: ");
-            setBirthYear(scanner.nextInt());
+            do {
+                System.out.print("Enter Birth Year: ");
+                birthYearTemp = scanner.nextInt();
+            } while (birthYearTemp < 1950 || birthYearTemp > 2007);
+            setBirthYear(birthYearTemp);
+            scanner.nextLine();
 
             do {
                 System.out.print("Enter Gender (M/F): ");
