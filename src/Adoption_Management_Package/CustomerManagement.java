@@ -123,7 +123,7 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
             do {
                 System.out.print("Enter Birth Year: ");
                 birthYearTemp = scanner.nextInt();
-            } while (birthYearTemp < 1900 || birthYearTemp > 2025);
+            } while (birthYearTemp < 1950 || birthYearTemp > 2007);
             setBirthYear(birthYearTemp);
             scanner.nextLine();
 

@@ -13,7 +13,7 @@ import java.util.*;
  * Each pet's data is stored as a comma-separated value (CSV) record.
  *
  * Key Features:
- * - Add a new pet with unique ID and attributes (name, type, breed, etc.).
+ * - Add a new pet with unique ID and attributes (name, type, breed, etc.)
  * - Remove a pet by its unique ID.
  * - Update specific attributes of an existing pet.
  * - Search for pets based on their type.
@@ -32,7 +32,7 @@ public class PetManagement extends Pet implements ManagementFunctions {
         try {
 
             Validation validator = new Validation();
-
+            
             // sets a unique id to the pet
             Random random = new Random();
             int id = random.nextInt(1_000_000);
@@ -54,7 +54,7 @@ public class PetManagement extends Pet implements ManagementFunctions {
             do {
                 System.out.print("Enter Age: ");
                 ageTemp = scanner.nextInt();
-            } while(ageTemp < 0 || ageTemp > 200);
+            } while(ageTemp < 0 || ageTemp > 120);
             setAge(ageTemp);
             scanner.nextLine();
 
@@ -75,7 +75,7 @@ public class PetManagement extends Pet implements ManagementFunctions {
             do {
                 System.out.print("Enter Birth Year: ");
                 birthYearTemp = scanner.nextInt();
-            } while (birthYearTemp < 1950 || birthYearTemp > 2007);
+            } while (birthYearTemp < 1900 || birthYearTemp > 2025);
             setBirthYear(birthYearTemp);
             scanner.nextLine();
 
