@@ -68,7 +68,8 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
     public void add() {
         Scanner scanner = new Scanner(System.in);
         char gender;
-        String nameTemp;
+        String nameTemp, addressTemp,homeTypeTemp, occupationTemp, emailTemp, contactNumberTemp;
+        int ageTemp, birthMonthTemp, birthDayTemp, birthYearTemp;
 
         try {
             Validation validator = new Validation();
@@ -85,9 +86,11 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
             } while (!validator.nameValidation(nameTemp));
             setName(nameTemp);
 
-
-            System.out.print("Enter Age: ");
-            setAge(scanner.nextInt());
+            do {
+                System.out.print("Enter Age: ");
+                ageTemp = scanner.nextInt();
+            } while(ageTemp < 18 || ageTemp > 120);
+            setAge(ageTemp);
             scanner.nextLine();
 
             do {
@@ -97,37 +100,60 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
             setGender(gender);
             scanner.nextLine();
 
+            do {
+                System.out.print("Enter Address: ");
+                addressTemp = scanner.nextLine();
+            } while (!validator.addressValidation(addressTemp));
+            setAddress(addressTemp);
 
-            System.out.print("Enter Address: ");
-            setAddress(scanner.nextLine());
-
-            System.out.print("Enter Birth Month: ");
-            setBirthMonth(scanner.nextInt());
+            do {
+                System.out.print("Enter Birth Month: ");
+                birthMonthTemp = scanner.nextInt();
+            } while (birthMonthTemp < 1 || birthMonthTemp > 12);
+            setBirthMonth(birthMonthTemp);
             scanner.nextLine();
 
-            System.out.print("Enter Birth Day: ");
-            setBirthDay(scanner.nextInt());
+            do {
+                System.out.print("Enter Birth Day: ");
+                birthDayTemp = scanner.nextInt();
+            } while (birthDayTemp < 1 || birthDayTemp > 31);
+            setBirthDay(birthDayTemp);
             scanner.nextLine();
 
-            System.out.print("Enter Birth Year: ");
-            setBirthYear(scanner.nextInt());
+            do {
+                System.out.print("Enter Birth Year: ");
+                birthYearTemp = scanner.nextInt();
+            } while (birthYearTemp < 1950 || birthYearTemp > 2007);
+            setBirthYear(birthYearTemp);
             scanner.nextLine();
 
-            System.out.print("Enter Occupation: ");
-            setOccupation(scanner.nextLine());
+            do {
+                System.out.print("Enter Occupation: ");
+                occupationTemp = scanner.nextLine();
+            } while (!validator.occupationAndHomeTypeValidation(occupationTemp));
+            setOccupation(occupationTemp);
 
-            System.out.print("Enter Home Type: ");
-            setHomeType(scanner.nextLine());
+            do {
+                System.out.print("Enter Home Type: ");
+                homeTypeTemp = scanner.nextLine();
+            } while (!validator.occupationAndHomeTypeValidation(homeTypeTemp));
+            setHomeType(homeTypeTemp);
 
             System.out.print("Has Other Pet/s(true/false): ");
             setHasOtherPets(scanner.nextBoolean());
             scanner.nextLine();
 
-            System.out.print("Enter Email: ");
-            setEmail(scanner.nextLine());
+            do {
+                System.out.print("Enter Email: ");
+                emailTemp = scanner.nextLine();
+            } while(!validator.emailValidation(emailTemp));
+            setEmail(emailTemp);
 
-            System.out.print("Enter Contact Number: ");
-            setContactNumber(scanner.nextLine());
+            do {
+                System.out.print("Enter Contact Number: ");
+                contactNumberTemp = scanner.nextLine();
+            } while(!validator.contactNumberValidation(contactNumberTemp));
+            setContactNumber(contactNumberTemp);
 
         }
         catch (InputMismatchException e) {

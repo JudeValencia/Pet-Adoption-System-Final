@@ -114,7 +114,8 @@ public class LoginPage extends CustomerManagement {
     }
 
     public void signUp() {
-        add();
+        CustomerManagement customerManager = new CustomerManagement();
+        customerManager.add();
     }
 
     public boolean signIn(String username, String password) {
@@ -194,82 +195,6 @@ public class LoginPage extends CustomerManagement {
             writer.flush();
         } catch (FileNotFoundException e) {
             System.out.println("❌ Unable to write back to the account file.");
-        }
-    }
-
-    @Override
-    public void add() {
-        Scanner scanner = new Scanner(System.in);
-        char gender;
-
-        try {
-            // sets a unique id to the customer
-            Random random = new Random();
-            int id = random.nextInt(1_000_000);
-            setCustomerID(id);
-
-            System.out.print("Enter Name: ");
-            setName(scanner.nextLine());
-
-            System.out.print("Enter Age: ");
-            setAge(scanner.nextInt());
-            scanner.nextLine();
-
-            do {
-                System.out.print("Enter Gender (M/F): ");
-                gender = scanner.next().toUpperCase().charAt(0);
-            } while (gender != 'M' && gender != 'F');
-            setGender(gender);
-            scanner.nextLine();
-
-
-            System.out.print("Enter Address: ");
-            setAddress(scanner.nextLine());
-
-            System.out.print("Enter Birth Month: ");
-            setBirthMonth(scanner.nextInt());
-            scanner.nextLine();
-
-            System.out.print("Enter Birth Day: ");
-            setBirthDay(scanner.nextInt());
-            scanner.nextLine();
-
-            System.out.print("Enter Birth Year: ");
-            setBirthYear(scanner.nextInt());
-            scanner.nextLine();
-
-            System.out.print("Enter Occupation: ");
-            setOccupation(scanner.nextLine());
-
-            System.out.print("Enter Home Type: ");
-            setHomeType(scanner.nextLine());
-
-            System.out.print("Has Other Pet/s (true/false): ");
-            setHasOtherPets(scanner.nextBoolean());
-            scanner.nextLine();
-
-            System.out.print("Enter Email: ");
-            setEmail(scanner.nextLine());
-
-            System.out.print("Enter Contact Number: ");
-            setContactNumber(scanner.nextLine());
-
-        }
-        catch (InputMismatchException e) {
-            throw new RuntimeException(e);
-        }
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))){
-            writer.write(getCustomerID() + "," + getName() + "," + getAge() + "," + getGender() + "," + getAddress() +
-                    "," + getBirthMonth() + "," + getBirthDay() + "," + getBirthYear() + "," + getOccupation() + "," +
-                    getHomeType() + "," + getHasOtherPets() + "," + getEmail() + "," + getContactNumber() + "\n");
-            createAccount();
-            System.out.println("Account created successfully!\n");
-            System.out.println("User Account: " + getAccount());
-            System.out.println("User Password: " + getPassword());
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 }
