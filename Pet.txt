@@ -1,3 +1,2 @@
 46915,Kuro,Cat,Siamese,3,11,11,2021,F
-216471,Master Splinter,Rat,Brown Rat (Mutant),50,3,8,1961,M
-660934,Jarob,Snake,Green Anaconda,3,10,10,2021,F
+337202,Leonardo,Snapping Turtle,Ninja Turtle,2,2,2,2023,F

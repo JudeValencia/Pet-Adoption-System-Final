@@ -1,3 +1,5 @@
+package Adoption_Management_Package;
+
 /**
  * Represents general information about an individual, including basic
  * personal details such as name, age, birthdate, and gender.

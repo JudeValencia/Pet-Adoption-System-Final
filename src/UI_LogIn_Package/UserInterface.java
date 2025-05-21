@@ -1,3 +1,6 @@
+package UI_LogIn_Package;
+
+import Adoption_Management_Package.PetManagement;
 
 /**
  * Represents the user interface for a pet adoption management system.
@@ -6,6 +9,30 @@
  * and generating reports.
  */
 public class UserInterface extends PetManagement {
+
+    public void logInInterfaceHeader() {
+
+        System.out.println("+------------------------------------------------------+");
+        System.out.println("|                                                      |");
+        System.out.println("|            🐾🐶 Welcome to Pet Haven 🐱🐾           |");
+        System.out.println("|        Your Trusted Pet Adoption System Portal       |");
+        System.out.println("|                                                      |");
+        System.out.println("+------------------------------------------------------+");
+        System.out.println("             [1] Login           [2] Sign Up");
+        System.out.println("             [3] About           [4] Exit");
+        System.out.print("             Select an option: ");
+
+    }
+
+    public void logInInterfaceFooter() {
+        System.out.println();
+        System.out.println("+------------------------------------------------------+");
+        System.out.println("|      Forgot your password? Contact support team      |");
+        System.out.println("|           📧 Email: help@pethaven.org                |");
+        System.out.println("+------------------------------------------------------+");
+        System.out.println();
+
+    }
 
     public void userInterface() {
 
@@ -50,10 +77,8 @@ public class UserInterface extends PetManagement {
         System.out.println("|             Pet Management Menu                 |");
         System.out.println("+-------------------------------------------------+");
         System.out.println("| [1] Add Pet                                     |");
-        System.out.println("| [2] Remove Pet                                  |");
-        System.out.println("| [3] Update Pet Details                          |");
-        System.out.println("| [4] View Pet Details                            |");
-        System.out.println("| [5] Back to Admin Panel                         |");
+        System.out.println("| [2] View, Update, and Remove Pet Details        |");
+        System.out.println("| [3] Back to Admin Panel                         |");
         System.out.println("+-------------------------------------------------+");
         System.out.print("Choose an option: ");
     }

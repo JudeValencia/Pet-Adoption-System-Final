@@ -1,3 +1,7 @@
+package UI_LogIn_Package;
+
+import Adoption_Management_Package.CustomerManagement;
+
 import java.io.*;
 import java.util.*;
 
@@ -28,37 +32,14 @@ public class LoginPage extends CustomerManagement {
         return currentUsername;
     }
 
-    public void logInInterfaceHeader() {
-
-        System.out.println("+------------------------------------------------------+");
-        System.out.println("|                                                      |");
-        System.out.println("|            🐾🐶 Welcome to Pet Haven 🐱🐾           |");
-        System.out.println("|        Your Trusted Pet Adoption System Portal       |");
-        System.out.println("|                                                      |");
-        System.out.println("+------------------------------------------------------+");
-        System.out.println("             [1] Login           [2] Sign Up");
-        System.out.println("             [3] About           [4] Exit");
-        System.out.print("             Select an option: ");
-
-    }
-
-    public void logInInterfaceFooter() {
-        System.out.println();
-        System.out.println("+------------------------------------------------------+");
-        System.out.println("|      Forgot your password? Contact support team      |");
-        System.out.println("|           📧 Email: help@pethaven.org                |");
-        System.out.println("+------------------------------------------------------+");
-        System.out.println();
-
-    }
-
     public void logIn() {
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
 
         while (isRunning) {
+            UserInterface ui = new UserInterface();
 
-            logInInterfaceHeader();
+            ui.logInInterfaceHeader();
 
             int option = scanner.nextInt();
             scanner.nextLine();
@@ -85,7 +66,7 @@ public class LoginPage extends CustomerManagement {
                         System.out.println("                   └──────────────────┘");
                         System.out.println();
 
-                        logInInterfaceFooter();
+                        ui.logInInterfaceFooter();
 
                         if (username.equals("admin123") && password.equals("password123")) {
                             isAuthenticated = true;
@@ -163,7 +144,7 @@ public class LoginPage extends CustomerManagement {
         System.out.println("   📋 Customer Account System                          ");
         System.out.println("                                                      ");
         System.out.println("  Developed as part of a Java-based final project,     ");
-        System.out.println("  Pet Haven is a safe, welcoming space for pet lovers  ");
+        System.out.println("   Haven is a safe, welcoming space for pet lovers  ");
         System.out.println("  and future pet parents.                              ");
         System.out.println("                                                      ");
         System.out.println("  📧 Need help? Contact us at help@pethaven.org        ");
@@ -188,6 +169,7 @@ public class LoginPage extends CustomerManagement {
                     found = true;
                     System.out.print("Enter your new password: ");
                     String newPassword = scanner.nextLine();
+                    // TODO: Add an if statement here with a parameter of a method that validates new password using regex
                     updatedLines.add(accountDetails[0] + "," + username + "," + newPassword);
                     System.out.println("✅ Password successfully updated.");
                 } else {

@@ -1,0 +1,17 @@
+--------------------------------------------------
+Request ID: 438902
+Adoption_Management_Package.Customer Information:
+   Name: Jude Martin Garciano
+   Age: 20
+   Contact Number: 09619603980
+   Occupation: Student
+   Home Type: Mansion
+   Has Other Pets: false
+Adoption_Management_Package.Pet Information:
+   Adoption_Management_Package.Pet ID: 46915
+   Name: Kuro
+   Breed: Siamese
+   Age: 3
+   Birthday: 11/11/2021
+   Gender: F
+--------------------------------------------------

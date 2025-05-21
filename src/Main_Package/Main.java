@@ -1,7 +1,13 @@
+package Main_Package;
+
+import Adoption_Management_Package.AdoptionManagement;
+import UI_LogIn_Package.LoginPage;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Starting Pet Haven Application...");
 
+        System.out.println("\nStarting Pet Haven Application...");
+        System.out.println( );
         LoginPage loginPage = new LoginPage();
         loginPage.logIn();
 

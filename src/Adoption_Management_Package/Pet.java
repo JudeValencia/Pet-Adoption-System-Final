@@ -1,3 +1,5 @@
+package Adoption_Management_Package;
+
 /**
  * Represents a pet entity with specific details such as type, breed, and id.
  * This class extends the General_Information class to inherit general

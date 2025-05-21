@@ -1,8 +1,4 @@
-881313,Martin Garciano,20,M,Cabulihan,10,26,2004,Student,Apartment,false,judemartingarciano@gmail.com,09196623741
-220107,Francen Anne Garciano,19,F,Cabulihan,3,23,2006,Student,Apartment,false,francengarciano@gmail.com,09123456789
-244158,dasdas,12,M,asdad,12,12,2012,sad,sad,false,dasd@gmail.com,09123456789
-53389,Junjie Orias,12,F,test,1,1,2001,test,test,true,test,01223538
-39082,Roxanne Valencia,18,F,Cabulihan Ormoc City,2,17,2007,Student,Apartment,true,roxannedianovalencia@gmail.com,09123456789
-916691,Franz Josef Capua,19,M,Valencia,11,26,2005,Student,Apartment,false,franzcapua@gmail.com,09123456789
-782242,Reinz Valencia,18,M,Cabulihan,10,2,2006,Student,Apartment,false,iskabadi@gmail.com,0912345678
-162809,Annalin,46,F,Cabulihan,3,6,1980,Teacher,Mansion,true,annalingarciano@gmail.com,09097959657
+390002,Jude Martin Garciano,20,M,Brgy. Cabulihan,12,12,2004,Student,Mansion,false,judemartingarciano@gmail.com,09619603980
+392223,Francen,18,F,Brgy. Cabulihan,3,23,2006,Student,Apartment,true,francengarciano@gmail.com,09196623741
+
+777203,Tyron Villaver,18,M,Ormoc City,12,12,2006,Student,Apartment,false,villaver@gmail.com,09123456789

@@ -1,3 +1,5 @@
+package Adoption_Management_Package;
+
 import java.io.*;
 import java.security.SecureRandom;
 import java.util.*;
@@ -80,8 +82,7 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                 System.out.print("Enter Name: ");
                 nameTemp = scanner.nextLine();
                 validator.nameValidation(nameTemp);
-            } while (!validator.nameValidation(nameTemp)); // TODO: Make a looping statement
-                                                            // TODO: which indicates that the user entered an invalid name format
+            } while (!validator.nameValidation(nameTemp));
             setName(nameTemp);
 
 
@@ -145,8 +146,6 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
         catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     @Override

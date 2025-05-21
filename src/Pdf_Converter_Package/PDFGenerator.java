@@ -1,3 +1,5 @@
+package Pdf_Converter_Package;
+
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.*;
@@ -30,7 +32,7 @@ public class PDFGenerator {
         }
     }
 
-    // Main PDF generation method
+    // Main_Package.Main PDF generation method
     public void generateAdoptionReport(String textFilePath) throws IOException, DocumentException {
         validateInputFile(textFilePath);
         String outputPath = buildOutputPath(textFilePath, ADOPTION_REPORTS_DIR);

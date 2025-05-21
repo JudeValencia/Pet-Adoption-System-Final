@@ -1,3 +1,5 @@
+package Adoption_Management_Package;
+
 /**
  * Represents a customer entity with specific details such as contact
  * information, address, account credentials, and additional personal details.

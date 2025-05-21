@@ -1,8 +1,12 @@
-    import java.io.*;
+package Adoption_Management_Package;
+
+import java.io.*;
     import java.util.ArrayList;
     import java.util.List;
     import java.util.Random;
     import java.util.Scanner;
+    import Pdf_Converter_Package.PDFGenerator;
+    import UI_LogIn_Package.*;
 
     /**
      * The AdoptionManagement class is responsible for managing the operations
@@ -34,8 +38,8 @@
      * - removePetFromFile(int petId): Removes a pet record from the system by pet ID (private method).
      * - searchPetForAdoption(int petID): Searches for a pet available for adoption using the pet's unique ID.
      * - loadCustomerByUsername(String username): Helper method to load customer information by username (private method).
-     * - handleAdoptionReport(PDFGenerator pdfGenerator): Handles the generation of an adoption report (private method).
-     * - handleRemainingPetsReport(PDFGenerator pdfGenerator): Handles the generation of a report listing remaining pets in the system (private method).
+     * - handleAdoptionReport(Report_Management_Package.PDFGenerator pdfGenerator): Handles the generation of an adoption report (private method).
+     * - handleRemainingPetsReport(Report_Management_Package.PDFGenerator pdfGenerator): Handles the generation of a report listing remaining pets in the system (private method).
      * - view(): Overrides the view method of the parent UserInterface class to define specific behavior of this class.
      * - setRequestID(int requestID): Sets the request ID for the current adoption request.
      * - getRequestID(): Gets the current request ID.
@@ -132,6 +136,8 @@
 
         public void petManagement() {
             Scanner scanner = new Scanner(System.in);
+            PetManagement petManagement = new PetManagement();
+
             boolean isRunning = true;
             int choice;
 
@@ -141,11 +147,9 @@
                 scanner.nextLine();
 
                 switch (choice) {
-                    case 1 -> add();
-                    case 2 -> remove();
-                    case 3 -> update();
-                    case 4 -> view();
-                    case 5 -> {
+                    case 1 -> petManagement.add();
+                    case 2 -> petManagement.view();
+                    case 3 -> {
                         System.out.println("Exiting pet management menu...");
                         isRunning = false;
                     }
@@ -264,7 +268,7 @@
                 return;
             }
 
-            // Remove the adopted pet from Pet.txt (if Pet ID was found)
+            // Remove the adopted pet from Pet.txt (if .Pet ID was found)
             if (adoptedPetId != -1) {
                 removePetFromFile(adoptedPetId);
             }
@@ -570,8 +574,6 @@
 
                 writer.flush();
 
-                String defaultFile = "RemainingPetsReport.txt";
-
                 if (new File(String.valueOf(remainingPetsReport)).exists() &&
                         new File(String.valueOf(remainingPetsReport)).length() > 0) {
                     pdfGenerator.generateRemainingPetsReport(String.valueOf(remainingPetsReport));
@@ -598,7 +600,6 @@
                     "--------------------------------------------------";
         }
 
-        @Override
         public void view() {
             try (Scanner scanner = new Scanner(file)) {
 

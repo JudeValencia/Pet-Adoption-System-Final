@@ -1,3 +1,5 @@
+package Adoption_Management_Package;
+
 import java.io.*;
 import java.util.*;
 
@@ -247,7 +249,7 @@ public class PetManagement extends Pet implements ManagementFunctions {
     public void searchPet() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter Pet Type to search: ");
+        System.out.print("Pet Type to search: ");
         String searchType = scanner.nextLine().trim();
 
         try (Scanner fileScanner = new Scanner(file)) {
@@ -257,7 +259,7 @@ public class PetManagement extends Pet implements ManagementFunctions {
                 String line = fileScanner.nextLine();
                 String[] petDetails = line.split(",");
 
-                if (petDetails.length == 9) { // Ensure correct format
+                if (petDetails.length == 9) { // Ensures correct format
                     setId(Integer.parseInt(petDetails[0]));
                     setName(petDetails[1]);
                     setType(petDetails[2]);
@@ -284,7 +286,7 @@ public class PetManagement extends Pet implements ManagementFunctions {
             }
 
             if (!found) {
-                System.out.println("Pet not found.");
+                System.out.println("Pet Type not found.");
             }
         }
         catch (FileNotFoundException e) {
