@@ -54,7 +54,7 @@ public class PetManagement extends Pet implements ManagementFunctions {
             do {
                 System.out.print("Enter Age: ");
                 ageTemp = scanner.nextInt();
-            } while(ageTemp < 0 || ageTemp > 120);
+            } while(ageTemp < 0 || ageTemp > 200);
             setAge(ageTemp);
             scanner.nextLine();
 
@@ -75,7 +75,7 @@ public class PetManagement extends Pet implements ManagementFunctions {
             do {
                 System.out.print("Enter Birth Year: ");
                 birthYearTemp = scanner.nextInt();
-            } while (birthYearTemp < 1900 || birthYearTemp > 2025);
+            } while (birthYearTemp < 1825 || birthYearTemp > 2025);
             setBirthYear(birthYearTemp);
             scanner.nextLine();
 
@@ -111,8 +111,8 @@ public class PetManagement extends Pet implements ManagementFunctions {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
-            while ((line = reader.readLine()) != null) {
 
+            while ((line = reader.readLine()) != null) {
                 // Ignore empty lines
                 if (line.trim().isEmpty()) continue;
 
@@ -161,13 +161,18 @@ public class PetManagement extends Pet implements ManagementFunctions {
         boolean found = false;
 
         try {
+            char gender;
+            String nameTemp;
+            int birthMonthTemp, birthDayTemp, birthYearTemp, ageTemp;
+            Validation validator = new Validation();
+
             Scanner fileScanner = new Scanner(file);
 
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
                 String[] petDetails = line.split(",");
 
-                // Ensure correct format
+                // Ensures correct format
                 if (petDetails.length == 9) {
                     setId(Integer.parseInt(petDetails[0]));
                     setName(petDetails[1]);
@@ -202,8 +207,12 @@ public class PetManagement extends Pet implements ManagementFunctions {
 
                             switch (choice) {
                                 case 1 -> {
-                                    System.out.print("Enter New Name: ");
-                                    setName(scanner.nextLine());
+                                    do {
+                                        System.out.print("Enter New Name: ");
+                                        nameTemp = scanner.nextLine();
+                                        validator.nameValidation(nameTemp);
+                                    } while (!validator.nameValidation(nameTemp));
+                                    setName(nameTemp);
                                 }
                                 case 2 -> {
                                     System.out.print("Enter New Type: ");
@@ -214,24 +223,43 @@ public class PetManagement extends Pet implements ManagementFunctions {
                                     setBreed(scanner.nextLine());
                                 }
                                 case 4 -> {
-                                    System.out.print("Enter New Age: ");
-                                    setAge(scanner.nextInt());
+                                    do {
+                                        System.out.print("Enter New Age: ");
+                                        ageTemp = scanner.nextInt();
+                                    } while(ageTemp < 0 || ageTemp > 200);
+                                    setAge(ageTemp);
+                                    scanner.nextLine();
                                 }
                                 case 5 -> {
-                                    System.out.print("Enter New Birth Month: ");
-                                    setBirthMonth(scanner.nextInt());
+                                    do {
+                                        System.out.print("Enter New Birth Month: ");
+                                        birthMonthTemp = scanner.nextInt();
+                                    } while (birthMonthTemp < 1 || birthMonthTemp > 12);
+                                    setBirthMonth(birthMonthTemp);
+                                    scanner.nextLine();
                                 }
                                 case 6 -> {
-                                    System.out.print("Enter New Birth Day: ");
-                                    setBirthDay(scanner.nextInt());
+                                    do {
+                                        System.out.print("Enter Birth Day: ");
+                                        birthDayTemp = scanner.nextInt();
+                                    } while (birthDayTemp < 1 || birthDayTemp > 31);
+                                    setBirthDay(birthDayTemp);
+                                    scanner.nextLine();
                                 }
                                 case 7 -> {
-                                    System.out.print("Enter New Birth Year: ");
-                                    setBirthYear(scanner.nextInt());
+                                    do {
+                                        System.out.print("Enter Birth Year: ");
+                                        birthYearTemp = scanner.nextInt();
+                                    } while (birthYearTemp < 1825 || birthYearTemp > 2025);
+                                    setBirthYear(birthYearTemp);
+                                    scanner.nextLine();
                                 }
                                 case 8 -> {
-                                    System.out.print("Enter New Gender: ");
-                                    setGender(scanner.next().charAt(0));
+                                    do {
+                                        System.out.print("Enter Gender (M/F): ");
+                                        gender = scanner.next().toUpperCase().charAt(0);
+                                    } while (gender != 'M' && gender != 'F');
+                                    setGender(gender);
                                 }
                                 case 9 -> {
                                     System.out.print("Exiting... ");

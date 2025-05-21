@@ -1,6 +1,7 @@
 package UI_LogIn_Package;
 
 import Adoption_Management_Package.CustomerManagement;
+import Adoption_Management_Package.Validation;
 
 import java.io.*;
 import java.util.*;
@@ -24,10 +25,10 @@ import java.util.*;
 public class LoginPage extends CustomerManagement {
 
 
-    // Add this field to store the current logged-in username
+    // Added this field to store the current logged-in username
     private String currentUsername;
 
-    // Add this getter method to retrieve the current username
+    // Added this getter method to retrieve the current username
     public String getCurrentUsername() {
         return currentUsername;
     }
@@ -160,6 +161,9 @@ public class LoginPage extends CustomerManagement {
 
         List<String> updatedLines = new ArrayList<>();
         boolean found = false;
+        String newPassword;
+
+        Validation validator = new Validation();
 
         try (Scanner fileScanner = new Scanner(file2)) {
             while (fileScanner.hasNextLine()) {
@@ -168,8 +172,12 @@ public class LoginPage extends CustomerManagement {
 
                 if (accountDetails.length == 3 && accountDetails[1].equals(username)) {
                     found = true;
-                    System.out.print("Enter your new password: ");
-                    String newPassword = scanner.nextLine();
+
+                    do{
+                        System.out.print("Enter your new password: ");
+                        newPassword = scanner.nextLine();
+                    } while (!validator.passwordValidation(newPassword));
+
                     // TODO: Add an if statement here with a parameter of a method that validates new password using regex
                     updatedLines.add(accountDetails[0] + "," + username + "," + newPassword);
                     System.out.println("✅ Password successfully updated.");
