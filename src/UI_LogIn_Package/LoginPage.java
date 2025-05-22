@@ -1,6 +1,7 @@
 package UI_LogIn_Package;
 
 import Adoption_Management_Package.CustomerManagement;
+import Adoption_Management_Package.Validation;
 
 import java.io.*;
 import java.util.*;
@@ -157,20 +158,25 @@ public class LoginPage extends CustomerManagement {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter your username to reset your password: ");
         String username = scanner.nextLine();
+        String newPassword;
 
         List<String> updatedLines = new ArrayList<>();
         boolean found = false;
+        Validation validator = new Validation();
 
         try (Scanner fileScanner = new Scanner(file2)) {
+
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
                 String[] accountDetails = line.split(",");
 
                 if (accountDetails.length == 3 && accountDetails[1].equals(username)) {
                     found = true;
-                    System.out.print("Enter your new password: ");
-                    String newPassword = scanner.nextLine();
-                    // TODO: Add an if statement here with a parameter of a method that validates new password using regex
+                    do{
+                        System.out.print("Enter your new password: ");
+                        newPassword = scanner.nextLine();
+                    } while(!validator.passwordValidation(newPassword));
+
                     updatedLines.add(accountDetails[0] + "," + username + "," + newPassword);
                     System.out.println("✅ Password successfully updated.");
                 } else {
