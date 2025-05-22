@@ -32,7 +32,7 @@ public class PDFGenerator {
         }
     }
 
-    // Main_Package.Main PDF generation method
+    // Main_Package.Main_Package.Main PDF generation method
     public void generateAdoptionReport(String textFilePath) throws IOException, DocumentException {
         validateInputFile(textFilePath);
         String outputPath = buildOutputPath(textFilePath, ADOPTION_REPORTS_DIR);

@@ -11,12 +11,23 @@ Pet Information:
 
 --------------------------------------------------
 Pet Information:
-   Pet ID: 472199
+   Pet ID: 664536
    Name: Patrick
    Species: Dog
    Breed: Shih Tzu
-   Age: 59
-   Birthday: 1/1/1966
-   Gender: F
+   Age: 18
+   Birthday: 1/2/2007
+   Gender: M
+--------------------------------------------------
+
+--------------------------------------------------
+Pet Information:
+   Pet ID: 399847
+   Name: Cthulu
+   Species: God
+   Breed: Floating Eyeball
+   Age: 9
+   Birthday: 1/1/1825
+   Gender: M
 --------------------------------------------------
 

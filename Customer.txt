@@ -1,1 +1,4 @@
 36461,Francen Anne Garciano,19,M,Brgy. Cabulihan,3,23,2006,Student,Tiny Home,true,francen@gmail.com,09123456789
+674070,Franz Mangubat,20,M,Brgy. Valencia Ormoc City,11,26,2005,Student,Single-Family Home,false,franzmangubat@gmail.com,0912345666789
+524341,Jude Martin Valencia,21,M,Brgy. Cabulihan Ormoc City,10,26,2004,Student,Mansion,false,judemartingarciano@gmail.com,09619603980
+147993,Kenneth Posion,20,M,Brgy. Valencia Ormoc City,4,5,2005,Nurse,Mansion,true,kenneththepoison@gmail.com,09123456789

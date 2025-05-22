@@ -1,4 +1,4 @@
-package Main_Package;
+package Main_Package;//package Main_Package;
 
 import Adoption_Management_Package.AdoptionManagement;
 import UI_LogIn_Package.LoginPage;
@@ -27,9 +27,6 @@ public class Main {
                 System.out.println("Welcome, " + username + "!");
                 adoptionManager.nonAdminUserInterface();
             }
-        }
-        else {
-            System.out.println("Login failed or canceled.");
         }
     }
 }
