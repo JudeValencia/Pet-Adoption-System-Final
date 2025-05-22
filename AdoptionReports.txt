@@ -1,0 +1,18 @@
+Request ID: 244423
+Customer Information:
+   Name: Francen Anne Garciano
+   Age: 19
+   Contact Number: 09123456789
+   Occupation: Student
+   Home Type: Tiny Home
+   Has Other Pets: true
+Pet Information:
+   Pet ID: 703194
+   Name: Abby
+   Breed: None
+   Age: 100
+   Birthday: 12/12/1950
+   Gender: M
+
+Status: Approved
+--------------------------------------------------

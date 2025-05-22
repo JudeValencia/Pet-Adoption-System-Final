@@ -103,7 +103,7 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
             do {
                 System.out.print("Enter Address: ");
                 addressTemp = scanner.nextLine();
-            } while (validator.addressValidation(addressTemp));
+            } while (!validator.addressValidation(addressTemp));
             setAddress(addressTemp);
 
             do {
@@ -130,13 +130,13 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
             do {
                 System.out.print("Enter Occupation: ");
                 occupationTemp = scanner.nextLine();
-            } while (validator.occupationAndHomeTypeValidation(occupationTemp));
+            } while (!validator.occupationAndHomeTypeValidation(occupationTemp));
             setOccupation(occupationTemp);
 
             do {
                 System.out.print("Enter Home Type: ");
                 homeTypeTemp = scanner.nextLine();
-            } while (validator.occupationAndHomeTypeValidation(homeTypeTemp));
+            } while (!validator.occupationAndHomeTypeValidation(homeTypeTemp));
             setHomeType(homeTypeTemp);
 
             System.out.print("Has Other Pet/s(true/false): ");
@@ -146,13 +146,13 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
             do {
                 System.out.print("Enter Email: ");
                 emailTemp = scanner.nextLine();
-            } while(validator.emailValidation(emailTemp));
+            } while(!validator.emailValidation(emailTemp));
             setEmail(emailTemp);
 
             do {
                 System.out.print("Enter Contact Number: ");
                 contactNumberTemp = scanner.nextLine();
-            } while(validator.contactNumberValidation(contactNumberTemp));
+            } while(!validator.contactNumberValidation(contactNumberTemp));
             setContactNumber(contactNumberTemp);
 
         }
@@ -237,12 +237,6 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
 
         List<String> customerList = new ArrayList<>();
         boolean found = false;
-        char gender;
-        String nameTemp, addressTemp,homeTypeTemp, occupationTemp, emailTemp, contactNumberTemp;
-        int ageTemp, birthMonthTemp, birthDayTemp, birthYearTemp;
-
-        Validation validator = new Validation();
-
         try {
             Scanner fileScanner = new Scanner(file);
 
@@ -292,94 +286,52 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
 
                             switch (choice) {
                                 case 1 -> {
-                                    do {
-                                        System.out.print("Enter Name: ");
-                                        nameTemp = scanner.nextLine();
-                                        validator.nameValidation(nameTemp);
-                                    } while (!validator.nameValidation(nameTemp));
-                                    setName(nameTemp);
+                                    System.out.print("Enter New Name: ");
+                                    setName(scanner.nextLine());
                                 }
                                 case 2 -> {
-                                    do {
-                                        System.out.print("Enter Age: ");
-                                        ageTemp = scanner.nextInt();
-                                    } while(ageTemp < 18 || ageTemp > 120);
-                                    setAge(ageTemp);
-                                    scanner.nextLine();
+                                    System.out.print("Enter New Age: ");
+                                    setAge(scanner.nextInt());
                                 }
                                 case 3 -> {
-                                    do {
-                                        System.out.print("Enter Gender (M/F): ");
-                                        gender = scanner.next().toUpperCase().charAt(0);
-                                    } while (gender != 'M' && gender != 'F');
-                                    setGender(gender);
-                                    scanner.nextLine();
+                                    System.out.print("Enter New Gender: ");
+                                    setGender(scanner.next().charAt(0));
                                 }
                                 case 4 -> {
-                                    do {
-                                        System.out.print("Enter Address: ");
-                                        addressTemp = scanner.nextLine();
-                                    } while (validator.addressValidation(addressTemp));
-                                    setAddress(addressTemp);
+                                    System.out.print("Enter New Address: ");
+                                    setAddress(scanner.nextLine());
                                 }
                                 case 5 -> {
-                                    do {
-                                        System.out.print("Enter Birth Month: ");
-                                        birthMonthTemp = scanner.nextInt();
-                                    } while (birthMonthTemp < 1 || birthMonthTemp > 12);
-                                    setBirthMonth(birthMonthTemp);
-                                    scanner.nextLine();
+                                    System.out.print("Enter New Birth Month: ");
+                                    setBirthMonth(scanner.nextInt());
                                 }
                                 case 6 -> {
-
-                                    do {
-                                        System.out.print("Enter Birth Day: ");
-                                        birthDayTemp = scanner.nextInt();
-                                    } while (birthDayTemp < 1 || birthDayTemp > 31);
-                                    setBirthDay(birthDayTemp);
-                                    scanner.nextLine();
+                                    System.out.print("Enter New Birth Day: ");
+                                    setBirthDay(scanner.nextInt());
                                 }
                                 case 7 -> {
-                                    do {
-                                        System.out.print("Enter Birth Year: ");
-                                        birthYearTemp = scanner.nextInt();
-                                    } while (birthYearTemp < 1950 || birthYearTemp > 2007);
-                                    setBirthYear(birthYearTemp);
-                                    scanner.nextLine();
+                                    System.out.print("Enter New Birth Year: ");
+                                    setBirthYear(scanner.nextInt());
                                 }
                                 case 8 -> {
-                                    do {
-                                        System.out.print("Enter Occupation: ");
-                                        occupationTemp = scanner.nextLine();
-                                    } while (validator.occupationAndHomeTypeValidation(occupationTemp));
-                                    setOccupation(occupationTemp);
+                                    System.out.print("Enter New Occupation: ");
+                                    setOccupation(scanner.nextLine());
                                 }
                                 case 9 -> {
-                                    do {
-                                        System.out.print("Enter Home Type: ");
-                                        homeTypeTemp = scanner.nextLine();
-                                    } while (validator.occupationAndHomeTypeValidation(homeTypeTemp));
-                                    setHomeType(homeTypeTemp);
+                                    System.out.print("Enter New Home Type: ");
+                                    setHomeType(scanner.nextLine());
                                 }
                                 case 10 -> {
-                                    System.out.print("Has Other Pet/s(true/false): ");
+                                    System.out.print("Do you have a pet (True or False): ");
                                     setHasOtherPets(scanner.nextBoolean());
-                                    scanner.nextLine();
                                 }
                                 case 11 -> {
-                                    do {
-                                        System.out.print("Enter Email: ");
-                                        emailTemp = scanner.nextLine();
-                                    } while(validator.emailValidation(emailTemp));
-                                    setEmail(emailTemp);
-
+                                    System.out.print("Enter New Contact Number: ");
+                                    setContactNumber(scanner.nextLine());
                                 }
                                 case 12 ->  {
-                                    do {
-                                        System.out.print("Enter Contact Number: ");
-                                        contactNumberTemp = scanner.nextLine();
-                                    } while(validator.contactNumberValidation(contactNumberTemp));
-                                    setContactNumber(contactNumberTemp);
+                                    System.out.print("Enter New Email: ");
+                                    setEmail(scanner.nextLine());
                                 }
                                 case 13 -> {
                                     System.out.print("Exiting... ");
