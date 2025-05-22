@@ -35,7 +35,7 @@ import java.io.*;
      * - viewAdoptionRequestSummaries(): Displays brief summaries of all pending adoption requests.
      * - approveAdoptionRequest(String requestId): Approves a specific adoption request.
      * - rejectAdoptionRequest(String requestId): Rejects a specific adoption request.
-     * - removePetFromFile(int petId): Removes a pet record from the system by pet ID (private method).
+     * - removePetFromPetTextFile(int petId): Removes a pet record from the system by pet ID (private method).
      * - searchPetForAdoption(int petID): Searches for a pet available for adoption using the pet's unique ID.
      * - loadCustomerByUsername(String username): Helper method to load customer information by username (private method).
      * - handleAdoptionReport(Report_Management_Package.PDFGenerator pdfGenerator): Handles the generation of an adoption report (private method).
@@ -54,6 +54,7 @@ import java.io.*;
         private final File adoptionRequest = new File("AdoptionRequest.txt");
         private final File adoptionHistory = new File("AdoptionHistory.txt");
         private final File remainingPetsReport = new File("RemainingPetsReport.txt");
+        private final File  requestedPets = new File("RequestedPets.txt");
         int requestID;
 
         // Constructor to inject LoginPage
@@ -270,7 +271,7 @@ import java.io.*;
 
             // Remove the adopted pet from Pet.txt (if .Pet ID was found)
             if (adoptedPetId != -1) {
-                removePetFromFile(adoptedPetId);
+                removePetFromPetTextFile(adoptedPetId);
             }
 
             // Rewrite AdoptionRequest.txt without the approved request
@@ -288,6 +289,8 @@ import java.io.*;
         }
 
         public void rejectAdoptionRequest(String requestIdToReject) {
+            // Variables to store the Pet ID of the rejected request
+            int rejectedPetId = -1;
 
             // Read all requests from AdoptionRequest.txt
             List<String> requests = new ArrayList<>();
@@ -297,13 +300,20 @@ import java.io.*;
                 String line;
                 StringBuilder currentRequest = new StringBuilder();
 
-
                 while ((line = reader.readLine()) != null) {
                     if (line.startsWith("--------------------------------------------------")) {
                         if (!currentRequest.isEmpty()) {
-                            // Check if this is the request to approve
+                            // Check if this is the request to reject
                             if (currentRequest.toString().contains("Request ID: " + requestIdToReject)) {
                                 requestFound = true;
+                                // Extract Pet ID from the request
+                                String[] lines = currentRequest.toString().split("\n");
+                                for (String l : lines) {
+                                    if (l.trim().startsWith("Pet ID:")) {
+                                        rejectedPetId = Integer.parseInt(l.trim().split(":")[1].trim());
+                                        break;
+                                    }
+                                }
 
                                 // Log to AdoptionHistory.txt
                                 try (BufferedWriter historyWriter = new BufferedWriter(new FileWriter(adoptionHistory, true))) {
@@ -334,7 +344,6 @@ import java.io.*;
                 return;
             }
 
-
             // Rewrite AdoptionRequest.txt without the rejected request
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(adoptionRequest, false))) {
                 for (String request : requests) {
@@ -346,10 +355,15 @@ import java.io.*;
                 System.err.println("Error updating AdoptionRequest.txt: " + e.getMessage());
             }
 
+            // Return the pet to Pet.txt if we found its ID
+            if (rejectedPetId != -1) {
+                returnPetToPetTextFile(rejectedPetId);
+            }
+
             System.out.println("Request ID " + requestIdToReject + " rejected.");
         }
 
-        private void removePetFromFile(int petId) {
+        private void removePetFromPetTextFile(int petId) {
             List<String> remainingPets = new ArrayList<>();
             boolean petFound = false;
 
@@ -385,9 +399,58 @@ import java.io.*;
             }
         }
 
+        private void returnPetToPetTextFile(int petId) {
+            // First find the pet in RequestedPets.txt
+            String petRecord = null;
+
+            try (BufferedReader reader = new BufferedReader(new FileReader(requestedPets))) {
+                String line;
+                List<String> remainingRequests = new ArrayList<>();
+
+                while ((line = reader.readLine()) != null) {
+                    if (line.trim().isEmpty()) continue;
+
+                    String[] petDetails = line.split(",");
+                    if (petDetails.length >= 1 && Integer.parseInt(petDetails[0]) == petId) {
+                        petRecord = line; // Found the pet to return
+                    } else {
+                        remainingRequests.add(line); // Keep other requests
+                    }
+                }
+
+                // Update RequestedPets.txt by removing the returned pet
+                if (petRecord != null) {
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(requestedPets, false))) {
+                        for (String request : remainingRequests) {
+                            writer.write(request);
+                            writer.newLine();
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                System.err.println("Error reading RequestedPets.txt: " + e.getMessage());
+                return;
+            }
+
+            if (petRecord == null) {
+                System.err.println("Pet ID " + petId + " not found in RequestedPets.txt.");
+                return;
+            }
+
+            // Add the pet back to Pet.txt
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("Pet.txt", true))) {
+                writer.write(petRecord);
+                writer.newLine();
+                System.out.println("✅ Pet ID " + petId + " has been returned to available pets.");
+            } catch (IOException e) {
+                System.err.println("Error writing to Pet.txt: " + e.getMessage());
+            }
+        }
+
         public void searchPetForAdoption(int petID) {
             // Variables to store pet details
             String petName = null;
+            String petType = null;
             String petBreed = null;
             int petAge = 0;
             int petBirthDay = 0;
@@ -406,6 +469,7 @@ import java.io.*;
                     String[] petDetails = line.split(",");
                     if (petDetails.length == 9 && Integer.parseInt(petDetails[0]) == petID) {
                         petName = petDetails[1];
+                        petType = petDetails[2];
                         petBreed = petDetails[3];
                         petAge = Integer.parseInt(petDetails[4]);
                         petBirthMonth = Integer.parseInt(petDetails[5]);
@@ -445,6 +509,17 @@ import java.io.*;
             int requestId = random.nextInt(1_000_000);
             setRequestID(requestId);
 
+            // Temporarily stores pet data to RequestedData.txt
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(requestedPets, true))) {
+                writer.write(petID + "," + petName + "," + petBreed + "," + petAge + "," + petBirthDay + "," + petBirthMonth + "," + petBirthYear + "," + petGender);
+                writer.newLine();
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            // Temporarily removes pets whenever it is requested to be adopted
+            removePetFromPetTextFile(petID);
+
             // Write adoption request
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(adoptionRequest, true))) {
                 writer.write("--------------------------------------------------");
@@ -470,6 +545,8 @@ import java.io.*;
                 writer.write("   Pet ID: " + petID);
                 writer.newLine();
                 writer.write("   Name: " + petName);
+                writer.newLine();
+                writer.write("   Type: " + petType);
                 writer.newLine();
                 writer.write("   Breed: " + petBreed);  // Use loaded pet data
                 writer.newLine();
@@ -525,7 +602,7 @@ import java.io.*;
 
         private void handleAdoptionReport(PDFGenerator pdfGenerator) {
             try {
-                // 1. First try default file
+                // 1. First try a default file
                 String defaultFile = "AdoptionReports.txt";
                 File file = new File(defaultFile);
 

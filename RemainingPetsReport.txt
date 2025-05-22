@@ -1,11 +1,22 @@
 --------------------------------------------------
 Pet Information:
-   Pet ID: 703194
-   Name: Abby
-   Species: Starfish
-   Breed: None
+   Pet ID: 658083
+   Name: Iskaba
+   Species: Pokemon
+   Breed: Pikachu
    Age: 100
-   Birthday: 12/12/1950
+   Birthday: 10/10/1925
    Gender: M
+--------------------------------------------------
+
+--------------------------------------------------
+Pet Information:
+   Pet ID: 472199
+   Name: Patrick
+   Species: Dog
+   Breed: Shih Tzu
+   Age: 59
+   Birthday: 1/1/1966
+   Gender: F
 --------------------------------------------------
 

@@ -1,1 +1,3 @@
-703194,Abby,Starfish,None,100,12,12,1950,M
+658083,Iskaba,Pokemon,Pikachu,100,10,10,1925,M
+399847,Cthulu,Floating Eyeball,9,1,1,1825,M
+664536,Patrick,Dog,Shih Tzu,18,1,2,2007,M
