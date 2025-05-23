@@ -126,7 +126,17 @@ public class LoginPage extends CustomerManagement {
     }
 
     public void signUp() {
+        final String BLUE = "\u001B[38;2;66;103;178m";
+        final String RESET = "\u001B[0m";
+        final String GRAY = "\u001B[38;2;137;143;156m";
         CustomerManagement customerManager = new CustomerManagement();
+
+        System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+        System.out.println("│                                                                                                                                                          │");
+        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
+        System.out.println(BLUE+"                                                                    ┌─────────────────┐                                                                     ");
+        System.out.println("                                                                    │     SIGN UP     │                                                                     ");
+        System.out.println("                                                                    └─────────────────┘                                                                     "+RESET);
         customerManager.add();
     }
 

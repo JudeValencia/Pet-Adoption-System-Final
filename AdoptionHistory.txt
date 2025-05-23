@@ -149,25 +149,6 @@ Pet Information:
 
 Status: Approved
 --------------------------------------------------
-Request ID: 463190
-Customer Information:
-   Name: Jude Martin Valencia
-   Age: 21
-   Contact Number: 09619603980
-   Occupation: Student
-   Home Type: Mansion
-   Has Other Pets: false
-Pet Information:
-   Pet ID: 535408
-   Name: Spongebob
-   Type: Sponge
-   Breed: JustASpongeBro
-   Age: 10
-   Birthday: 1/1/2015
-   Gender: M
-
-Status: Approved
---------------------------------------------------
 Request ID: 438115
 Customer Information:
    Name: Kenneth Posion
@@ -186,4 +167,99 @@ Pet Information:
    Gender: F
 
 Status: Rejected
+--------------------------------------------------
+Request ID: 750916
+Customer Information:
+   Name: Jude Martin Valencia
+   Age: 21
+   Contact Number: 09619603980
+   Occupation: Student
+   Home Type: Mansion
+   Has Other Pets: false
+Pet Information:
+   Pet ID: 658083
+   Name: Iskaba
+   Type: Pokemon
+   Breed: Pikachu
+   Age: 100
+   Birthday: 10/10/1925
+   Gender: M
+
+Status: Approved
+--------------------------------------------------
+Request ID: 626734
+Customer Information:
+   Name: Jude Martin Valencia
+   Age: 21
+   Contact Number: 09619603980
+   Occupation: Student
+   Home Type: Mansion
+   Has Other Pets: false
+Pet Information:
+   Pet ID: 873069
+   Name: Iskabadi
+   Type: Iskoka
+   Breed: Ishmoli
+   Age: 11
+   Birthday: 2/2/2014
+   Gender: F
+
+Status: Approved
+--------------------------------------------------
+Request ID: 276444
+Customer Information:
+   Name: Mozart
+   Age: 19
+   Contact Number: 0977 713 7588
+   Occupation: Sessionist
+   Home Type: Suburban
+   Has Other Pets: true
+Pet Information:
+   Pet ID: 540891
+   Name: Patrick
+   Type: Starfish
+   Breed: None
+   Age: 20
+   Birthday: 10/10/2005
+   Gender: M
+
+Status: Rejected
+--------------------------------------------------
+Request ID: 422692
+Customer Information:
+   Name: Kenneth Posion
+   Age: 20
+   Contact Number: 09123456789
+   Occupation: Nurse
+   Home Type: Mansion
+   Has Other Pets: true
+Pet Information:
+   Pet ID: 612336
+   Name: Sandy Iskaba
+   Type: Squirrel
+   Breed: Flying Squirrel
+   Age: 20
+   Birthday: 11/11/2005
+   Gender: F
+
+Status: Rejected
+--------------------------------------------------
+Request ID: 406633
+Customer Information:
+   Name: Loren Ebanyez
+   Age: 20
+   Contact Number: 09123456789
+   Occupation: Student
+   Home Type: Balay
+   Has Other Pets: true
+Pet Information:
+   Pet ID: 540891
+   Name: Patrick
+   Type: Starfish
+   Breed: None
+   Age: 20
+   Birthday: 10/10/2005
+   Gender: M
+
+Status: Approved
 --------------------------------------------------

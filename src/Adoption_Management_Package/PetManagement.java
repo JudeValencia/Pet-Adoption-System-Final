@@ -38,50 +38,81 @@ public class PetManagement extends Pet implements ManagementFunctions {
             int id = random.nextInt(1_000_000);
             setId(id);
 
+            final String BLUE = "\u001B[38;2;66;103;178m";
+            final String RESET = "\u001B[0m";
+            final String GRAY = "\u001B[38;2;137;143;156m";
+
             do {
-                System.out.print("Enter Name: ");
+                System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+                System.out.println("│                                                                                                                                                          │");
+                System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
+                System.out.println(BLUE+"                                                                    ┌─────────────────┐                                                                     ");
+                System.out.println("                                                                    │     ADD PET     │                                                                     ");
+                System.out.println("                                                                    └─────────────────┘                                                                     "+RESET);
+                System.out.println();
+                System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
+                System.out.print  ("                                             │ ENTER NAME: ");
                 nameTemp = scanner.nextLine();
+                System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                 validator.nameValidation(nameTemp);
             } while (!validator.nameValidation(nameTemp));
             setName(nameTemp);
 
-            System.out.print("Enter Type: ");
+            System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+            System.out.print  ("                                             │ ENTER TYPE: ");
             setType(scanner.nextLine());
+            System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
 
-            System.out.print("Enter Breed: ");
+            System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+            System.out.print  ("                                             │ ENTER BREED: ");
             setBreed(scanner.nextLine());
+            System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
 
             do {
-                System.out.print("Enter Age: ");
+                System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                System.out.print  ("                                             │ ENTER AGE: ");
                 ageTemp = scanner.nextInt();
+                System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
             } while(ageTemp < 0 || ageTemp > 200);
             setAge(ageTemp);
             scanner.nextLine();
 
             do {
-                System.out.print("Enter Birth Month: ");
+                System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                System.out.print  ("                                             │ ENTER BIRTH-MONTH: ");
                 birthMonthTemp = scanner.nextInt();
+                System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
             } while (birthMonthTemp < 1 || birthMonthTemp > 12);
             setBirthMonth(birthMonthTemp);
             scanner.nextLine();
 
             do {
-                System.out.print("Enter Birth Day: ");
+                System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                System.out.print  ("                                             │ ENTER DAY OF BIRTH: ");
                 birthDayTemp = scanner.nextInt();
+                System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
             } while (birthDayTemp < 1 || birthDayTemp > 31);
             setBirthDay(birthDayTemp);
             scanner.nextLine();
 
             do {
-                System.out.print("Enter Birth Year: ");
+                System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                System.out.print  ("                                             │ ENTER BIRTH-YEAR: ");
                 birthYearTemp = scanner.nextInt();
+                System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
             } while (birthYearTemp < 1825 || birthYearTemp > 2025);
             setBirthYear(birthYearTemp);
             scanner.nextLine();
 
             do {
-                System.out.print("Enter Gender (M/F): ");
+                System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                System.out.print  ("                                             │ ENTER GENDER (F/M): ");
                 gender = scanner.next().toUpperCase().charAt(0);
+                System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+                System.out.println();
+                System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+                System.out.println("│                                                                                                                                                          │");
+                System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
             } while (gender != 'M' && gender != 'F');
             setGender(gender);
 
@@ -163,6 +194,10 @@ public class PetManagement extends Pet implements ManagementFunctions {
         String nameTemp;
         int birthMonthTemp, birthDayTemp, birthYearTemp, ageTemp;
 
+        final String BLUE = "\u001B[38;2;66;103;178m";
+        final String RESET = "\u001B[0m";
+        final String GRAY = "\u001B[38;2;137;143;156m";
+
 
         try {
             Validation validator = new Validation();
@@ -209,56 +244,86 @@ public class PetManagement extends Pet implements ManagementFunctions {
                             switch (choice) {
                                 case 1 -> {
                                     do {
-                                        System.out.print("Enter Name: ");
+                                        System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+                                        System.out.println("│                                                                                                                                                          │");
+                                        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
+                                        System.out.println(BLUE+"                                                                    ┌─────────────────┐                                                                     ");
+                                        System.out.println("                                                                    │    EDIT PET     │                                                                     ");
+                                        System.out.println("                                                                    └─────────────────┘                                                                     "+RESET);
+                                        System.out.println();
+                                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.print  ("                                             │ ENTER NAME: ");
                                         nameTemp = scanner.nextLine();
+                                        System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                                         validator.nameValidation(nameTemp);
                                     } while (!validator.nameValidation(nameTemp));
                                     setName(nameTemp);
                                 }
                                 case 2 -> {
-                                    System.out.print("Enter New Type: ");
+
+                                    System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                    System.out.print  ("                                             │ ENTER TYPE: ");
                                     setType(scanner.nextLine());
+                                    System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                                 }
                                 case 3 -> {
-                                    System.out.print("Enter New Breed: ");
+
+                                    System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                    System.out.print  ("                                             │ ENTER BREED: ");
                                     setBreed(scanner.nextLine());
+                                    System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                                 }
                                 case 4 -> {
                                     do {
-                                        System.out.print("Enter Age: ");
+                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.print  ("                                             │ ENTER AGE: ");
                                         ageTemp = scanner.nextInt();
+                                        System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                                     } while(ageTemp < 0 || ageTemp > 200);
                                     setAge(ageTemp);
                                     scanner.nextLine();
                                 }
                                 case 5 -> {
+
                                     do {
-                                        System.out.print("Enter Birth Month: ");
+                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.print  ("                                             │ ENTER BIRTH-MONTH: ");
                                         birthMonthTemp = scanner.nextInt();
+                                        System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                                     } while (birthMonthTemp < 1 || birthMonthTemp > 12);
                                     setBirthMonth(birthMonthTemp);
                                     scanner.nextLine();
                                 }
                                 case 6 -> {
                                     do {
-                                        System.out.print("Enter Birth Day: ");
+                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.print  ("                                             │ ENTER DAY OF BIRTH: ");
                                         birthDayTemp = scanner.nextInt();
+                                        System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                                     } while (birthDayTemp < 1 || birthDayTemp > 31);
                                     setBirthDay(birthDayTemp);
                                     scanner.nextLine();
                                 }
                                 case 7 -> {
                                     do {
-                                        System.out.print("Enter Birth Year: ");
+                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.print  ("                                             │ ENTER BIRTH-YEAR: ");
                                         birthYearTemp = scanner.nextInt();
+                                        System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                                     } while (birthYearTemp < 1825 || birthYearTemp > 2025);
                                     setBirthYear(birthYearTemp);
                                     scanner.nextLine();
                                 }
                                 case 8 -> {
                                     do {
-                                        System.out.print("Enter Gender (M/F): ");
+                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.print  ("                                             │ ENTER GENDER (F/M): ");
                                         gender = scanner.next().toUpperCase().charAt(0);
+                                        System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+                                        System.out.println();
+                                        System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+                                        System.out.println("│                                                                                                                                                          │");
+                                        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
                                     } while (gender != 'M' && gender != 'F');
                                     setGender(gender);
                                 }

@@ -1,33 +1,22 @@
 --------------------------------------------------
 Pet Information:
-   Pet ID: 658083
-   Name: Iskaba
-   Species: Pokemon
-   Breed: Pikachu
-   Age: 100
-   Birthday: 10/10/1925
-   Gender: M
---------------------------------------------------
-
---------------------------------------------------
-Pet Information:
-   Pet ID: 664536
+   Pet ID: 540891
    Name: Patrick
-   Species: Dog
-   Breed: Shih Tzu
-   Age: 18
-   Birthday: 1/2/2007
+   Species: Starfish
+   Breed: None
+   Age: 20
+   Birthday: 10/10/2005
    Gender: M
 --------------------------------------------------
 
 --------------------------------------------------
 Pet Information:
-   Pet ID: 399847
-   Name: Cthulu
-   Species: God
-   Breed: Floating Eyeball
-   Age: 9
-   Birthday: 1/1/1825
-   Gender: M
+   Pet ID: 612336
+   Name: Sandy
+   Species: Squirrel
+   Breed: Flying Squirrel
+   Age: 20
+   Birthday: 11/11/2005
+   Gender: F
 --------------------------------------------------
 

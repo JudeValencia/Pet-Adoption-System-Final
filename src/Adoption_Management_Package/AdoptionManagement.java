@@ -61,6 +61,24 @@ public class AdoptionManagement extends UserInterface {
         this.loginPage = loginPage;
     }
 
+    /**
+     * Displays the user interface for non-administrative users, allowing them to interact
+     * with available features such as viewing pets, making adoption requests, and searching for pets.
+     *
+     * The method checks the current login session using the injected `loginPage` component.
+     * If a session exists, it provides a set of options for the user to choose from within a loop:
+     *
+     * 1. View available pets.
+     * 2. Make an adoption request.
+     * 3. Search for a specific pet.
+     * 4. Log out.
+     *
+     * The loop continues until the user selects the log-out option. Input validation is
+     * applied to handle incorrect menu choices gracefully.
+     *
+     * Note: This method relies on persistent login state and interaction with
+     * other methods (e.g., `view`, `makeAdoptionRequest`, `searchPet`) to execute user-selected operations.
+     */
     public void nonAdminUserInterface() {
 
         // Use the injected loginPage instead of creating a new one
