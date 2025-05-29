@@ -6,7 +6,10 @@ import UI_LogIn_Package.LoginPage;
 public class Main {
     public static void main(String[] args) {
 
-        System.out.println("\nStarting Pet Haven Application...");
+        final String RESET = "\u001B[0m";
+        final String GREEN = "\u001B[38;2;0;210;106m";
+
+        System.out.println("\n                                                           STARTING PET HAVEN APPLICATION...");
         System.out.println( );
         LoginPage loginPage = new LoginPage();
         loginPage.logIn();
@@ -14,17 +17,17 @@ public class Main {
         String username = loginPage.getCurrentUsername();
 
         if (username != null) {
-            System.out.println("Login successful!");
+            System.out.println(GREEN+"                                                                  LOGIN SUCCESSFULLY!                                                                       "+RESET);
 
             // Pass the username to AdoptionManagement
             AdoptionManagement adoptionManager = new AdoptionManagement(loginPage);
 
             if (username.equals("admin123")) {
-                System.out.println("Welcome, Administrator!");
+                System.out.println("                                                              WELCOME, ADMINISTRATOR!");
                 adoptionManager.adminUserInterface();
             }
             else {
-                System.out.println("Welcome, " + username + "!");
+                System.out.println("                                                                   WELCOME, " + username + "!");
                 adoptionManager.nonAdminUserInterface();
             }
         }

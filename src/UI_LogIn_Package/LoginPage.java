@@ -24,6 +24,11 @@ import java.util.*;
  */
 public class LoginPage extends CustomerManagement {
 
+    final String RESET = "\u001B[0m";
+    final String RED = "\u001B[31m";
+    final String BLUE = "\u001B[38;2;66;103;178m";
+    final String GREEN = "\u001B[38;2;0;210;106m";
+    final String GRAY = "\u001B[38;2;137;143;156m";
 
     // Add this field to store the current logged-in username
     private String currentUsername;
@@ -53,15 +58,16 @@ public class LoginPage extends CustomerManagement {
 
                     while (attempts < maxAttempts && !isAuthenticated) {
                         //LoginDisplay
-                        System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+                        System.out.println();
+                        System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
                         System.out.println("│                                                                                                                                                          │");
-                        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
+                        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
                         System.out.println();
-                        System.out.println("                                                                     ┌───────────────┐                                                                 ");
+                        System.out.println(BLUE+"                                                                     ┌───────────────┐                                                                 ");
                         System.out.println("                                                                     │     LOGIN     │                                                                      ");
-                        System.out.println("                                                                     └───────────────┘                                                                ");
+                        System.out.println("                                                                     └───────────────┘                                                                "+RESET);
                         System.out.println();
-                        System.out.println("                                                           ┌───────────────────────────────────┐                                                       ");
+                        System.out.println(GRAY+"                                                           ┌───────────────────────────────────┐                                                       ");
                         System.out.print  ("                                                           │ USERNAME: ");
 
                         String username = scanner.nextLine();
@@ -75,7 +81,7 @@ public class LoginPage extends CustomerManagement {
                         System.out.println();
                         System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
                         System.out.println("│                                                                                                                                                          │");
-                        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
+                        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
 
 
                         ui.logInInterfaceFooter();
@@ -93,19 +99,19 @@ public class LoginPage extends CustomerManagement {
                             } else {
                                 attempts++;
                                 if (attempts < maxAttempts) {
-                                    System.out.println("Incorrect username or password. Attempts left: " + (maxAttempts - attempts));
+                                    System.out.println(RED+"                                                     INCORRECT USERNAME OR PASSWORD. ATTEMPTS LEFT: "+RESET+ (maxAttempts - attempts));
                                 } else {
-                                    System.out.println("Too many failed attempts. Access denied.");
+                                    System.out.println(RED+"                                                          TOO MANY FAILED ATTEMPTS. ACCESS DENIED!                                                "+RESET);
                                     System.out.println();
 
                                     // Prompts the user if they want to change their password
-                                    System.out.print("Would you like to recover your password? (yes/no): ");
+                                    System.out.print(BLUE+"                                                   WOULD YOU LIKE TO RECOVER YOUR PASSWORD? (yes/no): "+RESET);
                                     String choice = scanner.nextLine();
 
                                     if (choice.equalsIgnoreCase("yes")) {
                                         forgotPassword();
                                     } else {
-                                        System.out.println("Returning to main menu...");
+                                        System.out.println("                                                                  RETURNING TO MAIN MENU...                                                                 ");
                                     }
                                 }
                             }
@@ -117,7 +123,7 @@ public class LoginPage extends CustomerManagement {
                 case 3 -> about();
 
                 case 4 -> {
-                    System.out.println("Exiting... ");
+                    System.out.println("                                                                         EXITING...                                                                         ");
                     isRunning = false;
                 }
             }
@@ -150,44 +156,61 @@ public class LoginPage extends CustomerManagement {
     }
 
     public void about() {
+
+        final String SKY_BLUE = "\u001B[38;2;161;227;239m";
+        final String LIGHT_BLUE = "\u001B[38;2;138;170;251m";
+        final String AQUA_BLUE = "\u001B[38;5;116m";
+        final String RESET = "\u001B[0m";
+
         //AboutUsDisplay
         System.out.println(" _____                                                                                                                                                _____ ");
-        System.out.println("( ___ )──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────( ___ )");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                          ,-.___,-.     █████╗ ██████╗  ██████╗ ██╗   ██╗████████╗    ██╗   ██╗███████╗                                         |   | ");
-        System.out.println(" |   |                          |_|_ _|_|    ██╔══██╗██╔══██╗██╔═══██╗██║   ██║╚══██╔══╝    ██║   ██║██╔════╝     ^~^  ,                              |   | ");
-        System.out.println(" |   |                            )O_O(      ███████║██████╔╝██║   ██║██║   ██║   ██║       ██║   ██║███████╗    ('Y') )                              |   | ");
-        System.out.println(" |   |                           { (_) }     ██╔══██║██╔══██╗██║   ██║██║   ██║   ██║       ██║   ██║╚════██║    /   ||/                              |   | ");
-        System.out.println(" |   |                            `-^-'      ██║  ██║██████╔╝╚██████╔╝╚██████╔╝   ██║       ╚██████╔╝███████║   (|||||/)                              |   | ");
-        System.out.println(" |   |                                       ╚═╝  ╚═╝╚═════╝  ╚═════╝  ╚═════╝    ╚═╝        ╚═════╝ ╚══════╝                                         |   | ");
-        System.out.println(" |   |────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────|   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                                               Welcome to Pet Haven!                                                            |   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                Pet Haven is a console-based Pet Adoption System designed to simplify and streamline                            |   | ");
-        System.out.println(" |   |                                               the process of finding loving homes for pets in need.                                            |   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                               Features:                                                                                        |   | ");
-        System.out.println(" |   |                                                   User Sign Up and Secure Login                                                                |   | ");
-        System.out.println(" |   |                                                   Password Recovery                                                                            |   | ");
-        System.out.println(" |   |                                                   Adoption History Tracking                                                                    |   | ");
-        System.out.println(" |   |                                                   Pet Listings and Management                                                                  |   | ");
-        System.out.println(" |   |                                                   Customer Account System                                                                      |   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                       Developed as part of a Java-based final project, Pet Haven is a safe,                                    |   | ");
-        System.out.println(" |   |                                                welcome space for pet lovers and future pet parents.                                            |   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                                    @Need help? Contact us at help@pethaven.org                                                 |   | ");
-        System.out.println(" |___|                                                                                                                                                |___| ");
-        System.out.println("(_____)──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────(_____)");
+        System.out.println("( ___ )══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════( ___ )");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                       "+SKY_BLUE+"   ,-.___,-.   "+LIGHT_BLUE+"  █████╗ ██████╗  ██████╗ ██╗   ██╗████████╗    ██╗   ██╗███████╗                      "+RESET+"                   ║   ║ ");
+        System.out.println(" ║   ║                       "+SKY_BLUE+"   |_|_ _|_|   "+LIGHT_BLUE+" ██╔══██╗██╔══██╗██╔═══██╗██║   ██║╚══██╔══╝    ██║   ██║██╔════╝   "+SKY_BLUE+"  ^~^  ,           "+RESET+"                   ║   ║ ");
+        System.out.println(" ║   ║                       "+SKY_BLUE+"     )O_O(     "+LIGHT_BLUE+" ███████║██████╔╝██║   ██║██║   ██║   ██║       ██║   ██║███████╗   "+SKY_BLUE+" ('Y') )           "+RESET+"                   ║   ║ ");
+        System.out.println(" ║   ║                       "+SKY_BLUE+"    { (_) }    "+LIGHT_BLUE+" ██╔══██║██╔══██╗██║   ██║██║   ██║   ██║       ██║   ██║╚════██║   "+SKY_BLUE+" /   ||/           "+RESET+"                   ║   ║ ");
+        System.out.println(" ║   ║                       "+SKY_BLUE+"     `-^-'     "+LIGHT_BLUE+" ██║  ██║██████╔╝╚██████╔╝╚██████╔╝   ██║       ╚██████╔╝███████║   "+SKY_BLUE+"(|||||/)           "+RESET+"                   ║   ║ ");
+        System.out.println(" ║   ║                                      "+LIGHT_BLUE+" ╚═╝  ╚═╝╚═════╝  ╚═════╝  ╚═════╝    ╚═╝        ╚═════╝ ╚══════╝                      "+RESET+"                   ║   ║ ");
+        System.out.println(" ║   ║════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║              "+AQUA_BLUE+"                                                 Welcome to Pet Haven!                                        "+RESET+"                    ║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║              "+AQUA_BLUE+"                  Pet Haven is a console-based Pet Adoption System designed to simplify and streamline        "+RESET+"                    ║   ║ ");
+        System.out.println(" ║   ║              "+AQUA_BLUE+"                                 the process of finding loving homes for pets in need.                        "+RESET+"                    ║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║              "+AQUA_BLUE+"                                 Features:                                                                    "+RESET+"                    ║   ║ ");
+        System.out.println(" ║   ║              "+AQUA_BLUE+"                                     User Sign Up and Secure Login                                            "+RESET+"                    ║   ║ ");
+        System.out.println(" ║   ║              "+AQUA_BLUE+"                                     Password Recovery                                                        "+RESET+"                    ║   ║ ");
+        System.out.println(" ║   ║              "+AQUA_BLUE+"                                     Adoption History Tracking                                                "+RESET+"                    ║   ║ ");
+        System.out.println(" ║   ║              "+AQUA_BLUE+"                                     Pet Listings and Management                                              "+RESET+"                    ║   ║ ");
+        System.out.println(" ║   ║              "+AQUA_BLUE+"                                     Customer Account System                                                  "+RESET+"                    ║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║              "+AQUA_BLUE+"                         Developed as part of a Java-based final project, Pet Haven is a safe,                "+RESET+"                    ║   ║ ");
+        System.out.println(" ║   ║              "+AQUA_BLUE+"                                  welcome space for pet lovers and future pet parents.                        "+RESET+"                    ║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║              "+AQUA_BLUE+"                                      @Need help? Contact us at help@pethaven.org                             "+RESET+"                    ║   ║ ");
+        System.out.println(" ║___║                                                                                                                                                ║___║ ");
+        System.out.println("(_____)══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════(_____)");
 
     }
 
     public void forgotPassword() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter your username to reset your password: ");
+        System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+        System.out.println("│                                                                                                                                                          │");
+        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
+        System.out.println();
+        System.out.println(BLUE+"                                                                ┌─────────────────────────┐                                                              ");
+        System.out.println("                                                                │     FORGOT PASSWORD     │                                                                  ");
+        System.out.println("                                                                └─────────────────────────┘                                                            "+RESET);
+        System.out.println();
+
+        System.out.println(GRAY+"                                              ┌──────────────────────────────────────────────────────────────┐");
+        System.out.print  ("                                              │ ENTER YOUR USERNAME TO RESET PASSWORD: ");
         String username = scanner.nextLine();
+        System.out.println("                                              └──────────────────────────────────────────────────────────────┘");
         String newPassword;
 
         List<String> updatedLines = new ArrayList<>();
@@ -203,23 +226,32 @@ public class LoginPage extends CustomerManagement {
                 if (accountDetails.length == 3 && accountDetails[1].equals(username)) {
                     found = true;
                     do{
-                        System.out.print("Enter your new password: ");
+                        System.out.println("                                              ┌──────────────────────────────────────────────────────────────┐");
+                        System.out.print  ("                                              │ ENTER YOUR NEW PASSWORD: ");
                         newPassword = scanner.nextLine();
+                        System.out.println("                                              └──────────────────────────────────────────────────────────────┘");
+                        System.out.println();
+                        System.out.println();
+                        System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+                        System.out.println("│                                                                                                                                                          │");
+                        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
                     } while(!validator.passwordValidation(newPassword));
 
                     updatedLines.add(accountDetails[0] + "," + username + "," + newPassword);
-                    System.out.println("✅ Password successfully updated.");
+                    System.out.println(GREEN+"                                                             ✅ PASSWORD SUCCESSFULLY UPDATED.                                                        ");
                 } else {
                     updatedLines.add(line);
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("❌ Account file not found.");
+            System.out.println(RED+"                                                                ❌ ACCOUNT FILE NOT FOUND.                                                              ");
             return;
         }
 
         if (!found) {
-            System.out.println("No account found with the username: " + username);
+            System.out.println(GRAY+"                                              ┌──────────────────────────────────────────────────────────────┐");
+            System.out.println("                                              │ "+RED+"NO ACCOUNT FOUND WITH THE USERNAME! " + username);
+            System.out.println(GRAY+"                                              └──────────────────────────────────────────────────────────────┘"+RESET);
             return;
         }
 
@@ -230,7 +262,7 @@ public class LoginPage extends CustomerManagement {
             }
             writer.flush();
         } catch (FileNotFoundException e) {
-            System.out.println("❌ Unable to write back to the account file.");
+            System.out.println(RED+"                                                        ❌ UNABLE TO WRITE BACK TO THE ACCOUNT FILE.                                             "+RESET);
         }
     }
 }

@@ -9,40 +9,44 @@ import Adoption_Management_Package.PetManagement;
  * and generating reports.
  */
 public class UserInterface extends PetManagement {
+    final String RESET = "\u001B[0m";
+    final String SKY_BLUE = "\u001B[38;2;161;227;239m";
+    final String LIGHT_BLUE = "\u001B[38;2;138;170;251m";
+    final String AQUA_BLUE = "\u001B[38;5;116m";
 
     public void logInInterfaceHeader() {
 
         //HeaderDisplay
         System.out.println(" _____                                                                                                                                                _____ ");
-        System.out.println("( ___ )──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────( ___ )");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                            ,-.___,-.  ██╗    ██╗███████╗██╗      ██████╗ ██████╗ ███╗   ███╗███████╗                                           |   | ");
-        System.out.println(" |   |                            |_|_ _|_|  ██║    ██║██╔════╝██║     ██╔════╝██╔═══██╗████╗ ████║██╔════╝    ^~^  ,                                 |   | ");
-        System.out.println(" |   |                              )O_O(    ██║ █╗ ██║█████╗  ██║     ██║     ██║   ██║██╔████╔██║█████╗     ('Y') )                                 |   | ");
-        System.out.println(" |   |                             { (_) }   ██║███╗██║██╔══╝  ██║     ██║     ██║   ██║██║╚██╔╝██║██╔══╝     /   ||/                                 |   | ");
-        System.out.println(" |   |                              `-^-'    ╚███╔███╔╝███████╗███████╗╚██████╗╚██████╔╝██║ ╚═╝ ██║███████╗  (|||||/)                                 |   | ");
-        System.out.println(" |   |                                        ╚══╝╚══╝ ╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝                                           |   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                        ████████╗ ██████╗     ██████╗ ███████╗████████╗    ██╗  ██╗ █████╗ ██╗   ██╗███████╗███╗   ██╗                          |   | ");
-        System.out.println(" |   |                        ╚══██╔══╝██╔═══██╗    ██╔══██╗██╔════╝╚══██╔══╝    ██║  ██║██╔══██╗██║   ██║██╔════╝████╗  ██║                          |   | ");
-        System.out.println(" |   |                           ██║   ██║   ██║    ██████╔╝█████╗     ██║       ███████║███████║██║   ██║█████╗  ██╔██╗ ██║                          |   | ");
-        System.out.println(" |   |                           ██║   ██║   ██║    ██╔═══╝ ██╔══╝     ██║       ██╔══██║██╔══██║╚██╗ ██╔╝██╔══╝  ██║╚██╗██║                          |   | ");
-        System.out.println(" |   |                           ██║   ╚██████╔╝    ██║     ███████╗   ██║       ██║  ██║██║  ██║ ╚████╔╝ ███████╗██║ ╚████║                          |   | ");
-        System.out.println(" |   |                           ╚═╝    ╚═════╝     ╚═╝     ╚══════╝   ╚═╝       ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝╚═╝  ╚═══╝                          |   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                ┬ ┬┌─┐┬ ┬┬─┐  ┌┬┐┬─┐┬ ┬┌─┐┌┬┐┌─┐┌┬─┐  ┌─┐┌─┐┌┬┐  ┌─┐┌┬─┐┌─┐┌─┐┌┬┐┬┌─┐┌┐┌  ┌─┐┬ ┬┌─┐┌┬┐┌─┐┌┬┐  ┌─┐┌─┐┬─┐┌┬┐┌─┐┬                  |   | ");
-        System.out.println(" |   |                └┬┘│ ││ │├┬┘   │ ├┬┘│ │└─┐ │ ├┤  │ │  ├─┘├┤  │   ├─┤ │ ││ │├─┘ │ ││ ││││  └─┐└┬┘└─┐ │ ├┤ │││  ├─┘│ │├┬┘ │ ├─┤│                  |   | ");
-        System.out.println(" |   |                 ┴ └─┘└─┘┴└─   ┴ ┴└─└─┘└─┘ ┴ └─┘─┴─┘  ┴  └─┘ ┴   ┴ ┴ ┴─┘└─┘┴   ┴ ┴└─┘┘└┘  └─┘ ┴ └─┘ ┴ └─┘┴ ┴  ┴  └─┘┴└─ ┴ ┴ ┴┴─┘                |   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────|   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                       [1] Login                                            [2] Sign Up                                         |   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                       [3] About                                            [4] Exit                                            |   | ");
-        System.out.println(" |___|                                                                                                                                                |___| ");
-        System.out.println("(_____)──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────(_____)");
+        System.out.println("( ___ )══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════( ___ )");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                          "+SKY_BLUE+"  ,-.___,-. "+LIGHT_BLUE+" ██╗    ██╗███████╗██╗      ██████╗ ██████╗ ███╗   ███╗███████╗                            "+RESET+"               ║   ║ ");
+        System.out.println(" ║   ║                          "+SKY_BLUE+"  |_|_ _|_| "+LIGHT_BLUE+" ██║    ██║██╔════╝██║     ██╔════╝██╔═══██╗████╗ ████║██╔════╝  "+SKY_BLUE+"  ^~^  ,   "+RESET+"                              ║   ║ ");
+        System.out.println(" ║   ║                          "+SKY_BLUE+"    )O_O(   "+LIGHT_BLUE+" ██║ █╗ ██║█████╗  ██║     ██║     ██║   ██║██╔████╔██║█████╗    "+SKY_BLUE+" ('Y') )   "+RESET+"                              ║   ║ ");
+        System.out.println(" ║   ║                          "+SKY_BLUE+"   { (_) }  "+LIGHT_BLUE+" ██║███╗██║██╔══╝  ██║     ██║     ██║   ██║██║╚██╔╝██║██╔══╝    "+SKY_BLUE+" /   ||/   "+RESET+"                              ║   ║ ");
+        System.out.println(" ║   ║                          "+SKY_BLUE+"    `-^-'   "+LIGHT_BLUE+" ╚███╔███╔╝███████╗███████╗╚██████╗╚██████╔╝██║ ╚═╝ ██║███████╗  "+SKY_BLUE+"(|||||/)   "+RESET+"                              ║   ║ ");
+        System.out.println(" ║   ║                                      "+LIGHT_BLUE+"  ╚══╝╚══╝ ╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝                                        "+RESET+"   ║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                  "+LIGHT_BLUE+"      ████████╗ ██████╗     ██████╗ ███████╗████████╗    ██╗  ██╗ █████╗ ██╗   ██╗███████╗███╗   ██╗     "+RESET+"                     ║   ║ ");
+        System.out.println(" ║   ║                  "+LIGHT_BLUE+"      ╚══██╔══╝██╔═══██╗    ██╔══██╗██╔════╝╚══██╔══╝    ██║  ██║██╔══██╗██║   ██║██╔════╝████╗  ██║     "+RESET+"                     ║   ║ ");
+        System.out.println(" ║   ║                  "+LIGHT_BLUE+"         ██║   ██║   ██║    ██████╔╝█████╗     ██║       ███████║███████║██║   ██║█████╗  ██╔██╗ ██║     "+RESET+"                     ║   ║ ");
+        System.out.println(" ║   ║                  "+LIGHT_BLUE+"         ██║   ██║   ██║    ██╔═══╝ ██╔══╝     ██║       ██╔══██║██╔══██║╚██╗ ██╔╝██╔══╝  ██║╚██╗██║     "+RESET+"                     ║   ║ ");
+        System.out.println(" ║   ║                  "+LIGHT_BLUE+"         ██║   ╚██████╔╝    ██║     ███████╗   ██║       ██║  ██║██║  ██║ ╚████╔╝ ███████╗██║ ╚████║     "+RESET+"                     ║   ║ ");
+        System.out.println(" ║   ║                  "+LIGHT_BLUE+"         ╚═╝    ╚═════╝     ╚═╝     ╚══════╝   ╚═╝       ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝╚═╝  ╚═══╝     "+RESET+"                     ║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║            "+AQUA_BLUE+"   ╦ ╦╔═╗╦ ╦ ╦═╗  ╔╦╗╦═╗╦ ╦╔═╗╔╦╗╔═╗╔╦═╗  ╔═╗╔═╗╔╦╗  ╔═╗╔╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔  ╔═╗╦ ╦╔═╗╔╦╗╔═╗╔╦╗  ╔═╗╔═╗╦═╗╔╦╗╔═╗ ╦     "+RESET+"            ║   ║ ");
+        System.out.println(" ║   ║            "+AQUA_BLUE+"   ╚╦╝║ ║║ ║ ╠╦╝   ║ ╠╦╝║ ║╚═╗ ║ ║╣  ║ ║  ╠═╝║╣  ║   ╠═╣ ║ ║║ ║╠═╝ ║ ║║ ║║║║  ╚═╗╚╦╝╚═╗ ║ ║╣ ║║║  ╠═╝║ ║╠╦╝ ║ ╠═╣ ║     "+RESET+"            ║   ║ ");
+        System.out.println(" ║   ║            "+AQUA_BLUE+"    ╩ ╚═╝╚═╝ ╩╚═   ╩ ╩╚═╚═╝╚═╝ ╩ ╚═╝═╩═╝  ╩  ╚═╝ ╩   ╩ ╩═╩═╝╚═╝╩   ╩ ╩╚═╝╝╚╝  ╚═╝ ╩ ╚═╝ ╩ ╚═╝╩ ╩  ╩  ╚═╝╩╚═ ╩ ╩ ╩ ╩═╝   "+RESET+"            ║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                               "+AQUA_BLUE+"        [1] Login                                            [2] Sign Up     "+RESET+"                                    ║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                               "+AQUA_BLUE+"        [3] About                                            [4] Exit        "+RESET+"                                    ║   ║ ");
+        System.out.println(" ║___║                                                                                                                                                ║___║ ");
+        System.out.println("(_____)══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════(_____)");
         System.out.println();
         System.out.print("                                             Select an option: ");
 
@@ -53,12 +57,12 @@ public class UserInterface extends PetManagement {
         //FooterDisplay
         System.out.println();
         System.out.println(" _____                                                                                                                                                _____ ");
-        System.out.println("( ___ )──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────( ___ )");
+        System.out.println("( ___ )══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════( ___ )");
         System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                                   Forgot your password? Contact support team                                                   |   | ");
-        System.out.println(" |   |                                                           @Email: help@pethaven.org                                                            |   | ");
+        System.out.println(" |   |                                  "+AQUA_BLUE+"                 Forgot your password? Contact support team               "+RESET+"                                    |   | ");
+        System.out.println(" |   |                                  "+AQUA_BLUE+"                         @Email: help@pethaven.org                        "+RESET+"                                    |   | ");
         System.out.println(" |___|                                                                                                                                                |___| ");
-        System.out.println("(_____)──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────(_____)");
+        System.out.println("(_____)══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════(_____)");
         System.out.println();
 
 
@@ -68,19 +72,19 @@ public class UserInterface extends PetManagement {
 
         //User Panel
         System.out.println(" _____                                                                                                                                                _____ ");
-        System.out.println("( ___ )──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────( ___ )");
-        System.out.println(" |   |                             ,-.___,-.                                                                                                          |   | ");
-        System.out.println(" |   |                             |_|_ _|_|  ┌─┐┌─┐┌┬┐  ┬ ┬┌─┐┬  ┬┌─┐┌┐┌       ┬ ┬┌─┐┌─┐┬─┐  ┌─┐┌─┐┌┐┌┌─┐┬     ^~^  ,                                |   | ");
-        System.out.println(" |   |                               )O_O(    ├─┘├┤  │   ├─┤├─┤└┐┌┘├┤ │││  ───  │ │└─┐├┤ ├┬┘  ├─┘├─┤│││├┤ │    ('Y') )                                |   | ");
-        System.out.println(" |   |                              { (_) }   ┴  └─┘ ┴   ┴ ┴┴ ┴ └┘ └─┘┘└┘       └─┘└─┘└─┘┴└─  ┴  ┴ ┴┘└┘└─┘┴─┘  /   ||/                                |   | ");
-        System.out.println(" |   |                               `-^-'                                                                    (|||||/)                                |   | ");
-        System.out.println(" |   |────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────|   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                       [1] View Available Pets                     [2] Make an Adoption Request                                 |   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                       [3] Search Pet                              [4] Log Out                                                  |   | ");
-        System.out.println(" |___|                                                                                                                                                |___| ");
-        System.out.println("(_____)──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────(_____)");
+        System.out.println("( ___ )══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════( ___ )");
+        System.out.println(" ║   ║                           "+SKY_BLUE+"   ,-.___,-.                                                                                                       "+RESET+"  ║   ║ ");
+        System.out.println(" ║   ║                           "+SKY_BLUE+"   |_|_ _|_| "+AQUA_BLUE+" ╔═╗╔═╗╔╦╗  ╦ ╦╔═╗╦  ╦╔═╗╔╗╔       ╦ ╦╔═╗╔═╗╦═╗  ╔═╗╔═╗╔╗╔╔═╗╦   "+SKY_BLUE+"  ^~^  ,    "+RESET+"                           ║   ║ ");
+        System.out.println(" ║   ║                           "+SKY_BLUE+"     )O_O(   "+AQUA_BLUE+" ╠═╝║╣  ║   ╠═╣╠═╣╚╗╔╝║╣ ║║║  ───  ║ ║╚═╗║╣ ╠╦╝  ╠═╝╠═╣║║║║╣ ║   "+SKY_BLUE+" ('Y') )    "+RESET+"                           ║   ║ ");
+        System.out.println(" ║   ║                           "+SKY_BLUE+"    { (_) }  "+AQUA_BLUE+" ╩  ╚═╝ ╩   ╩ ╩╩ ╩ ╚╝ ╚═╝╝╚╝       ╚═╝╚═╝╚═╝╩╚═  ╩  ╩ ╩╝╚╝╚═╝╩═╝ "+SKY_BLUE+" /   ||/    "+RESET+"                           ║   ║ ");
+        System.out.println(" ║   ║                           "+SKY_BLUE+"     `-^-'                                                                   "+SKY_BLUE+" (|||||/)                 "+RESET+"              ║   ║ ");
+        System.out.println(" ║   ║════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                            "+AQUA_BLUE+"           [1] View Available Pets                     [2] Make an Adoption Request        "+RESET+"                         ║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                            "+AQUA_BLUE+"           [3] Search Pet                              [4] Log Out                         "+RESET+"                         ║   ║ ");
+        System.out.println(" ║___║                                                                                                                                                ║___║ ");
+        System.out.println("(_____)══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════(_____)");
         System.out.println();
         System.out.print("                                             Select an option: ");
 
@@ -89,19 +93,19 @@ public class UserInterface extends PetManagement {
     public void adminInterface() {
         //Admin Panel
         System.out.println(" _____                                                                                                                                                _____ ");
-        System.out.println("( ___ )──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────( ___ )");
-        System.out.println(" |   |                            ,-.___,-.                                                                                                           |   | ");
-        System.out.println(" |   |                            |_|_ _|_|  ┌─┐┌─┐┌┬┐  ┬ ┬┌─┐┬  ┬┌─┐┌┐┌       ┌─┐┌┬─┐┌┬┐┬┌┐┌  ┌─┐┌─┐┌┐┌┌─┐┬    ^~^  ,                                |   | ");
-        System.out.println(" |   |                              )O_O(    ├─┘├┤  │   ├─┤├─┤└┐┌┘├┤ │││  ───  ├─┤ │ ││││││││  ├─┘├─┤│││├┤ │   ('Y') )                                |   | ");
-        System.out.println(" |   |                             { (_) }   ┴  └─┘ ┴   ┴ ┴┴ ┴ └┘ └─┘┘└┘       ┴ ┴─┴─┘┴ ┴┴┘└┘  ┴  ┴ ┴┘└┘└─┘┴─┘ /   ||/                                |   | ");
-        System.out.println(" |   |                              `-^-'                                                                     (|||||/)                                |   | ");
-        System.out.println(" |   |────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────|   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                       [1] Customer Management                     [2] Pet Management                                           |   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                       [3] Generate Reports                        [4] Log Out                                                  |   | ");
-        System.out.println(" |___|                                                                                                                                                |___| ");
-        System.out.println("(_____)──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────(_____)");
+        System.out.println("( ___ )══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════( ___ )");
+        System.out.println(" ║   ║                         "+SKY_BLUE+"   ,-.___,-.                                                                                                         "+RESET+"  ║   ║ ");
+        System.out.println(" ║   ║                         "+SKY_BLUE+"   |_|_ _|_| "+AQUA_BLUE+" ╔═╗╔═╗╔╦╗  ╦ ╦╔═╗╦  ╦╔═╗╔╗╔       ╔═╗╔╦═╗╔╦╗╦╔╗╔  ╔═╗╔═╗╔╗╔╔═╗╦   "+SKY_BLUE+" ^~^  ,    "+RESET+"                            ║   ║ ");
+        System.out.println(" ║   ║                         "+SKY_BLUE+"     )O_O(   "+AQUA_BLUE+" ╠═╝║╣  ║   ╠═╣╠═╣╚╗╔╝║╣ ║║║  ───  ╠═╣ ║ ║║║║║║║║  ╠═╝╠═╣║║║║╣ ║   "+SKY_BLUE+"('Y') )    "+RESET+"                            ║   ║ ");
+        System.out.println(" ║   ║                         "+SKY_BLUE+"    { (_) }  "+AQUA_BLUE+" ╩  ╚═╝ ╩   ╩ ╩╩ ╩ ╚╝ ╚═╝╝╚╝       ╩ ╩═╩═╝╩ ╩╩╝╚╝  ╩  ╩ ╩╝╚╝╚═╝╩═╝ "+SKY_BLUE+"/   ||/    "+RESET+"                            ║   ║ ");
+        System.out.println(" ║   ║                         "+SKY_BLUE+"     `-^-'                                                                     "+SKY_BLUE+"(|||||/)                  "+RESET+"              ║   ║ ");
+        System.out.println(" ║   ║════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                            "+AQUA_BLUE+"           [1] Customer Management                     [2] Pet Management              "+RESET+"                             ║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                            "+AQUA_BLUE+"           [3] Generate Reports                        [4] Log Out                     "+RESET+"                             ║   ║ ");
+        System.out.println(" ║___║                                                                                                                                                ║___║ ");
+        System.out.println("(_____)══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════(_____)");
         System.out.println();
         System.out.print("                                             Select an option: ");
 
@@ -110,19 +114,19 @@ public class UserInterface extends PetManagement {
     public void customerManagementMenu() {
         //Customer Management Menu
         System.out.println(" _____                                                                                                                                                _____ ");
-        System.out.println("( ___ )──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────( ___ )");
-        System.out.println(" |   |                          ,-.___,-.                                                                                                             |   | ");
-        System.out.println(" |   |                          |_|_ _|_|  ┌─┐┬ ┬┌─┐┌┬┐┌─┐┌┬┐┌─┐┬─┐  ┌┬┐┌─┐┌┐┌┌─┐┌─┐┌─┐┌┬┐┌─┐┌┐┌┌┬┐  ┌┬┐┌─┐┌┐┌ ┬ ┬   ^~^  ,                           |   | ");
-        System.out.println(" |   |                            )O_O(    │  │ │└─┐ │ │ ││││├┤ ├┬┘  │││├─┤│││├─┤│ ┬├┤ │││├┤ │││ │   │││├┤ │││ │ │  ('Y') )                           |   | ");
-        System.out.println(" |   |                           { (_) }   └─┘└─┘└─┘ ┴ └─┘┴ ┴└─┘┴└─  ┴ ┴┴ ┴┘└┘┴ ┴└─┘└─┘┴ ┴└─┘┘└┘ ┴   ┴ ┴└─┘┘└┘ └─┘  /   ||/                           |   | ");
-        System.out.println(" |   |                            `-^-'                                                                            (|||||/)                           |   | ");
-        System.out.println(" |   |────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────|   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                       [1] Add Customer                            [2] View, Update, and Remove Customer Details                |   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                       [3] Review Adoption Request                 [4] Back to Admin Panel                                      |   | ");
-        System.out.println(" |___|                                                                                                                                                |___| ");
-        System.out.println("(_____)──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────(_____)");
+        System.out.println("( ___ )══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════( ___ )");
+        System.out.println(" ║   ║                       "+SKY_BLUE+"   ,-.___,-.                                                                                                           "+RESET+"  ║   ║ ");
+        System.out.println(" ║   ║                       "+SKY_BLUE+"   |_|_ _|_| "+AQUA_BLUE+" ╔═╗╦ ╦╔═╗╔╦╗╔═╗╔╦╗╔═╗╦═╗  ╔╦╗╔═╗╔╗╔╔═╗╔═╗╔═╗╔╦╗╔═╗╔╗╔╔╦╗  ╔╦╗╔═╗╔╗╔ ╦ ╦  "+SKY_BLUE+" ^~^  ,    "+RESET+"                       ║   ║ ");
+        System.out.println(" ║   ║                       "+SKY_BLUE+"     )O_O(   "+AQUA_BLUE+" ║  ║ ║╚═╗ ║ ║ ║║║║║╣ ╠╦╝  ║║║╠═╣║║║╠═╣║ ╦║╣ ║║║║╣ ║║║ ║   ║║║║╣ ║║║ ║ ║  "+SKY_BLUE+"('Y') )    "+RESET+"                       ║   ║ ");
+        System.out.println(" ║   ║                       "+SKY_BLUE+"    { (_) }  "+AQUA_BLUE+" ╚═╝╚═╝╚═╝ ╩ ╚═╝╩ ╩╚═╝╩╚═  ╩ ╩╩ ╩╝╚╝╩ ╩╚═╝╚═╝╩ ╩╚═╝╝╚╝ ╩   ╩ ╩╚═╝╝╚╝ ╚═╝  "+SKY_BLUE+"/   ||/    "+RESET+"                       ║   ║ ");
+        System.out.println(" ║   ║                       "+SKY_BLUE+"     `-^-'                                                                            "+SKY_BLUE+"(|||||/)                  "+RESET+"         ║   ║ ");
+        System.out.println(" ║   ║════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                            "+AQUA_BLUE+"           [1] Add Customer                            [2] View, Update, and Remove Customer Details           "+RESET+"     ║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                            "+AQUA_BLUE+"           [3] Review Adoption Request                 [4] Back to Admin Panel                                 "+RESET+"     ║   ║ ");
+        System.out.println(" ║___║                                                                                                                                                ║___║ ");
+        System.out.println("(_____)══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════(_____)");
         System.out.println();
         System.out.print("                                             Select an option: ");
 
@@ -131,20 +135,21 @@ public class UserInterface extends PetManagement {
     public void petManagementMenu() {
         //Pet Management Menu
         System.out.println(" _____                                                                                                                                                _____ ");
-        System.out.println("( ___ )──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────( ___ )");
-        System.out.println(" |   |                                 ,-.___,-.                                                                                                      |   | ");
-        System.out.println(" |   |                                 |_|_ _|_|  ┌─┐┌─┐┌┬┐  ┌┬┐┌─┐┌┐┌┌─┐┌─┐┌─┐┌┬┐┌─┐┌┐┌┌┬┐  ┌┬┐┌─┐┌┐┌ ┬ ┬   ^~^  ,                                   |   | ");
-        System.out.println(" |   |                                   )O_O(    ├─┘├┤  │   │││├─┤│││├─┤│ ┬├┤ │││├┤ │││ │   │││├┤ │││ │ │  ('Y') )                                   |   | ");
-        System.out.println(" |   |                                  { (_) }   ┴  └─┘ ┴   ┴ ┴┴ ┴┘└┘┴ ┴└─┘└─┘┴ ┴└─┘┘└┘ ┴   ┴ ┴└─┘┘└┘ └─┘  /   ||/                                   |   | ");
-        System.out.println(" |   |                                   `-^-'                                                             (|||||/)                                   |   | ");
-        System.out.println(" |   |────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────|   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                       [1] Add Pet                                 [2] View, Update, Remove Pet Details                         |   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                       [3] Back to Admin Panel                                                                                  |   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |___|                                                                                                                                                |___| ");
-        System.out.println("(_____)──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────(_____)");
+        System.out.println("( ___ )══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════( ___ )");
+        System.out.println(" ║   ║                              "+SKY_BLUE+"   ,-.___,-.                                                                                                     "+RESET+" ║   ║ ");
+        System.out.println(" ║   ║                              "+SKY_BLUE+"   |_|_ _|_| "+AQUA_BLUE+" ╔═╗╔═╗╔╦╗  ╔╦╗╔═╗╔╗╔╔═╗╔═╗╔═╗╔╦╗╔═╗╔╗╔╔╦╗  ╔╦╗╔═╗╔╗╔ ╦ ╦  "+SKY_BLUE+" ^~^  ,        "+RESET+"                           ║   ║ ");
+        System.out.println(" ║   ║                              "+SKY_BLUE+"     )O_O(   "+AQUA_BLUE+" ╠═╝║╣  ║   ║║║╠═╣║║║╠═╣║ ╦║╣ ║║║║╣ ║║║ ║   ║║║║╣ ║║║ ║ ║  "+SKY_BLUE+"('Y') )        "+RESET+"                           ║   ║ ");
+        System.out.println(" ║   ║                              "+SKY_BLUE+"    { (_) }  "+AQUA_BLUE+" ╩  ╚═╝ ╩   ╩ ╩╩ ╩╝╚╝╩ ╩╚═╝╚═╝╩ ╩╚═╝╝╚╝ ╩   ╩ ╩╚═╝╝╚╝ ╚═╝  "+SKY_BLUE+"/   ||/        "+RESET+"                           ║   ║ ");
+        System.out.println(" ║   ║                              "+SKY_BLUE+"     `-^-'                                                             "+SKY_BLUE+"(|||||/)                      "+RESET+"             ║   ║ ");
+        System.out.println(" ║   ║════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                            "+AQUA_BLUE+"           [1] Add Pet                                 [2] Remove Pet               "+RESET+"                                ║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                            "+AQUA_BLUE+"           [3] Update Pet Details                      [4] View Pet Details         "+RESET+"                                ║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                            "+AQUA_BLUE+"           [5] Back to Admin Panel                                                  "+RESET+"                                ║   ║ ");
+        System.out.println(" ║___║                                                                                                                                                ║___║ ");
+        System.out.println("(_____)══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════(_____)");
         System.out.println();
         System.out.print("                                             Select an option: ");
     }
@@ -152,19 +157,19 @@ public class UserInterface extends PetManagement {
     public void reportsMenu() {
         //Reports Menu
         System.out.println(" _____                                                                                                                                                _____ ");
-        System.out.println("( ___ )──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────( ___ )");
-        System.out.println(" |   |                                           ,-.___,-.                                                                                            |   | ");
-        System.out.println(" |   |                                           |_|_ _|_|  ┬─┐┌─┐┌─┐┌─┐┬─┐┌┬┐┌─┐   ┌┬┐┌─┐┌┐┌ ┬ ┬   ^~^  ,                                            |   | ");
-        System.out.println(" |   |                                             )O_O(    ├┬┘├┤ ├─┘│ │├┬┘ │ └─┐   │││├┤ │││ │ │  ('Y') )                                            |   | ");
-        System.out.println(" |   |                                            { (_) }   ┴└─└─┘┴  └─┘┴└─ ┴ └─┘   ┴ ┴└─┘┘└┘ └─┘  /   ||/                                            |   | ");
-        System.out.println(" |   |                                             `-^-'                                          (|||||/)                                            |   | ");
-        System.out.println(" |   |────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────|   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                       [1] Generate Adoption Reports               [2] Generate Remaining Pets Report                           |   | ");
-        System.out.println(" |   |                                                                                                                                                |   | ");
-        System.out.println(" |   |                                       [3] Back to Admin Panel                                                                                  |   | ");
-        System.out.println(" |___|                                                                                                                                                |___| ");
-        System.out.println("(_____)──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────(_____)");
+        System.out.println("( ___ )══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════( ___ )");
+        System.out.println(" ║   ║                                        "+SKY_BLUE+"   ,-.___,-.                                                                                          "+RESET+"  ║   ║ ");
+        System.out.println(" ║   ║                                        "+SKY_BLUE+"   |_|_ _|_| "+AQUA_BLUE+" ╦═╗╔═╗╔═╗╔═╗╦═╗╔╦╗╔═╗   ╔╦╗╔═╗╔╗╔ ╦ ╦  "+SKY_BLUE+" ^~^  ,                "+RESET+"                            ║   ║ ");
+        System.out.println(" ║   ║                                        "+SKY_BLUE+"     )O_O(   "+AQUA_BLUE+" ╠╦╝║╣ ╠═╝║ ║╠╦╝ ║ ╚═╗   ║║║║╣ ║║║ ║ ║  "+SKY_BLUE+"('Y') )                "+RESET+"                            ║   ║ ");
+        System.out.println(" ║   ║                                        "+SKY_BLUE+"    { (_) }  "+AQUA_BLUE+" ╩╚═╚═╝╩  ╚═╝╩╚═ ╩ ╚═╝   ╩ ╩╚═╝╝╚╝ ╚═╝  "+SKY_BLUE+"/   ||/                "+RESET+"                            ║   ║ ");
+        System.out.println(" ║   ║                                        "+SKY_BLUE+"     `-^-'                                          "+SKY_BLUE+"(|||||/)                              "+RESET+"              ║   ║ ");
+        System.out.println(" ║   ║════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                            "+AQUA_BLUE+"           [1] Generate Adoption Reports               [2] Generate Remaining Pets Report      "+RESET+"                     ║   ║ ");
+        System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
+        System.out.println(" ║   ║                            "+AQUA_BLUE+"           [3] Back to Admin Panel                                                             "+RESET+"                     ║   ║ ");
+        System.out.println(" ║___║                                                                                                                                                ║___║ ");
+        System.out.println("(_____)══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════(_____)");
         System.out.println();
         System.out.print("                                             Select an option: ");
     }

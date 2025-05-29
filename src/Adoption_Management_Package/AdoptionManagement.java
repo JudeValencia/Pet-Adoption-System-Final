@@ -740,6 +740,9 @@ public class AdoptionManagement extends UserInterface {
 
     public void view() {
         try (Scanner scanner = new Scanner(file)) {
+            String padding = "│                               "; // to align with main box sides
+            final String RESET = "\033[0m";
+            final String AQUA_LIGHT = "\u001B[38;2;161;227;239m"+"\033[1m";
 
             while (scanner.hasNextLine()) {
                 String[] petDetails = scanner.nextLine().split(",");
@@ -755,20 +758,48 @@ public class AdoptionManagement extends UserInterface {
                     setBirthYear(Integer.parseInt(petDetails[7]));
                     setGender(petDetails[8].charAt(0));
 
-                    System.out.println("\n--- Pet Details ---");
-                    System.out.println("ID: " + getId());
-                    System.out.println("Name: " + getName());
-                    System.out.println("Type: " + getType());
-                    System.out.println("Breed: " + getBreed());
-                    System.out.println("Age: " + getAge());
-                    System.out.println("Birthday: " + getBirthMonth() + "/" + getBirthDay() + "/" + getBirthYear());
-                    System.out.println("Gender: " + getGender());
-                    System.out.println("----------------------");
+                    System.out.println();
+                    System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+                    System.out.println("│                                                               "+AQUA_LIGHT+"       PET DETAILS     "+RESET+"                                                                    │");
+                    System.out.println("├──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤");
+
+                    printCenteredBox(padding, "ID", String.valueOf(getId()));
+                    printCenteredBox(padding, "NAME", getName());
+                    printCenteredBox(padding, "TYPE", getType());
+                    printCenteredBox(padding, "BREED", getBreed());
+                    printCenteredBox(padding, "AGE", String.valueOf(getAge()));
+                    printCenteredBox(padding, "BIRTHDAY", getBirthMonth() + "/" + getBirthDay() + "/" + getBirthYear());
+                    printCenteredBox(padding, "GENDER", String.valueOf(getGender()));
+
+                    // Bottom Border
+                    System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
+
                 }
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void printCenteredBox(String padding, String label, String value) {
+        int boxWidth = 90;
+
+        // Colors
+        final String RESET = "\u001B[0m";
+        final String AQUA_LIGHT = "\u001B[38;2;161;227;239m"+"\033[1m";
+        final String SKY_BLUE = "\u001B[38;2;147;211;233m"+"\033[1m";
+
+        // Build colored content
+        String content = String.format("│ %s%-35s%s │  %s%-50s%s│",
+                AQUA_LIGHT, label, RESET,
+                SKY_BLUE, value, RESET);
+
+        String top = "┌" + "─".repeat(boxWidth) + "┐";
+        String bottom = "└" + "─".repeat(boxWidth) + "┘";
+
+        System.out.println(padding + top + "                               │");
+        System.out.println(padding + content + "                               │");
+        System.out.println(padding + bottom + "                               │");
     }
 
     public void setRequestID(int requestID) {

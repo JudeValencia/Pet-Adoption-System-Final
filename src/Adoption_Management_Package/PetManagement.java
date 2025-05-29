@@ -119,12 +119,14 @@ public class PetManagement extends Pet implements ManagementFunctions {
         } catch (InputMismatchException e) {
             throw new RuntimeException(e);
         }
+        final String GREEN = "\u001B[38;2;0;210;106m";
+        final String RESET = "\u001B[0m";
 
         // Write data to Pet.txt
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
             writer.write(getId() + "," + getName() + "," + getType() + "," + getBreed() + "," + getAge() + "," +
                     getBirthMonth() + "," + getBirthDay() + "," + getBirthYear() + "," + getGender() + "\n");
-            System.out.println("Pet added successfully!\n");
+            System.out.println(GREEN+"                                                                  PET ADDED SUCCESSFULLY!                                                                 \n"+RESET);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -133,8 +135,10 @@ public class PetManagement extends Pet implements ManagementFunctions {
     @Override
     public void remove() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter Pet ID to remove: ");
+        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+        System.out.print  ("                                             │ ENTER PET ID TO REMOVE: ");
         int removeId = scanner.nextInt();
+        System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
         scanner.nextLine();
 
         List<String> petList = new ArrayList<>();
@@ -162,11 +166,13 @@ public class PetManagement extends Pet implements ManagementFunctions {
                 petList.add(line); // Keep other pets
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error reading the file.", e);
+            final String RED = "\u001B[31m";
+            final String RESET = "\u001B[0m";
+            throw new RuntimeException(RED+"                                                                  ERROR READING THE FILE."+RESET, e );
         }
 
         if (!found) {
-            System.out.println("Pet with ID " + removeId + " not found.");
+            System.out.println("                                                                  PET WITH ID " + removeId + " NOT FOUND.");
             return;
         }
 
@@ -175,17 +181,21 @@ public class PetManagement extends Pet implements ManagementFunctions {
                 String[] petDetails = pets.split(",");
                 writer.write(String.join(",", petDetails) + "\n");
             }
-            System.out.println("Pet removed.");
+            System.out.println("                                                                  PET REMOVED.");
         } catch (IOException e) {
-            throw new RuntimeException("Error writing to the file.", e);
+            final String RED = "\u001B[31m";
+            final String RESET = "\u001B[0m";
+            throw new RuntimeException(RED+"                                                                  ERROR WRITING TO THE FILE."+RESET, e);
         }
     }
 
     @Override
     public void update() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter Pet ID to edit: ");
+        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+        System.out.print  ("                                             │ ENTER PET ID TO EDIT: ");
         int editID = scanner.nextInt();
+        System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
         scanner.nextLine();
 
         List<String> petList = new ArrayList<>();
@@ -197,6 +207,7 @@ public class PetManagement extends Pet implements ManagementFunctions {
         final String BLUE = "\u001B[38;2;66;103;178m";
         final String RESET = "\u001B[0m";
         final String GRAY = "\u001B[38;2;137;143;156m";
+        final String RED = "\u001B[31m";
 
 
         try {
@@ -208,7 +219,7 @@ public class PetManagement extends Pet implements ManagementFunctions {
                 String line = fileScanner.nextLine();
                 String[] petDetails = line.split(",");
 
-                // Ensure a correct format
+                // Ensure correct format
                 if (petDetails.length == 9) {
                     setId(Integer.parseInt(petDetails[0]));
                     setName(petDetails[1]);
@@ -328,10 +339,10 @@ public class PetManagement extends Pet implements ManagementFunctions {
                                     setGender(gender);
                                 }
                                 case 9 -> {
-                                    System.out.print("Exiting... ");
+                                    System.out.println("                                                                         EXITING...                                                                         ");
                                     isEditing = false;
                                 }
-                                default -> System.out.println("Invalid Choice! No changes made.");
+                                default -> System.out.println(RED+"                                                          INVALID CHOICE! NO CHANGES MADE."+RESET);
                             }
                         }
                         // replace old data with new data
@@ -409,8 +420,8 @@ public class PetManagement extends Pet implements ManagementFunctions {
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException(e);
-            }
         }
+    }
 
     @Override
     public void view() {
