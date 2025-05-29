@@ -208,7 +208,7 @@ public class PetManagement extends Pet implements ManagementFunctions {
                 String line = fileScanner.nextLine();
                 String[] petDetails = line.split(",");
 
-                // Ensure correct format
+                // Ensure a correct format
                 if (petDetails.length == 9) {
                     setId(Integer.parseInt(petDetails[0]));
                     setName(petDetails[1]);
@@ -409,8 +409,8 @@ public class PetManagement extends Pet implements ManagementFunctions {
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException(e);
+            }
         }
-    }
 
     @Override
     public void view() {
