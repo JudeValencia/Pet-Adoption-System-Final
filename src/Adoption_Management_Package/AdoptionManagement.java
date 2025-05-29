@@ -206,11 +206,17 @@ public class AdoptionManagement extends UserInterface {
 
     public void makeAdoptionRequest() {
         Scanner scanner = new Scanner(System.in);
-
+        final String GRAY = "\u001B[38;2;137;143;156m";
         try {
-            System.out.print("Enter Pet ID to Adopt: ");
+
+            view();
+
+            System.out.println();
+            System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
+            System.out.print  ("                                             │ ENTER PET ID TO EDIT: ");
             int petID = scanner.nextInt();
-            scanner.nextLine();
+            System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+
 
             searchPetForAdoption(petID);
 
@@ -218,6 +224,123 @@ public class AdoptionManagement extends UserInterface {
             System.out.println("❌ Invalid input. Please enter a valid pet ID.");
         }
 
+    }
+
+    @Override
+    public void view() {
+        List<String[]> petData = new ArrayList<>();
+
+        // Read all pet data first
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String[] petDetails = scanner.nextLine().split(",");
+                if (petDetails.length == 9) {
+                    petData.add(petDetails);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (petData.isEmpty()) {
+            System.out.println("No pet records found.");
+            return;
+        }
+
+        // Define table headers
+        String[] headers = {"ID", "Name", "Type", "Breed", "Age", "Birthday", "Gender"};
+
+        // Calculate column widths
+        int[] columnWidths = new int[headers.length];
+
+        // Initialize with header lengths
+        for (int i = 0; i < headers.length; i++) {
+            columnWidths[i] = headers[i].length();
+        }
+
+        // Check data lengths and update column widths
+        for (String[] pet : petData) {
+            columnWidths[0] = Math.max(columnWidths[0], pet[0].length()); // ID
+            columnWidths[1] = Math.max(columnWidths[1], pet[1].length()); // Name
+            columnWidths[2] = Math.max(columnWidths[2], pet[2].length()); // Type
+            columnWidths[3] = Math.max(columnWidths[3], pet[3].length()); // Breed
+            columnWidths[4] = Math.max(columnWidths[4], pet[4].length()); // Age
+
+            // Birthday format: MM/DD/YYYY
+            String birthday = pet[5] + "/" + pet[6] + "/" + pet[7];
+            columnWidths[5] = Math.max(columnWidths[5], birthday.length());
+
+            columnWidths[6] = Math.max(columnWidths[6], pet[8].length()); // Gender
+        }
+
+        // Add padding to column widths
+        for (int i = 0; i < columnWidths.length; i++) {
+            columnWidths[i] += 2;
+        }
+
+        // Print top border
+        System.out.print("┌");
+        for (int i = 0; i < columnWidths.length; i++) {
+            for (int j = 0; j < columnWidths[i]; j++) {
+                System.out.print("─");
+            }
+            if (i < columnWidths.length - 1) {
+                System.out.print("┬");
+            }
+        }
+        System.out.println("┐");
+
+        // Print headers
+        System.out.print("│");
+        for (int i = 0; i < headers.length; i++) {
+            System.out.printf(" %-" + (columnWidths[i] - 1) + "s│", headers[i]);
+        }
+        System.out.println();
+
+        // Print header separator
+        System.out.print("├");
+        for (int i = 0; i < columnWidths.length; i++) {
+            for (int j = 0; j < columnWidths[i]; j++) {
+                System.out.print("─");
+            }
+            if (i < columnWidths.length - 1) {
+                System.out.print("┼");
+            }
+        }
+        System.out.println("┤");
+
+        // Print pet data rows
+        for (int row = 0; row < petData.size(); row++) {
+            String[] pet = petData.get(row);
+            System.out.print("│");
+
+            // Print each column
+            System.out.printf(" %-" + (columnWidths[0] - 1) + "s│", pet[0]); // ID
+            System.out.printf(" %-" + (columnWidths[1] - 1) + "s│", pet[1]); // Name
+            System.out.printf(" %-" + (columnWidths[2] - 1) + "s│", pet[2]); // Type
+            System.out.printf(" %-" + (columnWidths[3] - 1) + "s│", pet[3]); // Breed
+            System.out.printf(" %-" + (columnWidths[4] - 1) + "s│", pet[4]); // Age
+
+            // Birthday
+            String birthday = pet[5] + "/" + pet[6] + "/" + pet[7];
+            System.out.printf(" %-" + (columnWidths[5] - 1) + "s│", birthday);
+
+            System.out.printf(" %-" + (columnWidths[6] - 1) + "s│", pet[8]); // Gender
+
+            System.out.println();
+        }
+
+        // Print bottom border
+        System.out.print("└");
+        for (int i = 0; i < columnWidths.length; i++) {
+            for (int j = 0; j < columnWidths[i]; j++) {
+                System.out.print("─");
+            }
+            if (i < columnWidths.length - 1) {
+                System.out.print("┴");
+            }
+        }
+        System.out.println("┘");
     }
 
     public void approveAdoptionRequest(String requestIdToApprove) {
@@ -605,13 +728,13 @@ public class AdoptionManagement extends UserInterface {
             writer.newLine();
             writer.write("   Pet ID: " + petID);
             writer.newLine();
-            writer.write("   Name: " + petName);
+            writer.write("   Pet Name: " + petName);
             writer.newLine();
             writer.write("   Type: " + petType);
             writer.newLine();
             writer.write("   Breed: " + petBreed);  // Use loaded pet data
             writer.newLine();
-            writer.write("   Age: " + petAge);      // Use loaded pet data
+            writer.write("   Pet Age: " + petAge);      // Use loaded pet data
             writer.newLine();
             writer.write("   Birthday: " + petBirthDay + "/" + petBirthMonth + "/" + petBirthYear); // Use loaded pet data
             writer.newLine();
@@ -738,81 +861,32 @@ public class AdoptionManagement extends UserInterface {
                 "--------------------------------------------------";
     }
 
-    public void view() {
-        try (Scanner scanner = new Scanner(file)) {
-            String padding = "│                               "; // to align with main box sides
-            final String RESET = "\033[0m";
-            final String AQUA_LIGHT = "\u001B[38;2;161;227;239m"+"\033[1m";
-
-            while (scanner.hasNextLine()) {
-                String[] petDetails = scanner.nextLine().split(",");
-
-                if (petDetails.length == 9) {
-                    setId(Integer.parseInt(petDetails[0]));
-                    setName(petDetails[1]);
-                    setType(petDetails[2]);
-                    setBreed(petDetails[3]);
-                    setAge(Integer.parseInt(petDetails[4]));
-                    setBirthMonth(Integer.parseInt(petDetails[5]));
-                    setBirthDay(Integer.parseInt(petDetails[6]));
-                    setBirthYear(Integer.parseInt(petDetails[7]));
-                    setGender(petDetails[8].charAt(0));
-
-                    System.out.println();
-                    System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
-                    System.out.println("│                                                               "+AQUA_LIGHT+"       PET DETAILS     "+RESET+"                                                                    │");
-                    System.out.println("├──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤");
-
-                    printCenteredBox(padding, "ID", String.valueOf(getId()));
-                    printCenteredBox(padding, "NAME", getName());
-                    printCenteredBox(padding, "TYPE", getType());
-                    printCenteredBox(padding, "BREED", getBreed());
-                    printCenteredBox(padding, "AGE", String.valueOf(getAge()));
-                    printCenteredBox(padding, "BIRTHDAY", getBirthMonth() + "/" + getBirthDay() + "/" + getBirthYear());
-                    printCenteredBox(padding, "GENDER", String.valueOf(getGender()));
-
-                    // Bottom Border
-                    System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
-
-                }
-            }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void printCenteredBox(String padding, String label, String value) {
-        int boxWidth = 90;
-
-        // Colors
-        final String RESET = "\u001B[0m";
-        final String AQUA_LIGHT = "\u001B[38;2;161;227;239m"+"\033[1m";
-        final String SKY_BLUE = "\u001B[38;2;147;211;233m"+"\033[1m";
-
-        // Build colored content
-        String content = String.format("│ %s%-35s%s │  %s%-50s%s│",
-                AQUA_LIGHT, label, RESET,
-                SKY_BLUE, value, RESET);
-
-        String top = "┌" + "─".repeat(boxWidth) + "┐";
-        String bottom = "└" + "─".repeat(boxWidth) + "┘";
-
-        System.out.println(padding + top + "                               │");
-        System.out.println(padding + content + "                               │");
-        System.out.println(padding + bottom + "                               │");
-    }
-
     public void setRequestID(int requestID) {
         this.requestID = requestID;
     }
 
     public void viewAdoptionRequestSummaries() {
+        final String BLUE = "\u001B[38;2;66;103;178m";
+        final String RESET = "\u001B[0m";
+        final String GRAY = "\u001B[38;2;137;143;156m";
+        final String RED = "\u001B[31m";
+        final String GREEN = "\u001B[32m";
+        final String AQUA_LIGHT = "\u001B[38;2;161;227;239m";
+
         try (BufferedReader reader = new BufferedReader(new FileReader(adoptionRequest))) {
             String line;
             StringBuilder currentRequest = new StringBuilder();
             boolean hasRequest = false;
+            int requestCount = 0;
 
-            System.out.println("\n=== Pending Adoption Requests ===");
+            System.out.println();
+            System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+            System.out.println("│                                                                                                                                                          │");
+            System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
+            System.out.println(BLUE+"                                                             ┌─────────────────────────────┐                                                               ");
+            System.out.println("                                                             │ PENDING ADOPTION REQUESTS   │                                                               ");
+            System.out.println("                                                             └─────────────────────────────┘                                                               "+RESET);
+            System.out.println();
 
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("--------------------------------------------------")) {
@@ -837,8 +911,20 @@ public class AdoptionManagement extends UserInterface {
                             }
                         }
 
-                        System.out.printf("[%s] %s wants to adopt %s\n",
+                        requestCount++;
+                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
+                        System.out.printf ("                                             │ " + AQUA_LIGHT + "[%s]" + RESET + GRAY + " %s wants to adopt %s",
                                 requestId, customerName, petName);
+
+                        // Calculate padding to align the closing border
+                        int contentLength = String.format("[%s] %s wants to adopt %s", requestId, customerName, petName).length();
+                        int padding = 58 - contentLength; // 58 is the inner width of the box
+                        for (int i = 0; i < padding; i++) {
+                            System.out.print(" ");
+                        }
+                        System.out.println("   │");
+                        System.out.println("                                             └──────────────────────────────────────────────────────────────┘"+RESET);
+
                         hasRequest = false;
                         currentRequest = new StringBuilder();
                     }
@@ -847,8 +933,29 @@ public class AdoptionManagement extends UserInterface {
                     hasRequest = true;
                 }
             }
+
+            System.out.println();
+            if (requestCount == 0) {
+                System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
+                System.out.println("                                             │                  NO PENDING REQUESTS FOUND                   │");
+                System.out.println("                                             └──────────────────────────────────────────────────────────────┘"+RESET);
+            } else {
+                System.out.println(GREEN+"                                             ┌──────────────────────────────────────────────────────────────┐");
+                System.out.printf ("                                             │                  TOTAL PENDING REQUESTS: %-2d                  │\n", requestCount);
+                System.out.println("                                             └──────────────────────────────────────────────────────────────┘"+RESET);
+            }
+
+            System.out.println();
+            System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+            System.out.println("│                                                                                                                                                          │");
+            System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
+
         } catch (IOException e) {
-            System.err.println("Error reading adoption requests: " + e.getMessage());
+            System.out.println();
+            System.out.println(RED+"                                             ┌──────────────────────────────────────────────────────────────┐");
+            System.out.println("                                             │           ERROR READING ADOPTION REQUESTS FILE               │");
+            System.out.println("                                             └──────────────────────────────────────────────────────────────┘"+RESET);
+            System.err.println("Error details: " + e.getMessage());
         }
     }
 
@@ -858,8 +965,11 @@ public class AdoptionManagement extends UserInterface {
         // First show summaries
         viewAdoptionRequestSummaries();
 
-        System.out.print("\nEnter Request ID to review (or '0' to cancel): ");
-        String requestId = scanner.nextLine().trim();
+        System.out.println("\n                                             ┌──────────────────────────────────────────────────────────────┐");
+        System.out.print  ("                                             │ ENTER REQUEST ID: ");
+        String requestId = scanner.next();
+        System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+        scanner.nextLine();
 
         if (requestId.equals("0")) {
             return;
@@ -867,6 +977,9 @@ public class AdoptionManagement extends UserInterface {
 
         // Now show full details
         boolean found = false;
+        String customerName = "", customerAge = "", customerContact = "", customerOccupation = "", customerHomeType = "", customerHasOtherPets = "";
+        String petId = "", petName = "", petType = "", petBreed = "", petAge = "", petBirthday = "", petGender = "";
+
         try (BufferedReader reader = new BufferedReader(new FileReader(adoptionRequest))) {
             String line;
             StringBuilder currentRequest = new StringBuilder();
@@ -875,8 +988,39 @@ public class AdoptionManagement extends UserInterface {
                 if (line.startsWith("--------------------------------------------------")) {
                     if (currentRequest.toString().contains("Request ID: " + requestId)) {
                         found = true;
-                        System.out.println("\n=== Adoption Request Details ===");
-                        System.out.println(currentRequest);
+
+                        // Parse the request details
+                        String[] lines = currentRequest.toString().split("\n");
+                        for (String l : lines) {
+                            String trimmed = l.trim();
+                            if (trimmed.startsWith("Name:")) {
+                                customerName = trimmed.substring("Name:".length()).trim();
+                            } else if (trimmed.startsWith("Age:")) {
+                                customerAge = trimmed.substring("Age:".length()).trim();
+                            } else if (trimmed.startsWith("Contact Number:")) {
+                                customerContact = trimmed.substring("Contact Number:".length()).trim();
+                            } else if (trimmed.startsWith("Occupation:")) {
+                                customerOccupation = trimmed.substring("Occupation:".length()).trim();
+                            } else if (trimmed.startsWith("Home Type:")) {
+                                customerHomeType = trimmed.substring("Home Type:".length()).trim();
+                            } else if (trimmed.startsWith("Has Other Pets:")) {
+                                customerHasOtherPets = trimmed.substring("Has Other Pets:".length()).trim();
+                            } else if (trimmed.startsWith("Pet ID:")) {
+                                petId = trimmed.substring("Pet ID:".length()).trim();
+                            } else if (trimmed.startsWith("Pet Name:") && petName.isEmpty()) {
+                                petName = trimmed.substring("Pet Name:".length()).trim();
+                            } else if (trimmed.startsWith("Type:")) {
+                                petType = trimmed.substring("Type:".length()).trim();
+                            } else if (trimmed.startsWith("Breed:")) {
+                                petBreed = trimmed.substring("Breed:".length()).trim();
+                            } else if (trimmed.startsWith("Pet Age:") && petAge.isEmpty()) {
+                                petAge = trimmed.substring("Pet Age:".length()).trim();
+                            } else if (trimmed.startsWith("Birthday:")) {
+                                petBirthday = trimmed.substring("Birthday:".length()).trim();
+                            } else if (trimmed.startsWith("Gender:")) {
+                                petGender = trimmed.substring("Gender:".length()).trim();
+                            }
+                        }
                         break;
                     }
                     currentRequest = new StringBuilder();
@@ -893,20 +1037,108 @@ public class AdoptionManagement extends UserInterface {
             return;
         }
 
-        // Prompt for action
-        System.out.println("\n1. Approve request");
-        System.out.println("2. Reject request");
-        System.out.println("3. Cancel");
-        System.out.print("Select action: ");
+        // Color definitions
+        final String BLUE = "\u001B[38;2;66;103;178m";
+        final String RESET = "\u001B[0m";
+        final String GRAY = "\u001B[38;2;137;143;156m";
+        final String RED = "\u001B[31m";
+        final String GREEN = "\u001B[32m";
 
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+        // Display customer details in formatted style
+        System.out.println();
+        System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+        System.out.println("│                                                                  CUSTOMER DETAILS                                                                        │");
+        System.out.println("├──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤");
+        System.out.printf("│                               ┌──────────────────────────────────────────────────────────────────────────────────────────┐                               │%n");
+        System.out.printf("│                               │ NAME                                │  %-47s   │                               │%n", customerName);
+        System.out.printf("│                               └──────────────────────────────────────────────────────────────────────────────────────────┘                               │%n");
+        System.out.printf("│                               ┌──────────────────────────────────────────────────────────────────────────────────────────┐                               │%n");
+        System.out.printf("│                               │ AGE                                 │  %-47s   │                               │%n", customerAge);
+        System.out.printf("│                               └──────────────────────────────────────────────────────────────────────────────────────────┘                               │%n");
+        System.out.printf("│                               ┌──────────────────────────────────────────────────────────────────────────────────────────┐                               │%n");
+        System.out.printf("│                               │ CONTACT NUMBER                      │  %-47s   │                               │%n", customerContact);
+        System.out.printf("│                               └──────────────────────────────────────────────────────────────────────────────────────────┘                               │%n");
+        System.out.printf("│                               ┌──────────────────────────────────────────────────────────────────────────────────────────┐                               │%n");
+        System.out.printf("│                               │ OCCUPATION                          │  %-47s   │                               │%n", customerOccupation);
+        System.out.printf("│                               └──────────────────────────────────────────────────────────────────────────────────────────┘                               │%n");
+        System.out.printf("│                               ┌──────────────────────────────────────────────────────────────────────────────────────────┐                               │%n");
+        System.out.printf("│                               │ HOME TYPE                           │  %-47s   │                               │%n", customerHomeType);
+        System.out.printf("│                               └──────────────────────────────────────────────────────────────────────────────────────────┘                               │%n");
+        System.out.printf("│                               ┌──────────────────────────────────────────────────────────────────────────────────────────┐                               │%n");
+        System.out.printf("│                               │ HAS OTHER PETS                      │  %-47s   │                               │%n", customerHasOtherPets);
+        System.out.printf("│                               └──────────────────────────────────────────────────────────────────────────────────────────┘                               │%n");
+        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
 
-        switch (choice) {
-            case 1 -> approveAdoptionRequest(requestId); // Modified to take requestId
-            case 2 -> rejectAdoptionRequest(requestId);  // Modified to take requestId
-            case 3 -> System.out.println("Action cancelled.");
-            default -> System.out.println("Invalid option.");
+        System.out.println();
+
+        // Display pet details in formatted style
+        System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+        System.out.println("│                                                                      PET DETAILS                                                                         │");
+        System.out.println("├──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤");
+        System.out.printf("│                               ┌──────────────────────────────────────────────────────────────────────────────────────────┐                               │%n");
+        System.out.printf("│                               │ ID                                  │  %-47s   │                               │%n", petId);
+        System.out.printf("│                               └──────────────────────────────────────────────────────────────────────────────────────────┘                               │%n");
+        System.out.printf("│                               ┌──────────────────────────────────────────────────────────────────────────────────────────┐                               │%n");
+        System.out.printf("│                               │ NAME                                │  %-47s   │                               │%n", petName);
+        System.out.printf("│                               └──────────────────────────────────────────────────────────────────────────────────────────┘                               │%n");
+        System.out.printf("│                               ┌──────────────────────────────────────────────────────────────────────────────────────────┐                               │%n");
+        System.out.printf("│                               │ TYPE                                │  %-47s   │                               │%n", petType);
+        System.out.printf("│                               └──────────────────────────────────────────────────────────────────────────────────────────┘                               │%n");
+        System.out.printf("│                               ┌──────────────────────────────────────────────────────────────────────────────────────────┐                               │%n");
+        System.out.printf("│                               │ BREED                               │  %-47s   │                               │%n", petBreed);
+        System.out.printf("│                               └──────────────────────────────────────────────────────────────────────────────────────────┘                               │%n");
+        System.out.printf("│                               ┌──────────────────────────────────────────────────────────────────────────────────────────┐                               │%n");
+        System.out.printf("│                               │ AGE                                 │  %-47s   │                               │%n", petAge);
+        System.out.printf("│                               └──────────────────────────────────────────────────────────────────────────────────────────┘                               │%n");
+        System.out.printf("│                               ┌──────────────────────────────────────────────────────────────────────────────────────────┐                               │%n");
+        System.out.printf("│                               │ BIRTHDAY                            │  %-47s   │                               │%n", petBirthday);
+        System.out.printf("│                               └──────────────────────────────────────────────────────────────────────────────────────────┘                               │%n");
+        System.out.printf("│                               ┌──────────────────────────────────────────────────────────────────────────────────────────┐                               │%n");
+        System.out.printf("│                               │ GENDER                              │  %-47s   │                               │%n", petGender);
+        System.out.printf("│                               └──────────────────────────────────────────────────────────────────────────────────────────┘                               │%n");
+        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
+
+        // Action menu with improved formatting
+        Scanner scanner2 = new Scanner(System.in);
+        boolean continueRunning = true;
+
+        while (continueRunning) {
+            System.out.println();
+            System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+            System.out.println("│                                                                                                                                                          │");
+            System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
+            System.out.println(BLUE+"                                                                      ┌─────────────┐                                                                           ");
+            System.out.println("                                                                      │   ACTIONS   │                                                                           ");
+            System.out.println("                                                                      └─────────────┘                                                                           "+RESET);
+            System.out.println();
+            System.out.println(GRAY+"                                                            1. Approve Request");
+            System.out.println("                                                            2. Reject Request");
+            System.out.println("                                                            3. Exit");
+            System.out.println();
+            System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+            System.out.print  ("                                             │ ENTER CHOICE: ");
+            int choice = scanner2.nextInt();
+            System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+            System.out.println();
+            System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+            System.out.println("│                                                                                                                                                          │");
+            System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
+
+            switch (choice) {
+                case 1 -> {
+                    approveAdoptionRequest(requestId);
+                    continueRunning = false;
+                }
+                case 2 -> {
+                    rejectAdoptionRequest(requestId);
+                    continueRunning = false;
+                }
+                case 3 -> {
+                    System.out.println(GRAY + "                                                                   EXITING..." + RESET);
+                    continueRunning = false;
+                }
+                default -> System.out.println(RED + "                                                          INVALID CHOICE! PLEASE TRY AGAIN." + RESET);
+            }
         }
     }
 }

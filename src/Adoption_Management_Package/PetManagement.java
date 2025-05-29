@@ -135,67 +135,114 @@ public class PetManagement extends Pet implements ManagementFunctions {
     @Override
     public void remove() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+
+        final String BLUE = "\u001B[38;2;66;103;178m";
+        final String RESET = "\u001B[0m";
+        final String GRAY = "\u001B[38;2;137;143;156m";
+        final String RED = "\u001B[31m";
+        final String GREEN = "\u001B[32m";
+
+        System.out.println();
+        System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+        System.out.println("│                                                                                                                                                          │");
+        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
+        System.out.println(BLUE+"                                                                ┌──────────────────────┐                                                                     ");
+        System.out.println("                                                                │ REMOVE PET RECORD    │                                                                     ");
+        System.out.println("                                                                └──────────────────────┘                                                                     "+RESET);
+        System.out.println();
+
+        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
         System.out.print  ("                                             │ ENTER PET ID TO REMOVE: ");
         int removeId = scanner.nextInt();
         System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
         scanner.nextLine();
 
-        List<String> petList = new ArrayList<>();
-        boolean found = false;
+        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+        System.out.print  ("                                             │ ARE YOU SURE? (yes/no): ");
+        String choice = scanner.nextLine().toLowerCase().trim();
+        System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+        System.out.println();
+        System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+        System.out.println("│                                                                                                                                                          │");
+        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
+        if (choice.equalsIgnoreCase("yes")) {
+            List<String> petList = new ArrayList<>();
+            boolean found = false;
 
-                // Ignore empty lines
-                if (line.trim().isEmpty()) continue;
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
 
-                String[] petDetails = line.split(",");
+                    // Ignore empty lines
+                    if (line.trim().isEmpty()) continue;
 
-                // Validate that petDetails[0] is an integer before parsing
-                if (!petDetails[0].matches("\\d+")) continue;
+                    String[] petDetails = line.split(",");
 
-                int petId = Integer.parseInt(petDetails[0]);
+                    // Validate that petDetails[0] is an integer before parsing
+                    if (!petDetails[0].matches("\\d+")) continue;
 
-                if (petId == removeId) {
-                    found = true;
-                    continue; // Skip this pet (removing it)
+                    int petId = Integer.parseInt(petDetails[0]);
+
+                    if (petId == removeId) {
+                        found = true;
+                        continue; // Skip this pet (removing it)
+                    }
+
+                    petList.add(line); // Keep other pets
                 }
-
-                petList.add(line); // Keep other pets
+            } catch (IOException e) {
+                throw new RuntimeException("Error reading the file.", e);
             }
-        } catch (IOException e) {
-            final String RED = "\u001B[31m";
-            final String RESET = "\u001B[0m";
-            throw new RuntimeException(RED+"                                                                  ERROR READING THE FILE."+RESET, e );
-        }
 
-        if (!found) {
-            System.out.println("                                                                  PET WITH ID " + removeId + " NOT FOUND.");
-            return;
-        }
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            for (String pets : petList) {
-                String[] petDetails = pets.split(",");
-                writer.write(String.join(",", petDetails) + "\n");
+            if (!found) {
+                System.out.println(RED + "                                                                PET WITH ID " + removeId + " NOT FOUND." + RESET);
+                return;
             }
-            System.out.println("                                                                  PET REMOVED.");
-        } catch (IOException e) {
-            final String RED = "\u001B[31m";
-            final String RESET = "\u001B[0m";
-            throw new RuntimeException(RED+"                                                                  ERROR WRITING TO THE FILE."+RESET, e);
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                for (String pets : petList) {
+                    String[] petDetails = pets.split(",");
+                    writer.write(String.join(",", petDetails) + "\n");
+                }
+                System.out.println(GREEN + "                                                          PET SUCCESSFULLY REMOVED!" + RESET);
+            } catch (IOException e) {
+                throw new RuntimeException(RED + "                                                          ERROR WRITING TO THE FILE." + RESET, e);
+            }
+        } else {
+            System.out.println(GRAY + "                                                                 REMOVAL CANCELLED." + RESET);
         }
     }
 
     @Override
     public void update() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+
+        final String BLUE = "\u001B[38;2;66;103;178m";
+        final String RESET = "\u001B[0m";
+        final String GRAY = "\u001B[38;2;137;143;156m";
+        final String GREEN = "\u001B[32m";
+        final String RED = "\u001B[31m";
+
+        System.out.println();
+        System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+        System.out.println("│                                                                                                                                                          │");
+        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
+        System.out.println(BLUE+"                                                                ┌──────────────────────┐                                                                     ");
+        System.out.println("                                                                │ UPDATE PET RECORD    │                                                                     ");
+        System.out.println("                                                                └──────────────────────┘                                                                     "+RESET);
+        System.out.println();
+
+        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
         System.out.print  ("                                             │ ENTER PET ID TO EDIT: ");
         int editID = scanner.nextInt();
         System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+
+        System.out.println();
+        System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+        System.out.println("│                                                                                                                                                          │");
+        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
+
         scanner.nextLine();
 
         List<String> petList = new ArrayList<>();
@@ -204,22 +251,15 @@ public class PetManagement extends Pet implements ManagementFunctions {
         String nameTemp;
         int birthMonthTemp, birthDayTemp, birthYearTemp, ageTemp;
 
-        final String BLUE = "\u001B[38;2;66;103;178m";
-        final String RESET = "\u001B[0m";
-        final String GRAY = "\u001B[38;2;137;143;156m";
-        final String RED = "\u001B[31m";
-
-
         try {
-            Validation validator = new Validation();
-
             Scanner fileScanner = new Scanner(file);
+            Validation validator = new Validation();
+            boolean updated = false;
 
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
                 String[] petDetails = line.split(",");
 
-                // Ensure correct format
                 if (petDetails.length == 9) {
                     setId(Integer.parseInt(petDetails[0]));
                     setName(petDetails[1]);
@@ -235,21 +275,22 @@ public class PetManagement extends Pet implements ManagementFunctions {
                         found = true;
                         boolean isEditing = true;
 
+
                         while (isEditing) {
-                            System.out.println("""
-                                     \nEdit:\s
-                                     1. Name
-                                     2. Type
-                                     3. Breed
-                                     4. Age
-                                     5. Birth Month
-                                     6. Birth Day
-                                     7. Birth Year
-                                     8. Gender
-                                     9. Exit
-                                    \s""");
-                            System.out.print("Enter: ");
+                            System.out.println(BLUE + "                                                                 ┌──────────────────┐");
+                            System.out.println("                                                                 │ EDIT FIELD MENU  │");
+                            System.out.println("                                                                 └──────────────────┘" + RESET);
+                            System.out.println();
+                            System.out.println(GRAY + "                                                         1. Name             6. Birth Day");
+                            System.out.println("                                                         2. Type             7. Birth Year");
+                            System.out.println("                                                         3. Breed            8. Gender");
+                            System.out.println("                                                         4. Age              9. Exit");
+                            System.out.println("                                                         5. Birth Month");
+                            System.out.println();
+                            System.out.println("                                            ┌──────────────────────────────────────────────────────────────┐");
+                            System.out.print  ("                                            │ ENTER CHOICE: ");
                             int choice = scanner.nextInt();
+                            System.out.println("                                            └──────────────────────────────────────────────────────────────┘" + RESET);
                             scanner.nextLine();
 
                             switch (choice) {
@@ -258,10 +299,11 @@ public class PetManagement extends Pet implements ManagementFunctions {
                                         System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
                                         System.out.println("│                                                                                                                                                          │");
                                         System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
-                                        System.out.println(BLUE+"                                                                    ┌─────────────────┐                                                                     ");
-                                        System.out.println("                                                                    │    EDIT PET     │                                                                     ");
-                                        System.out.println("                                                                    └─────────────────┘                                                                     "+RESET);
+                                        System.out.println(BLUE+"                                                                   ┌──────────────────┐                                                                     ");
+                                        System.out.println("                                                                   │   PET DETAILS    │                                                                     ");
+                                        System.out.println("                                                                   └──────────────────┘                                                                     "+RESET);
                                         System.out.println();
+
                                         System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                         System.out.print  ("                                             │ ENTER NAME: ");
                                         nameTemp = scanner.nextLine();
@@ -269,80 +311,86 @@ public class PetManagement extends Pet implements ManagementFunctions {
                                         validator.nameValidation(nameTemp);
                                     } while (!validator.nameValidation(nameTemp));
                                     setName(nameTemp);
+                                    updated = true;
                                 }
                                 case 2 -> {
-
-                                    System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                    System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                     System.out.print  ("                                             │ ENTER TYPE: ");
                                     setType(scanner.nextLine());
                                     System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+                                    updated = true;
                                 }
                                 case 3 -> {
-
-                                    System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                    System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                     System.out.print  ("                                             │ ENTER BREED: ");
                                     setBreed(scanner.nextLine());
                                     System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+                                    updated = true;
                                 }
                                 case 4 -> {
                                     do {
-                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                         System.out.print  ("                                             │ ENTER AGE: ");
                                         ageTemp = scanner.nextInt();
                                         System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                                     } while(ageTemp < 0 || ageTemp > 200);
                                     setAge(ageTemp);
                                     scanner.nextLine();
+                                    updated = true;
                                 }
                                 case 5 -> {
-
                                     do {
-                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                         System.out.print  ("                                             │ ENTER BIRTH-MONTH: ");
                                         birthMonthTemp = scanner.nextInt();
                                         System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                                     } while (birthMonthTemp < 1 || birthMonthTemp > 12);
                                     setBirthMonth(birthMonthTemp);
                                     scanner.nextLine();
+                                    updated = true;
                                 }
                                 case 6 -> {
                                     do {
-                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                         System.out.print  ("                                             │ ENTER DAY OF BIRTH: ");
                                         birthDayTemp = scanner.nextInt();
                                         System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                                     } while (birthDayTemp < 1 || birthDayTemp > 31);
                                     setBirthDay(birthDayTemp);
                                     scanner.nextLine();
+                                    updated = true;
                                 }
                                 case 7 -> {
                                     do {
-                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                         System.out.print  ("                                             │ ENTER BIRTH-YEAR: ");
                                         birthYearTemp = scanner.nextInt();
                                         System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                                     } while (birthYearTemp < 1825 || birthYearTemp > 2025);
                                     setBirthYear(birthYearTemp);
                                     scanner.nextLine();
+                                    updated = true;
                                 }
                                 case 8 -> {
                                     do {
-                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                         System.out.print  ("                                             │ ENTER GENDER (F/M): ");
                                         gender = scanner.next().toUpperCase().charAt(0);
                                         System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                                         System.out.println();
-                                        System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+                                        System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
                                         System.out.println("│                                                                                                                                                          │");
-                                        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
+                                        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
                                     } while (gender != 'M' && gender != 'F');
                                     setGender(gender);
+                                    scanner.nextLine();
+                                    updated = true;
                                 }
                                 case 9 -> {
-                                    System.out.println("                                                                         EXITING...                                                                         ");
+                                    System.out.println(GREEN + "                                              EXITING EDIT MODE..." + RESET);
                                     isEditing = false;
                                 }
-                                default -> System.out.println(RED+"                                                          INVALID CHOICE! NO CHANGES MADE."+RESET);
+                                default -> System.out.println(RED + "                                              INVALID CHOICE! NO CHANGES MADE." + RESET);
                             }
                         }
                         // replace old data with new data
@@ -358,31 +406,38 @@ public class PetManagement extends Pet implements ManagementFunctions {
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                     for (String pet : petList) {
                         writer.write(pet + "\n");
+                    } if(updated){
+                        System.out.println(GREEN + "                                              PET DETAILS UPDATED SUCCESSFULLY!" + RESET);
                     }
-                    System.out.println("Pet details updated successfully!\n");
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
             else {
-                System.out.println("Pet ID not found.\n");
+                System.out.println(RED + "                                              PET ID NOT FOUND." + RESET);
             }
 
         }
         catch (FileNotFoundException ex) {
             throw new RuntimeException(ex);
         }
-
     }
 
     public void searchPet() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Pet Type to search: ");
+        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+        System.out.print  ("                                             │ ENTER PET TYPE TO SEARCH: ");
         String searchType = scanner.nextLine().trim();
+        System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+
 
         try (Scanner fileScanner = new Scanner(file)) {
             boolean found = false;
+            String padding = "│                               "; // to align with main box sides
+            final String RESET = "\033[0m";
+            final String AQUA_LIGHT = "\u001B[38;2;161;227;239m"+"\033[1m";
 
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
@@ -400,16 +455,34 @@ public class PetManagement extends Pet implements ManagementFunctions {
                     setGender(petDetails[8].charAt(0));
 
                     if (getType().equalsIgnoreCase(searchType)) {
-                        System.out.println("\nPet Found!");
-                        System.out.println("ID: " + getId());
-                        System.out.println("Name: " + getName());
-                        System.out.println("Type: " + getType());
-                        System.out.println("Breed: " + getBreed());
-                        System.out.println("Age: " + getAge());
-                        System.out.println("Birthday: " + getBirthMonth() + "/" +
-                                getBirthDay() + "/" + getBirthYear());
-                        System.out.println("Gender: " + getGender());
+                        setId(Integer.parseInt(petDetails[0]));
+                        setName(petDetails[1]);
+                        setType(petDetails[2]);
+                        setBreed(petDetails[3]);
+                        setAge(Integer.parseInt(petDetails[4]));
+                        setBirthMonth(Integer.parseInt(petDetails[5]));
+                        setBirthDay(Integer.parseInt(petDetails[6]));
+                        setBirthYear(Integer.parseInt(petDetails[7]));
+                        setGender(petDetails[8].charAt(0));
+
                         found = true;
+
+                        System.out.println();
+                        System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+                        System.out.println("│                                                               "+AQUA_LIGHT+"       PET DETAILS     "+RESET+"                                                                    │");
+                        System.out.println("├──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤");
+
+                        printCenteredBox(padding, "ID", String.valueOf(getId()));
+                        printCenteredBox(padding, "NAME", getName());
+                        printCenteredBox(padding, "TYPE", getType());
+                        printCenteredBox(padding, "BREED", getBreed());
+                        printCenteredBox(padding, "AGE", String.valueOf(getAge()));
+                        printCenteredBox(padding, "BIRTHDAY", getBirthMonth() + "/" + getBirthDay() + "/" + getBirthYear());
+                        printCenteredBox(padding, "GENDER", String.valueOf(getGender()));
+
+                        // Bottom Border
+                        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
+
                     }
                 }
             }
@@ -425,55 +498,181 @@ public class PetManagement extends Pet implements ManagementFunctions {
 
     @Override
     public void view() {
-        boolean continueRunning = true;
-        try (Scanner scanner = new Scanner(file)) {
+        List<String[]> petData = new ArrayList<>();
 
+        // Read all pet data first
+        try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 String[] petDetails = scanner.nextLine().split(",");
-
                 if (petDetails.length == 9) {
-                    setId(Integer.parseInt(petDetails[0]));
-                    setName(petDetails[1]);
-                    setType(petDetails[2]);
-                    setBreed(petDetails[3]);
-                    setAge(Integer.parseInt(petDetails[4]));
-                    setBirthMonth(Integer.parseInt(petDetails[5]));
-                    setBirthDay(Integer.parseInt(petDetails[6]));
-                    setBirthYear(Integer.parseInt(petDetails[7]));
-                    setGender(petDetails[8].charAt(0));
-
-                    System.out.println("\n--- Pet Details ---");
-                    System.out.println("ID: " + getId());
-                    System.out.println("Name: " + getName());
-                    System.out.println("Type: " + getType());
-                    System.out.println("Breed: " + getBreed());
-                    System.out.println("Age: " + getAge());
-                    System.out.println("Birthday: " + getBirthMonth() + "/" + getBirthDay() + "/" + getBirthYear());
-                    System.out.println("Gender: " + getGender());
-                    System.out.println("----------------------");
-                }
-            }
-            Scanner scanner2 = new Scanner(System.in);
-            while (continueRunning) {
-                System.out.println("""
-                         \nAction:\s
-                         1. Update Pet Details
-                         2. Remove Pet
-                         3. Exit
-                        \s""");
-                System.out.print("Enter Choice: ");
-                int choice = scanner2.nextInt();
-
-                switch (choice) {
-                    case 1 -> update();
-                    case 2 -> remove();
-                    case 3 -> continueRunning = false;
-                    default -> System.out.println("Invalid Choice!");
+                    petData.add(petDetails);
                 }
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+        if (petData.isEmpty()) {
+            System.out.println("No pet records found.");
+            return;
+        }
+
+        // Define table headers
+        String[] headers = {"ID", "Name", "Type", "Breed", "Age", "Birthday", "Gender"};
+
+        // Calculate column widths
+        int[] columnWidths = new int[headers.length];
+
+        // Initialize with header lengths
+        for (int i = 0; i < headers.length; i++) {
+            columnWidths[i] = headers[i].length();
+        }
+
+        // Check data lengths and update column widths
+        for (String[] pet : petData) {
+            columnWidths[0] = Math.max(columnWidths[0], pet[0].length()); // ID
+            columnWidths[1] = Math.max(columnWidths[1], pet[1].length()); // Name
+            columnWidths[2] = Math.max(columnWidths[2], pet[2].length()); // Type
+            columnWidths[3] = Math.max(columnWidths[3], pet[3].length()); // Breed
+            columnWidths[4] = Math.max(columnWidths[4], pet[4].length()); // Age
+
+            // Birthday format: MM/DD/YYYY
+            String birthday = pet[5] + "/" + pet[6] + "/" + pet[7];
+            columnWidths[5] = Math.max(columnWidths[5], birthday.length());
+
+            columnWidths[6] = Math.max(columnWidths[6], pet[8].length()); // Gender
+        }
+
+        // Add padding to column widths
+        for (int i = 0; i < columnWidths.length; i++) {
+            columnWidths[i] += 2;
+        }
+
+        // Print top border
+        System.out.print("┌");
+        for (int i = 0; i < columnWidths.length; i++) {
+            for (int j = 0; j < columnWidths[i]; j++) {
+                System.out.print("─");
+            }
+            if (i < columnWidths.length - 1) {
+                System.out.print("┬");
+            }
+        }
+        System.out.println("┐");
+
+        // Print headers
+        System.out.print("│");
+        for (int i = 0; i < headers.length; i++) {
+            System.out.printf(" %-" + (columnWidths[i] - 1) + "s│", headers[i]);
+        }
+        System.out.println();
+
+        // Print header separator
+        System.out.print("├");
+        for (int i = 0; i < columnWidths.length; i++) {
+            for (int j = 0; j < columnWidths[i]; j++) {
+                System.out.print("─");
+            }
+            if (i < columnWidths.length - 1) {
+                System.out.print("┼");
+            }
+        }
+        System.out.println("┤");
+
+        // Print pet data rows
+        for (int row = 0; row < petData.size(); row++) {
+            String[] pet = petData.get(row);
+            System.out.print("│");
+
+            // Print each column
+            System.out.printf(" %-" + (columnWidths[0] - 1) + "s│", pet[0]); // ID
+            System.out.printf(" %-" + (columnWidths[1] - 1) + "s│", pet[1]); // Name
+            System.out.printf(" %-" + (columnWidths[2] - 1) + "s│", pet[2]); // Type
+            System.out.printf(" %-" + (columnWidths[3] - 1) + "s│", pet[3]); // Breed
+            System.out.printf(" %-" + (columnWidths[4] - 1) + "s│", pet[4]); // Age
+
+            // Birthday
+            String birthday = pet[5] + "/" + pet[6] + "/" + pet[7];
+            System.out.printf(" %-" + (columnWidths[5] - 1) + "s│", birthday);
+
+            System.out.printf(" %-" + (columnWidths[6] - 1) + "s│", pet[8]); // Gender
+
+            System.out.println();
+        }
+
+        // Print bottom border
+        System.out.print("└");
+        for (int i = 0; i < columnWidths.length; i++) {
+            for (int j = 0; j < columnWidths[i]; j++) {
+                System.out.print("─");
+            }
+            if (i < columnWidths.length - 1) {
+                System.out.print("┴");
+            }
+        }
+        System.out.println("┘");
+
+        // Rest of your action menu code...
+        Scanner scanner2 = new Scanner(System.in);
+        boolean continueRunning = true;
+
+        final String BLUE = "\u001B[38;2;66;103;178m";
+        final String RESET = "\u001B[0m";
+        final String GRAY = "\u001B[38;2;137;143;156m";
+        final String RED = "\u001B[31m";
+
+        while (continueRunning) {
+            System.out.println();
+            System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+            System.out.println("│                                                                                                                                                          │");
+            System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
+            System.out.println(BLUE+"                                                                      ┌─────────────┐                                                                           ");
+            System.out.println("                                                                      │   ACTIONS   │                                                                           ");
+            System.out.println("                                                                      └─────────────┘                                                                           "+RESET);
+            System.out.println();
+            System.out.println(GRAY+"                                                            1. Update Customer Details");
+            System.out.println("                                                            2. Remove Customer");
+            System.out.println("                                                            3. Exit");
+            System.out.println();
+            System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+            System.out.print  ("                                             │ ENTER CHOICE: ");
+            int choice = scanner2.nextInt();
+            System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+            System.out.println();
+            System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+            System.out.println("│                                                                                                                                                          │");
+            System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
+
+            switch (choice) {
+                case 1 -> update();
+                case 2 -> remove();
+                case 3 -> {
+                    System.out.println(GRAY + "                                                                   EXITING..." + RESET);
+                    continueRunning = false;
+                }
+                default -> System.out.println(RED + "                                                          INVALID CHOICE! PLEASE TRY AGAIN." + RESET);
+            }
+        }
     }
 
+    public static void printCenteredBox(String padding, String label, String value) {
+        int boxWidth = 90;
+
+        // Colors
+        final String RESET = "\u001B[0m";
+        final String AQUA_LIGHT = "\u001B[38;2;161;227;239m"+"\033[1m";
+        final String SKY_BLUE = "\u001B[38;2;147;211;233m"+"\033[1m";
+
+        // Build colored content
+        String content = String.format("│ %s%-35s%s │  %s%-50s%s│",
+                AQUA_LIGHT, label, RESET,
+                SKY_BLUE, value, RESET);
+
+        String top = "┌" + "─".repeat(boxWidth) + "┐";
+        String bottom = "└" + "─".repeat(boxWidth) + "┘";
+
+        System.out.println(padding + top + "                               │");
+        System.out.println(padding + content + "                               │");
+        System.out.println(padding + bottom + "                               │");
+    }
 }

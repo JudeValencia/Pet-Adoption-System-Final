@@ -1,1 +1,2 @@
-612336,Sandy Iskaba,Squirrel,Flying Squirrel,20,11,11,2005,F
+612336,Sandy,Squirrel,Flying Squirrel,19,11,11,2005,F
+867391,Smallo,Bear,Polar Bear,12,10,10,2012,M

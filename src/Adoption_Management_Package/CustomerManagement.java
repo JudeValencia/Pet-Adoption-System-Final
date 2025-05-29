@@ -1,3 +1,4 @@
+
 package Adoption_Management_Package;
 
 import java.io.*;
@@ -210,62 +211,117 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
     @Override
     public void remove() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter Customer ID to remove: ");
+
+        final String BLUE = "\u001B[38;2;66;103;178m";
+        final String RESET = "\u001B[0m";
+        final String GRAY = "\u001B[38;2;137;143;156m";
+        final String RED = "\u001B[31m";
+        final String GREEN = "\u001B[32m";
+
+        System.out.println();
+        System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+        System.out.println("│                                                                                                                                                          │");
+        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
+        System.out.println(BLUE+"                                                                ┌────────────────────────┐                                                                     ");
+        System.out.println("                                                                │ REMOVE CUSTOMER RECORD │                                                                     ");
+        System.out.println("                                                                └────────────────────────┘                                                                     "+RESET);
+        System.out.println();
+
+        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
+        System.out.print  ("                                             │ ENTER CUSTOMER ID TO REMOVE: ");
         int removeId = scanner.nextInt();
+        System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
         scanner.nextLine();
 
-        List<String> customerList = new ArrayList<>();
-        boolean found = false;
+        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+        System.out.print  ("                                             │ ARE YOU SURE? (yes/no): ");
+        String choice = scanner.nextLine().toLowerCase().trim();
+        System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+        System.out.println();
+        System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+        System.out.println("│                                                                                                                                                          │");
+        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
+        if (choice.equalsIgnoreCase("yes")) {
+            List<String> customerList = new ArrayList<>();
+            boolean found = false;
 
-                // Ignore empty lines
-                if (line.trim().isEmpty()) continue;
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
 
-                String[] customerDetails = line.split(",");
+                    // Ignore empty lines
+                    if (line.trim().isEmpty()) continue;
 
-                // Validate that customerDetails[0] is an integer before parsing
-                if (!customerDetails[0].matches("\\d+")) continue;
+                    String[] customerDetails = line.split(",");
 
-                int customerId = Integer.parseInt(customerDetails[0]);
+                    // Validate that customerDetails[0] is an integer before parsing
+                    if (!customerDetails[0].matches("\\d+")) continue;
 
-                if (customerId == removeId) {
-                    found = true;
-                    continue; // Skip this customer (removing it)
+                    int customerId = Integer.parseInt(customerDetails[0]);
+
+                    if (customerId == removeId) {
+                        found = true;
+                        continue; // Skip this customer (removing it)
+                    }
+
+                    customerList.add(line); // Keep other customers
+                }
+            } catch (IOException e) {
+                throw new RuntimeException("Error reading the file.", e);
+            }
+
+            if (!found) {
+                System.out.println(RED + "                                                          CUSTOMER WITH ID " + removeId + " NOT FOUND." + RESET);
+                return;
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                for (String customers : customerList) {
+                    String[] customerDetails = customers.split(",");
+                    writer.write(String.join(",", customerDetails) + "\n");
                 }
 
-                customerList.add(line); // Keep other customers
+                removeAccount(removeId); // Now remove from UserAccounts.txt too
+                System.out.println(GREEN + "                                                          CUSTOMER SUCCESSFULLY REMOVED!" + RESET);
+            } catch (IOException e) {
+                throw new RuntimeException(RED + "                                                          ERROR WRITING TO THE FILE." + RESET, e);
             }
-        } catch (IOException e) {
-            throw new RuntimeException("Error reading the file.", e);
+        } else {
+            System.out.println(GRAY + "                                                                 REMOVAL CANCELLED." + RESET);
         }
-
-        if (!found) {
-            System.out.println("customer with ID " + removeId + " not found.");
-            return;
-        }
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            for (String customers : customerList) {
-                String[] customerDetails = customers.split(",");
-                writer.write(String.join(",", customerDetails) + "\n");
-            }
-
-            removeAccount(removeId); // Now remove from UserAccounts.txt too
-            System.out.println("customer removed.");
-        } catch (IOException e) {
-            throw new RuntimeException("Error writing to the file.", e);
-        }
-
     }
 
     @Override
     public void update() {
+
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter Customer ID to edit: ");
+
+        final String BLUE = "\u001B[38;2;66;103;178m";
+        final String RESET = "\u001B[0m";
+        final String GRAY = "\u001B[38;2;137;143;156m";
+        final String GREEN = "\u001B[32m";
+        final String RED = "\u001B[31m";
+
+        System.out.println();
+        System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+        System.out.println("│                                                                                                                                                          │");
+        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
+        System.out.println(BLUE+"                                                                ┌────────────────────────┐                                                                     ");
+        System.out.println("                                                                │ UPDATE CUSTOMER RECORD │                                                                     ");
+        System.out.println("                                                                └────────────────────────┘                                                                     "+RESET);
+        System.out.println();
+
+        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
+        System.out.print  ("                                             │ ENTER CUSTOMER ID TO EDIT: ");
         int editID = scanner.nextInt();
+        System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+
+        System.out.println();
+        System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+        System.out.println("│                                                                                                                                                          │");
+        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
+
         scanner.nextLine();
 
         List<String> customerList = new ArrayList<>();
@@ -273,11 +329,6 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
         char gender;
         String nameTemp, addressTemp,homeTypeTemp, occupationTemp, emailTemp, contactNumberTemp;
         int ageTemp, birthMonthTemp, birthDayTemp, birthYearTemp;
-
-        final String BLUE = "\u001B[38;2;66;103;178m";
-        final String RESET = "\u001B[0m";
-        final String GRAY = "\u001B[38;2;137;143;156m";
-
 
         try {
             Scanner fileScanner = new Scanner(file);
@@ -307,24 +358,22 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                         boolean isEditing = true;
 
                         while (isEditing) {
-                            System.out.println("""
-                                     \nEdit:\s
-                                     1. Name
-                                     2. Age
-                                     3. Gender
-                                     4. Address
-                                     5. Birth Month
-                                     6. Birth Day
-                                     7. Birth Year
-                                     8. Occupation
-                                     9. Home Type
-                                     10. Has Other Pets (True or False)
-                                     11. Email Address
-                                     12. Contact Number
-                                     13. Exit
-                                    \s""");
-                            System.out.print("Enter: ");
+                            System.out.println(BLUE + "                                                                    ┌──────────────────┐");
+                            System.out.println("                                                                    │ EDIT FIELD MENU  │");
+                            System.out.println("                                                                    └──────────────────┘" + RESET);
+                            System.out.println();
+                            System.out.println(GRAY + "                                                            1. Name             8. Occupation");
+                            System.out.println("                                                            2. Age              9. Home Type");
+                            System.out.println("                                                            3. Gender           10. Has Other Pets");
+                            System.out.println("                                                            4. Address          11. Email Address");
+                            System.out.println("                                                            5. Birth Month      12. Contact Number");
+                            System.out.println("                                                            6. Birth Day        13. Exit");
+                            System.out.println("                                                            7. Birth Year");
+                            System.out.println();
+                            System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                            System.out.print  ("                                             │ ENTER CHOICE: ");
                             int choice = scanner.nextInt();
+                            System.out.println("                                             └──────────────────────────────────────────────────────────────┘" + RESET);
                             scanner.nextLine();
 
                             switch (choice) {
@@ -338,7 +387,6 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                                         System.out.println("                                                                   └──────────────────┘                                                                     "+RESET);
                                         System.out.println();
 
-
                                         System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                         System.out.print  ("                                             │ ENTER NAME: ");
                                         nameTemp = scanner.nextLine();
@@ -346,24 +394,20 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                                         validator.nameValidation(nameTemp);
                                     } while (!validator.nameValidation(nameTemp));
                                     setName(nameTemp);
-
                                 }
                                 case 2 -> {
-
                                     do {
-                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                         System.out.print  ("                                             │ ENTER AGE: ");
                                         ageTemp = scanner.nextInt();
                                         System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
-
                                     } while(ageTemp < 18 || ageTemp > 120);
                                     setAge(ageTemp);
                                     scanner.nextLine();
                                 }
                                 case 3 -> {
-
                                     do {
-                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                         System.out.print  ("                                             │ ENTER GENDER (M/F): ");
                                         gender = scanner.next().toUpperCase().charAt(0);
                                         System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
@@ -372,43 +416,37 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                                     scanner.nextLine();
                                 }
                                 case 4 -> {
-
                                     do {
-                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                         System.out.print  ("                                             │ ENTER ADDRESS: ");
                                         addressTemp = scanner.nextLine();
                                         System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                                     } while (validator.addressValidation(addressTemp));
                                     setAddress(addressTemp);
-
                                 }
                                 case 5 -> {
-
                                     do {
-                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                         System.out.print  ("                                             │ ENTER BIRTH-MONTH: ");
                                         birthMonthTemp = scanner.nextInt();
                                         System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                                     } while (birthMonthTemp < 1 || birthMonthTemp > 12);
                                     setBirthMonth(birthMonthTemp);
                                     scanner.nextLine();
-
                                 }
                                 case 6 -> {
-
                                     do {
-                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                         System.out.print  ("                                             │ ENTER DAY OF BIRTH: ");
                                         birthDayTemp = scanner.nextInt();
                                         System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                                     } while (birthDayTemp < 1 || birthDayTemp > 31);
                                     setBirthDay(birthDayTemp);
                                     scanner.nextLine();
-
                                 }
                                 case 7 -> {
                                     do {
-                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                         System.out.print  ("                                             │ ENTER BIRTH-YEAR: ");
                                         birthYearTemp = scanner.nextInt();
                                         System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
@@ -417,9 +455,8 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                                     scanner.nextLine();
                                 }
                                 case 8 -> {
-
                                     do {
-                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                         System.out.print  ("                                             │ ENTER OCCUPATION: ");
                                         occupationTemp = scanner.nextLine();
                                         System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
@@ -427,9 +464,8 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                                     setOccupation(occupationTemp);
                                 }
                                 case 9 -> {
-
                                     do {
-                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                         System.out.print  ("                                             │ ENTER HOME TYPE: ");
                                         homeTypeTemp = scanner.nextLine();
                                         System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
@@ -437,27 +473,24 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                                     setHomeType(homeTypeTemp);
                                 }
                                 case 10 -> {
-
-                                    System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                    System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                     System.out.print  ("                                             │ HAS OTHER PET/S (true/false): ");
                                     setHasOtherPets(scanner.nextBoolean());
                                     System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                                     scanner.nextLine();
                                 }
                                 case 11 -> {
-
                                     do {
-                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                         System.out.print  ("                                             │ ENTER EMAIL: ");
                                         emailTemp = scanner.nextLine();
                                         System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                                     } while(validator.emailValidation(emailTemp));
                                     setEmail(emailTemp);
-
                                 }
                                 case 12 ->  {
                                     do {
-                                        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
                                         System.out.print  ("                                             │ ENTER CONTACT NUMBER: ");
                                         contactNumberTemp = scanner.nextLine();
                                         System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
@@ -469,10 +502,10 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                                     setContactNumber(contactNumberTemp);
                                 }
                                 case 13 -> {
-                                    System.out.print("Exiting... ");
+                                    System.out.println(GREEN + "                                                          EXITING EDIT MODE..." + RESET);
                                     isEditing = false;
                                 }
-                                default -> System.out.println("Invalid Choice! No changes made.");
+                                default -> System.out.println(RED + "                                                          INVALID CHOICE! NO CHANGES MADE." + RESET);
                             }
                         }
                         // replace old data with new data
@@ -507,65 +540,172 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
 
     }
 
+
     @Override
     public void view() {
+        List<String[]> customerData = new ArrayList<>();
+
+        // Read all customer data first
         try(Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 String[] customerDetails = scanner.nextLine().split(",");
-
                 if (customerDetails.length == 13) {
-                    setCustomerID(Integer.parseInt(customerDetails[0]));
-                    setName(customerDetails[1]);
-                    setAge(Integer.parseInt(customerDetails[2]));
-                    setGender(customerDetails[3].charAt(0));
-                    setAddress(customerDetails[4]);
-                    setBirthMonth(Integer.parseInt(customerDetails[5]));
-                    setBirthDay(Integer.parseInt(customerDetails[6]));
-                    setBirthYear(Integer.parseInt(customerDetails[7]));
-                    setOccupation(customerDetails[8]);
-                    setHomeType(customerDetails[9]);
-                    setHasOtherPets(Boolean.parseBoolean(customerDetails[10]));
-                    setEmail(customerDetails[11]);
-                    setContactNumber(customerDetails[12]);
-
-                    System.out.println("\n--- Customer Details ---");
-                    System.out.println("ID: " + getCustomerID());
-                    System.out.println("Name: " + getName());
-                    System.out.println("Age: " + getAge());
-                    System.out.println("Gender: " + getGender());
-                    System.out.println("Address: " + getAddress());
-                    System.out.println("Birthday: " + getBirthMonth() + "/" +
-                            getBirthDay() + "/" + getBirthYear());
-                    System.out.println("Occupation: " + getOccupation());
-                    System.out.println("Home Type: " + getHomeType());
-                    System.out.println("Has Other Pets: " + getHasOtherPets());
-                    System.out.println("Email: " + getEmail());
-                    System.out.println("Contact Number: " + getContactNumber());
-                    System.out.println("----------------------");
-                }
-            }
-
-            Scanner scanner2 = new Scanner(System.in);
-            boolean continueRunning = true;
-            while (continueRunning) {
-                System.out.println("""
-                         \nAction:\s
-                         1. Update Customer Details
-                         2. Remove Customer
-                         3. Exit
-                        \s""");
-                System.out.print("Enter Choice: ");
-                int choice = scanner2.nextInt();
-
-                switch (choice) {
-                    case 1 -> update();
-                    case 2 -> remove();
-                    case 3 -> continueRunning = false;
-                    default -> System.out.println("Invalid Choice!");
+                    customerData.add(customerDetails);
                 }
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
+        }
+
+        if (customerData.isEmpty()) {
+            System.out.println("No customer records found.");
+            return;
+        }
+
+        // Define table headers
+        String[] headers = {"ID", "Name", "Age", "Gender", "Address", "Birthday",
+                "Occupation", "Home Type", "Has Pets", "Email", "Contact"};
+
+        // Calculate column widths
+        int[] columnWidths = new int[headers.length];
+
+        // Initialize with header lengths
+        for (int i = 0; i < headers.length; i++) {
+            columnWidths[i] = headers[i].length();
+        }
+
+        // Check data lengths and update column widths
+        for (String[] customer : customerData) {
+            columnWidths[0] = Math.max(columnWidths[0], customer[0].length()); // ID
+            columnWidths[1] = Math.max(columnWidths[1], customer[1].length()); // Name
+            columnWidths[2] = Math.max(columnWidths[2], customer[2].length()); // Age
+            columnWidths[3] = Math.max(columnWidths[3], customer[3].length()); // Gender
+            columnWidths[4] = Math.max(columnWidths[4], customer[4].length()); // Address
+
+            // Birthday format: MM/DD/YYYY
+            String birthday = customer[5] + "/" + customer[6] + "/" + customer[7];
+            columnWidths[5] = Math.max(columnWidths[5], birthday.length());
+
+            columnWidths[6] = Math.max(columnWidths[6], customer[8].length()); // Occupation
+            columnWidths[7] = Math.max(columnWidths[7], customer[9].length()); // Home Type
+            columnWidths[8] = Math.max(columnWidths[8], customer[10].length()); // Has Pets
+            columnWidths[9] = Math.max(columnWidths[9], customer[11].length()); // Email
+            columnWidths[10] = Math.max(columnWidths[10], customer[12].length()); // Contact
+        }
+
+        // Add padding to column widths
+        for (int i = 0; i < columnWidths.length; i++) {
+            columnWidths[i] += 2;
+        }
+
+        // Print top border
+        System.out.print("┌");
+        for (int i = 0; i < columnWidths.length; i++) {
+            for (int j = 0; j < columnWidths[i]; j++) {
+                System.out.print("─");
+            }
+            if (i < columnWidths.length - 1) {
+                System.out.print("┬");
+            }
+        }
+        System.out.println("┐");
+
+        // Print headers
+        System.out.print("│");
+        for (int i = 0; i < headers.length; i++) {
+            System.out.printf(" %-" + (columnWidths[i] - 1) + "s│", headers[i]);
+        }
+        System.out.println();
+
+        // Print header separator
+        System.out.print("├");
+        for (int i = 0; i < columnWidths.length; i++) {
+            for (int j = 0; j < columnWidths[i]; j++) {
+                System.out.print("─");
+            }
+            if (i < columnWidths.length - 1) {
+                System.out.print("┼");
+            }
+        }
+        System.out.println("┤");
+
+        // Print customer data rows
+        for (int row = 0; row < customerData.size(); row++) {
+            String[] customer = customerData.get(row);
+            System.out.print("│");
+
+            // Print each column
+            System.out.printf(" %-" + (columnWidths[0] - 1) + "s│", customer[0]); // ID
+            System.out.printf(" %-" + (columnWidths[1] - 1) + "s│", customer[1]); // Name
+            System.out.printf(" %-" + (columnWidths[2] - 1) + "s│", customer[2]); // Age
+            System.out.printf(" %-" + (columnWidths[3] - 1) + "s│", customer[3]); // Gender
+            System.out.printf(" %-" + (columnWidths[4] - 1) + "s│", customer[4]); // Address
+
+            // Birthday
+            String birthday = customer[5] + "/" + customer[6] + "/" + customer[7];
+            System.out.printf(" %-" + (columnWidths[5] - 1) + "s│", birthday);
+
+            System.out.printf(" %-" + (columnWidths[6] - 1) + "s│", customer[8]); // Occupation
+            System.out.printf(" %-" + (columnWidths[7] - 1) + "s│", customer[9]); // Home Type
+            System.out.printf(" %-" + (columnWidths[8] - 1) + "s│", customer[10]); // Has Pets
+            System.out.printf(" %-" + (columnWidths[9] - 1) + "s│", customer[11]); // Email
+            System.out.printf(" %-" + (columnWidths[10] - 1) + "s│", customer[12]); // Contact
+
+            System.out.println();
+        }
+
+        // Print bottom border
+        System.out.print("└");
+        for (int i = 0; i < columnWidths.length; i++) {
+            for (int j = 0; j < columnWidths[i]; j++) {
+                System.out.print("─");
+            }
+            if (i < columnWidths.length - 1) {
+                System.out.print("┴");
+            }
+        }
+        System.out.println("┘");
+
+        // Rest of your action menu code...
+        Scanner scanner2 = new Scanner(System.in);
+        boolean continueRunning = true;
+
+        final String BLUE = "\u001B[38;2;66;103;178m";
+        final String RESET = "\u001B[0m";
+        final String GRAY = "\u001B[38;2;137;143;156m";
+        final String RED = "\u001B[31m";
+
+        while (continueRunning) {
+            System.out.println();
+            System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+            System.out.println("│                                                                                                                                                          │");
+            System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
+            System.out.println(BLUE+"                                                                      ┌─────────────┐                                                                           ");
+            System.out.println("                                                                      │   ACTIONS   │                                                                           ");
+            System.out.println("                                                                      └─────────────┘                                                                           "+RESET);
+            System.out.println();
+            System.out.println(GRAY+"                                                            1. Update Customer Details");
+            System.out.println("                                                            2. Remove Customer");
+            System.out.println("                                                            3. Exit");
+            System.out.println();
+            System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+            System.out.print  ("                                             │ ENTER CHOICE: ");
+            int choice = scanner2.nextInt();
+            System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+            System.out.println();
+            System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+            System.out.println("│                                                                                                                                                          │");
+            System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
+
+            switch (choice) {
+                case 1 -> update();
+                case 2 -> remove();
+                case 3 -> {
+                    System.out.println(GRAY + "                                                                   EXITING..." + RESET);
+                    continueRunning = false;
+                }
+                default -> System.out.println(RED + "                                                          INVALID CHOICE! PLEASE TRY AGAIN." + RESET);
+            }
         }
     }
 

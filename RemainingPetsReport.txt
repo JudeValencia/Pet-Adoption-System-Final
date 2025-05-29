@@ -1,22 +1,22 @@
 --------------------------------------------------
 Pet Information:
-   Pet ID: 540891
-   Name: Patrick
-   Species: Starfish
-   Breed: None
-   Age: 20
-   Birthday: 10/10/2005
-   Gender: M
---------------------------------------------------
-
---------------------------------------------------
-Pet Information:
    Pet ID: 612336
-   Name: Sandy
+   Name: Sandy Iskaba
    Species: Squirrel
    Breed: Flying Squirrel
    Age: 20
    Birthday: 11/11/2005
    Gender: F
+--------------------------------------------------
+
+--------------------------------------------------
+Pet Information:
+   Pet ID: 972679
+   Name: Squirtle
+   Species: WaterGun
+   Breed: Pokemo
+   Age: 19
+   Birthday: 11/31/1999
+   Gender: M
 --------------------------------------------------
 

@@ -1,94 +1,37 @@
-Request ID: 247794
+Request ID: 321641
 Customer Information:
-   Name: Franz Mangubat
-   Age: 20
-   Contact Number: 0912345666789
-   Occupation: Student
-   Home Type: Single-Family Home
-   Has Other Pets: false
-Pet Information:
-   Pet ID: 183601
-   Name: Test Test One
-   Type: Tester
-   Breed: Testosterone
-   Age: 10
-   Birthday: 10/10/2015
-   Gender: F
-
-Status: Approved
---------------------------------------------------
-Request ID: 7892
-Customer Information:
-   Name: Francen Anne Garciano
+   Name: Francen Anne Valencia Garciano
    Age: 19
    Contact Number: 09123456789
    Occupation: Student
    Home Type: Tiny Home
    Has Other Pets: true
 Pet Information:
-   Pet ID: 664536
-   Name: Patrick
-   Type: Dog
-   Breed: Shih Tzu
-   Age: 18
-   Birthday: 1/2/2007
-   Gender: M
-
-Status: Approved
---------------------------------------------------
-Request ID: 750916
-Customer Information:
-   Name: Jude Martin Valencia
-   Age: 21
-   Contact Number: 09619603980
-   Occupation: Student
-   Home Type: Mansion
-   Has Other Pets: false
-Pet Information:
-   Pet ID: 658083
-   Name: Iskaba
-   Type: Pokemon
-   Breed: Pikachu
-   Age: 100
-   Birthday: 10/10/1925
-   Gender: M
-
-Status: Approved
---------------------------------------------------
-Request ID: 626734
-Customer Information:
-   Name: Jude Martin Valencia
-   Age: 21
-   Contact Number: 09619603980
-   Occupation: Student
-   Home Type: Mansion
-   Has Other Pets: false
-Pet Information:
-   Pet ID: 873069
-   Name: Iskabadi
-   Type: Iskoka
-   Breed: Ishmoli
-   Age: 11
-   Birthday: 2/2/2014
+   Pet ID: 612336
+   Name: Sandy
+   Type: Squirrel
+   Breed: Flying Squirrel
+   Age: 19
+   Birthday: 11/11/2005
    Gender: F
 
 Status: Approved
 --------------------------------------------------
-Request ID: 406633
+Request ID: 907566
 Customer Information:
-   Name: Loren Ebanyez
-   Age: 20
+   Name: Francen Anne Valencia Garciano
+   Age: 19
    Contact Number: 09123456789
    Occupation: Student
-   Home Type: Balay
+   Home Type: Tiny Home
    Has Other Pets: true
 Pet Information:
-   Pet ID: 540891
+   Pet ID: 778133
    Name: Patrick
-   Type: Starfish
-   Breed: None
-   Age: 20
-   Birthday: 10/10/2005
+   Type: Dog
+   Breed: Golden Reciever
+   Age: 18
+   Birthday: 10/10/2006
    Gender: M
 
 Status: Approved

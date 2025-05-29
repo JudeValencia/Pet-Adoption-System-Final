@@ -1,7 +1,2 @@
-36461,Francen Anne Garciano,19,M,Brgy. Cabulihan,3,23,2006,Student,Tiny Home,true,francen@gmail.com,09123456789
-524341,Jude Martin Valencia,21,M,Brgy. Cabulihan Ormoc City,10,26,2004,Student,Mansion,false,judemartingarciano@gmail.com,09619603980
-147993,Kenneth Posion,20,M,Brgy. Valencia Ormoc City,4,5,2005,Nurse,Mansion,true,kenneththepoison@gmail.com,09123456789
-895248,Annalin Valencia,45,F,Brgy. Cabulihan Ormoc City,3,9,1980,Teacher,Family Home,false,annalingarciano@gmail.com,09097959657
-502017,Cheene Anoos,19,F,Liloan,4,6,2006,Student,Condo,false,chennee334@gmail.com,09876543210
-815320,Mozart,19,M,Ormoc City,4,5,2006,Sessionist,Suburban,true,jahashayadi@gmail.com,0977 713 7588
-775403,Loren Ebanyez,20,F,Brgy. Idk,3,27,2005,Student,Balay,true,lorenebanyez@gmail.com,09123456789
+36461,Francen Anne Valencia Garciano,19,F,Brgy. Cabulihan Ormoc City,3,23,2006,Student,Tiny Home,true,francen@gmail.com,09123456789
+195941,Jude Martin Valencia,20,M,Brgy. Cabulihan Ormoc City,10,26,2004,Student,Mansion,false,judemartingarciano@gmail.com,09619603980

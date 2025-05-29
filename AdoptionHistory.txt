@@ -1,238 +1,11 @@
-Request ID: 253620
+Request ID: 568111
 Customer Information:
-   Name: Francen Anne Garciano
+   Name: Franz
    Age: 19
-   Contact Number: 09123456789
-   Occupation: Student
-   Home Type: Tiny Home
-   Has Other Pets: true
-Pet Information:
-   Pet ID: 658083
-   Name: Iskaba
-   Breed: Pikachu
-   Age: 100
-   Birthday: 10/10/1925
-   Gender: M
-
-Status: Rejected
---------------------------------------------------
-Request ID: 763023
-Customer Information:
-   Name: Francen Anne Garciano
-   Age: 19
-   Contact Number: 09123456789
-   Occupation: Student
-   Home Type: Tiny Home
-   Has Other Pets: true
-Pet Information:
-   Pet ID: 399847
-   Name: Cthulu
-   Type: God
-   Breed: Floating Eyeball
-   Age: 9
-   Birthday: 1/1/1825
-   Gender: M
-
-Status: Rejected
---------------------------------------------------
-Request ID: 247794
-Customer Information:
-   Name: Franz Mangubat
-   Age: 20
-   Contact Number: 0912345666789
-   Occupation: Student
-   Home Type: Single-Family Home
+   Contact Number: 09090909099
+   Occupation: Racer
+   Home Type: Modern Fringe
    Has Other Pets: false
-Pet Information:
-   Pet ID: 183601
-   Name: Test Test One
-   Type: Tester
-   Breed: Testosterone
-   Age: 10
-   Birthday: 10/10/2015
-   Gender: F
-
-Status: Approved
---------------------------------------------------
-Request ID: 247794
-Customer Information:
-   Name: Franz Mangubat
-   Age: 20
-   Contact Number: 0912345666789
-   Occupation: Student
-   Home Type: Single-Family Home
-   Has Other Pets: false
-Pet Information:
-   Pet ID: 183601
-   Name: Test Test One
-   Type: Tester
-   Breed: Testosterone
-   Age: 10
-   Birthday: 10/10/2015
-   Gender: F
-
-Status: Approved
---------------------------------------------------
-Request ID: 96975
-Customer Information:
-   Name: Francen Anne Garciano
-   Age: 19
-   Contact Number: 09123456789
-   Occupation: Student
-   Home Type: Tiny Home
-   Has Other Pets: true
-Pet Information:
-   Pet ID: 399847
-   Name: Cthulu
-   Type: God
-   Breed: Floating Eyeball
-   Age: 9
-   Birthday: 1/1/1825
-   Gender: M
-
-Status: Rejected
---------------------------------------------------
-Request ID: 233257
-Customer Information:
-   Name: Francen Anne Garciano
-   Age: 19
-   Contact Number: 09123456789
-   Occupation: Student
-   Home Type: Tiny Home
-   Has Other Pets: true
-Pet Information:
-   Pet ID: 399847
-   Name: Cthulu
-   Type: God
-   Breed: Floating Eyeball
-   Age: 9
-   Birthday: 1/1/1825
-   Gender: M
-
-Status: Rejected
---------------------------------------------------
-Request ID: 964851
-Customer Information:
-   Name: Francen Anne Garciano
-   Age: 19
-   Contact Number: 09123456789
-   Occupation: Student
-   Home Type: Tiny Home
-   Has Other Pets: true
-Pet Information:
-   Pet ID: 664536
-   Name: Patrick
-   Type: Dog
-   Breed: Shih Tzu
-   Age: 18
-   Birthday: 2/1/2007
-   Gender: M
-
-Status: Rejected
---------------------------------------------------
-Request ID: 7892
-Customer Information:
-   Name: Francen Anne Garciano
-   Age: 19
-   Contact Number: 09123456789
-   Occupation: Student
-   Home Type: Tiny Home
-   Has Other Pets: true
-Pet Information:
-   Pet ID: 664536
-   Name: Patrick
-   Type: Dog
-   Breed: Shih Tzu
-   Age: 18
-   Birthday: 1/2/2007
-   Gender: M
-
-Status: Approved
---------------------------------------------------
-Request ID: 438115
-Customer Information:
-   Name: Kenneth Posion
-   Age: 20
-   Contact Number: 09123456789
-   Occupation: Nurse
-   Home Type: Mansion
-   Has Other Pets: true
-Pet Information:
-   Pet ID: 612336
-   Name: Sandy
-   Type: Squirrel
-   Breed: Flying Squirrel
-   Age: 20
-   Birthday: 11/11/2005
-   Gender: F
-
-Status: Rejected
---------------------------------------------------
-Request ID: 750916
-Customer Information:
-   Name: Jude Martin Valencia
-   Age: 21
-   Contact Number: 09619603980
-   Occupation: Student
-   Home Type: Mansion
-   Has Other Pets: false
-Pet Information:
-   Pet ID: 658083
-   Name: Iskaba
-   Type: Pokemon
-   Breed: Pikachu
-   Age: 100
-   Birthday: 10/10/1925
-   Gender: M
-
-Status: Approved
---------------------------------------------------
-Request ID: 626734
-Customer Information:
-   Name: Jude Martin Valencia
-   Age: 21
-   Contact Number: 09619603980
-   Occupation: Student
-   Home Type: Mansion
-   Has Other Pets: false
-Pet Information:
-   Pet ID: 873069
-   Name: Iskabadi
-   Type: Iskoka
-   Breed: Ishmoli
-   Age: 11
-   Birthday: 2/2/2014
-   Gender: F
-
-Status: Approved
---------------------------------------------------
-Request ID: 276444
-Customer Information:
-   Name: Mozart
-   Age: 19
-   Contact Number: 0977 713 7588
-   Occupation: Sessionist
-   Home Type: Suburban
-   Has Other Pets: true
-Pet Information:
-   Pet ID: 540891
-   Name: Patrick
-   Type: Starfish
-   Breed: None
-   Age: 20
-   Birthday: 10/10/2005
-   Gender: M
-
-Status: Rejected
---------------------------------------------------
-Request ID: 422692
-Customer Information:
-   Name: Kenneth Posion
-   Age: 20
-   Contact Number: 09123456789
-   Occupation: Nurse
-   Home Type: Mansion
-   Has Other Pets: true
 Pet Information:
    Pet ID: 612336
    Name: Sandy Iskaba
@@ -244,22 +17,155 @@ Pet Information:
 
 Status: Rejected
 --------------------------------------------------
-Request ID: 406633
+Request ID: 568111
 Customer Information:
-   Name: Loren Ebanyez
+   Name: Franz
+   Age: 19
+   Contact Number: 09090909099
+   Occupation: Racer
+   Home Type: Modern Fringe
+   Has Other Pets: false
+Pet Information:
+   Pet ID: 612336
+   Name: Sandy Iskaba
+   Type: Squirrel
+   Breed: Flying Squirrel
    Age: 20
+   Birthday: 11/11/2005
+   Gender: F
+
+Status: Rejected
+--------------------------------------------------
+Request ID: 321641
+Customer Information:
+   Name: Francen Anne Valencia Garciano
+   Age: 19
    Contact Number: 09123456789
    Occupation: Student
-   Home Type: Balay
+   Home Type: Tiny Home
    Has Other Pets: true
 Pet Information:
-   Pet ID: 540891
+   Pet ID: 612336
+   Name: Sandy
+   Type: Squirrel
+   Breed: Flying Squirrel
+   Age: 19
+   Birthday: 11/11/2005
+   Gender: F
+
+Status: Approved
+--------------------------------------------------
+Request ID: 843120
+Customer Information:
+   Name: Francen Anne Valencia Garciano
+   Age: 19
+   Contact Number: 09123456789
+   Occupation: Student
+   Home Type: Tiny Home
+   Has Other Pets: true
+Pet Information:
+   Pet ID: 778133
    Name: Patrick
-   Type: Starfish
-   Breed: None
-   Age: 20
-   Birthday: 10/10/2005
+   Type: Dog
+   Breed: Golden Reciever
+   Age: 18
+   Birthday: 10/10/2006
+   Gender: M
+
+Status: Rejected
+--------------------------------------------------
+Request ID: 582874
+Customer Information:
+   Name: Francen Anne Valencia Garciano
+   Age: 19
+   Contact Number: 09123456789
+   Occupation: Student
+   Home Type: Tiny Home
+   Has Other Pets: true
+Pet Information:
+   Pet ID: 612336
+   Name: Sandy
+   Type: Squirrel
+   Breed: Flying Squirrel
+   Age: 19
+   Birthday: 11/11/2005
+   Gender: F
+
+Status: Rejected
+--------------------------------------------------
+Request ID: 907566
+Customer Information:
+   Name: Francen Anne Valencia Garciano
+   Age: 19
+   Contact Number: 09123456789
+   Occupation: Student
+   Home Type: Tiny Home
+   Has Other Pets: true
+Pet Information:
+   Pet ID: 778133
+   Name: Patrick
+   Type: Dog
+   Breed: Golden Reciever
+   Age: 18
+   Birthday: 10/10/2006
    Gender: M
 
 Status: Approved
+--------------------------------------------------
+Request ID: 955282
+Customer Information:
+   Name: Francen Anne Valencia Garciano
+   Age: 19
+   Contact Number: 09123456789
+   Occupation: Student
+   Home Type: Tiny Home
+   Has Other Pets: true
+Pet Information:
+   Pet ID: 612336
+   Name: Sandy
+   Type: Squirrel
+   Breed: Flying Squirrel
+   Age: 19
+   Birthday: 11/11/2005
+   Gender: F
+
+Status: Rejected
+--------------------------------------------------
+Request ID: 984666
+Customer Information:
+   Name: Francen Anne Valencia Garciano
+   Age: 19
+   Contact Number: 09123456789
+   Occupation: Student
+   Home Type: Tiny Home
+   Has Other Pets: true
+Pet Information:
+   Pet ID: 612336
+   Pet Name: Sandy
+   Type: Squirrel
+   Breed: Flying Squirrel
+   Pet Age: 19
+   Birthday: 11/11/2005
+   Gender: F
+
+Status: Rejected
+--------------------------------------------------
+Request ID: 289421
+Customer Information:
+   Name: Jude Martin Valencia
+   Age: 20
+   Contact Number: 09619603980
+   Occupation: Student
+   Home Type: Mansion
+   Has Other Pets: false
+Pet Information:
+   Pet ID: 867391
+   Pet Name: Smallo
+   Type: Bear
+   Breed: Polar Bear
+   Pet Age: 12
+   Birthday: 10/10/2012
+   Gender: M
+
+Status: Rejected
 --------------------------------------------------

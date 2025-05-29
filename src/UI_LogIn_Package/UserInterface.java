@@ -143,11 +143,10 @@ public class UserInterface extends PetManagement {
         System.out.println(" ║   ║                              "+SKY_BLUE+"     `-^-'                                                             "+SKY_BLUE+"(|||||/)                      "+RESET+"             ║   ║ ");
         System.out.println(" ║   ║════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════║   ║ ");
         System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
-        System.out.println(" ║   ║                            "+AQUA_BLUE+"           [1] Add Pet                                 [2] Remove Pet               "+RESET+"                                ║   ║ ");
+        System.out.println(" ║   ║                            "+AQUA_BLUE+"           [1] Add Pet                                [2] View, Update, Remove Pet Details          "+RESET+"                ║   ║ ");
         System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
-        System.out.println(" ║   ║                            "+AQUA_BLUE+"           [3] Update Pet Details                      [4] View Pet Details         "+RESET+"                                ║   ║ ");
+        System.out.println(" ║   ║                            "+AQUA_BLUE+"           [3]  Back to Admin Panel                                                 "+RESET+"                                ║   ║ ");
         System.out.println(" ║   ║                                                                                                                                                ║   ║ ");
-        System.out.println(" ║   ║                            "+AQUA_BLUE+"           [5] Back to Admin Panel                                                  "+RESET+"                                ║   ║ ");
         System.out.println(" ║___║                                                                                                                                                ║___║ ");
         System.out.println("(_____)══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════(_____)");
         System.out.println();

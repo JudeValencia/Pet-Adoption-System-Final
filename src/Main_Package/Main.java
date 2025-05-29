@@ -23,11 +23,11 @@ public class Main {
             AdoptionManagement adoptionManager = new AdoptionManagement(loginPage);
 
             if (username.equals("admin123")) {
-                System.out.println("                                                              WELCOME, ADMINISTRATOR!");
+                System.out.println("                                                                WELCOME, ADMINISTRATOR!");
                 adoptionManager.adminUserInterface();
             }
             else {
-                System.out.println("                                                                   WELCOME, " + username + "!");
+                System.out.println("                                                                  WELCOME, " + username + "!");
                 adoptionManager.nonAdminUserInterface();
             }
         }
