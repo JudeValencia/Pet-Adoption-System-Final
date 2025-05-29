@@ -243,7 +243,7 @@ public class AdoptionManagement extends UserInterface {
         }
 
         if (petData.isEmpty()) {
-            System.out.println("No pet records found.");
+            System.out.println("\n                                             No pet records found.");
             return;
         }
 
@@ -273,17 +273,29 @@ public class AdoptionManagement extends UserInterface {
             columnWidths[6] = Math.max(columnWidths[6], pet[8].length()); // Gender
         }
 
-        // Add padding to column widths
+        // Add padding to column widths (minimum 2 spaces padding per column)
         for (int i = 0; i < columnWidths.length; i++) {
-            columnWidths[i] += 2;
+            columnWidths[i] += 4; // Increased padding for better spacing
         }
 
-        // Print top border
-        System.out.print("┌");
+        // Calculate total table width more accurately
+        int totalWidth = 1; // Left border
         for (int i = 0; i < columnWidths.length; i++) {
-            for (int j = 0; j < columnWidths[i]; j++) {
-                System.out.print("─");
-            }
+            totalWidth += columnWidths[i] + 1; // Column width + right border
+        }
+
+        // Calculate left padding to center the table
+        // Using 140 as terminal width to match your ASCII art width
+        int terminalWidth = 140;
+        int leftPadding = Math.max(0, (terminalWidth - totalWidth) / 2) + 8; // Added 8 spaces to move right
+        String padding = " ".repeat(leftPadding);
+
+        System.out.println(); // Add some space before the table
+
+        // Print top border
+        System.out.print(padding + "┌");
+        for (int i = 0; i < columnWidths.length; i++) {
+            System.out.print("─".repeat(columnWidths[i]));
             if (i < columnWidths.length - 1) {
                 System.out.print("┬");
             }
@@ -291,18 +303,16 @@ public class AdoptionManagement extends UserInterface {
         System.out.println("┐");
 
         // Print headers
-        System.out.print("│");
+        System.out.print(padding + "│");
         for (int i = 0; i < headers.length; i++) {
             System.out.printf(" %-" + (columnWidths[i] - 1) + "s│", headers[i]);
         }
         System.out.println();
 
         // Print header separator
-        System.out.print("├");
+        System.out.print(padding + "├");
         for (int i = 0; i < columnWidths.length; i++) {
-            for (int j = 0; j < columnWidths[i]; j++) {
-                System.out.print("─");
-            }
+            System.out.print("─".repeat(columnWidths[i]));
             if (i < columnWidths.length - 1) {
                 System.out.print("┼");
             }
@@ -310,11 +320,10 @@ public class AdoptionManagement extends UserInterface {
         System.out.println("┤");
 
         // Print pet data rows
-        for (int row = 0; row < petData.size(); row++) {
-            String[] pet = petData.get(row);
-            System.out.print("│");
+        for (String[] pet : petData) {
+            System.out.print(padding + "│");
 
-            // Print each column
+            // Print each column with proper formatting
             System.out.printf(" %-" + (columnWidths[0] - 1) + "s│", pet[0]); // ID
             System.out.printf(" %-" + (columnWidths[1] - 1) + "s│", pet[1]); // Name
             System.out.printf(" %-" + (columnWidths[2] - 1) + "s│", pet[2]); // Type
@@ -331,16 +340,17 @@ public class AdoptionManagement extends UserInterface {
         }
 
         // Print bottom border
-        System.out.print("└");
+        System.out.print(padding + "└");
         for (int i = 0; i < columnWidths.length; i++) {
-            for (int j = 0; j < columnWidths[i]; j++) {
-                System.out.print("─");
-            }
+            System.out.print("─".repeat(columnWidths[i]));
             if (i < columnWidths.length - 1) {
                 System.out.print("┴");
             }
         }
         System.out.println("┘");
+
+        // Add some space after the table
+        System.out.println();
     }
 
     public void approveAdoptionRequest(String requestIdToApprove) {
