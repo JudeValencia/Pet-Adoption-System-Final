@@ -9,8 +9,9 @@ Updates:
   - Updatd the approval/rejection logic
   - Formatted of Remaining Pets report
   - Completely connect all features to build the full system
+  - Validations
 
 TODO: 
-  - Update UI (Kamo na ani gais, lamuch)
-  - Validations
+  - Center and available pets table
+  
   
