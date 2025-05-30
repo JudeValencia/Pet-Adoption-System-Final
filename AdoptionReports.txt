@@ -36,3 +36,22 @@ Pet Information:
 
 Status: Approved
 --------------------------------------------------
+Request ID: 757355
+Customer Information:
+   Name: Franz
+   Age: 21
+   Contact Number: 0909090909
+   Occupation: racer
+   Home Type: trapal
+   Has Other Pets: false
+Pet Information:
+   Pet ID: 46322
+   Pet Name: Mozart
+   Type: Pokemon
+   Breed: Charizard
+   Pet Age: 10
+   Birthday: 10/10/2014
+   Gender: F
+
+Status: Approved
+--------------------------------------------------

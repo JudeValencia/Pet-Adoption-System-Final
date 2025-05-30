@@ -432,15 +432,19 @@ public class PetManagement extends Pet implements ManagementFunctions {
         String searchType = scanner.nextLine().trim();
         System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
 
+        boolean found = false;
+        String padding = "│                               "; // to align with main box sides
+        final String RESET = "\033[0m";
+        final String AQUA_LIGHT = "\u001B[38;2;161;227;239m"+"\033[1m";
+        final String RED = "\u001B[31m";
+        final String GREEN = "\u001B[32m";
 
+        // Search in Pet.txt (Available pets)
         try (Scanner fileScanner = new Scanner(file)) {
-            boolean found = false;
-            String padding = "│                               "; // to align with main box sides
-            final String RESET = "\033[0m";
-            final String AQUA_LIGHT = "\u001B[38;2;161;227;239m"+"\033[1m";
-
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
+                if (line.trim().isEmpty()) continue;
+
                 String[] petDetails = line.split(",");
 
                 if (petDetails.length == 9) { // Ensures correct format
@@ -454,62 +458,136 @@ public class PetManagement extends Pet implements ManagementFunctions {
                     setBirthYear(Integer.parseInt(petDetails[7]));
                     setGender(petDetails[8].charAt(0));
 
-                    if (getType().equalsIgnoreCase(searchType)) {
-                        setId(Integer.parseInt(petDetails[0]));
-                        setName(petDetails[1]);
-                        setType(petDetails[2]);
-                        setBreed(petDetails[3]);
-                        setAge(Integer.parseInt(petDetails[4]));
-                        setBirthMonth(Integer.parseInt(petDetails[5]));
-                        setBirthDay(Integer.parseInt(petDetails[6]));
-                        setBirthYear(Integer.parseInt(petDetails[7]));
-                        setGender(petDetails[8].charAt(0));
-
+                    if (getType().toLowerCase().contains(searchType.toLowerCase())) {
                         found = true;
-
-                        System.out.println();
-                        System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
-                        System.out.println("│                                                               "+AQUA_LIGHT+"       PET DETAILS     "+RESET+"                                                                    │");
-                        System.out.println("├──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤");
-
-                        printCenteredBox(padding, "ID", String.valueOf(getId()));
-                        printCenteredBox(padding, "NAME", getName());
-                        printCenteredBox(padding, "TYPE", getType());
-                        printCenteredBox(padding, "BREED", getBreed());
-                        printCenteredBox(padding, "AGE", String.valueOf(getAge()));
-                        printCenteredBox(padding, "BIRTHDAY", getBirthMonth() + "/" + getBirthDay() + "/" + getBirthYear());
-                        printCenteredBox(padding, "GENDER", String.valueOf(getGender()));
-
-                        // Bottom Border
-                        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
-
+                        displayPetDetails(padding, "Available");
                     }
                 }
             }
+        }
+        catch (FileNotFoundException e) {
+            // Pet.txt doesn't exist, continue to check RequestedPets.txt
+        }
 
-            if (!found) {
-                System.out.println("Pet Type not found.");
+        // Search in RequestedPets.txt (Currently Requested pets)
+        try (Scanner fileScanner = new Scanner(new File("RequestedPets.txt"))) {
+            while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
+                if (line.trim().isEmpty()) continue;
+
+                String[] petDetails = line.split(",");
+
+                if (petDetails.length == 9) { // Ensures correct format
+                    setId(Integer.parseInt(petDetails[0]));
+                    setName(petDetails[1]);
+                    setType(petDetails[2]);
+                    setBreed(petDetails[3]);
+                    setAge(Integer.parseInt(petDetails[4]));
+                    setBirthMonth(Integer.parseInt(petDetails[5]));
+                    setBirthDay(Integer.parseInt(petDetails[6]));
+                    setBirthYear(Integer.parseInt(petDetails[7]));
+                    setGender(petDetails[8].charAt(0));
+
+                    if (getType().toLowerCase().contains(searchType.toLowerCase())) {
+                        found = true;
+                        displayPetDetails(padding, "Currently Requested");
+                    }
+                }
             }
         }
         catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            // RequestedPets.txt doesn't exist, that's okay
         }
+
+        if (!found) {
+            System.out.println("Pet Type not found.");
+        }
+    }
+
+    // Helper method to display pet details with status
+    private void displayPetDetails(String padding, String status) {
+        final String RESET = "\033[0m";
+        final String AQUA_LIGHT = "\u001B[38;2;161;227;239m"+"\033[1m";
+        final String RED = "\u001B[31m";
+        final String GREEN = "\u001B[32m";
+
+        System.out.println();
+        System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+        System.out.println("│                                                               "+AQUA_LIGHT+"       PET DETAILS     "+RESET+"                                                                    │");
+        System.out.println("├──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤");
+
+        printCenteredBox(padding, "ID", String.valueOf(getId()));
+        printCenteredBox(padding, "NAME", getName());
+        printCenteredBox(padding, "TYPE", getType());
+        printCenteredBox(padding, "BREED", getBreed());
+        printCenteredBox(padding, "AGE", String.valueOf(getAge()));
+        printCenteredBox(padding, "BIRTHDAY", getBirthMonth() + "/" + getBirthDay() + "/" + getBirthYear());
+        printCenteredBox(padding, "GENDER", String.valueOf(getGender()));
+
+        // Add status with color coding
+        String statusColor = status.equals("Available") ? GREEN : RED;
+        printCenteredBoxWithColor(padding, "STATUS", status, statusColor);
+
+        // Bottom Border
+        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
+    }
+
+    // Enhanced printCenteredBox method that supports status colors
+    public static void printCenteredBoxWithColor(String padding, String label, String value, String valueColor) {
+        int boxWidth = 90;
+
+        // Colors
+        final String RESET = "\u001B[0m";
+        final String AQUA_LIGHT = "\u001B[38;2;161;227;239m"+"\033[1m";
+
+        // Build colored content with colored value
+        String content = String.format("│ %s%-35s%s │  %s%-50s%s│",
+                AQUA_LIGHT, label, RESET,
+                valueColor, value, RESET);
+
+        String top = "┌" + "─".repeat(boxWidth) + "┐";
+        String bottom = "└" + "─".repeat(boxWidth) + "┘";
+
+        System.out.println(padding + top + "                               │");
+        System.out.println(padding + content + "                               │");
+        System.out.println(padding + bottom + "                               │");
     }
 
     @Override
     public void view() {
         List<String[]> petData = new ArrayList<>();
+        List<String> petStatuses = new ArrayList<>();
 
-        // Read all pet data first
+        // Read all pet data from Pet.txt (Available pets)
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
-                String[] petDetails = scanner.nextLine().split(",");
+                String line = scanner.nextLine();
+                if (line.trim().isEmpty()) continue;
+
+                String[] petDetails = line.split(",");
                 if (petDetails.length == 9) {
                     petData.add(petDetails);
+                    petStatuses.add("Available");
                 }
             }
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            // Pet.txt doesn't exist, continue to check RequestedPets.txt
+        }
+
+        // Read pet data from RequestedPets.txt (Currently Requested pets)
+        try (Scanner scanner = new Scanner(new File("RequestedPets.txt"))) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.trim().isEmpty()) continue;
+
+                String[] petDetails = line.split(",");
+                if (petDetails.length == 9) {
+                    petData.add(petDetails);
+                    petStatuses.add("Currently Requested");
+                }
+            }
+        } catch (FileNotFoundException e) {
+            // RequestedPets.txt doesn't exist, that's okay
         }
 
         if (petData.isEmpty()) {
@@ -517,8 +595,8 @@ public class PetManagement extends Pet implements ManagementFunctions {
             return;
         }
 
-        // Define table headers
-        String[] headers = {"ID", "Name", "Type", "Breed", "Age", "Birthday", "Gender"};
+        // Define table headers (added Status column)
+        String[] headers = {"ID", "Name", "Type", "Breed", "Age", "Birthday", "Gender", "Status"};
 
         // Calculate column widths
         int[] columnWidths = new int[headers.length];
@@ -529,7 +607,10 @@ public class PetManagement extends Pet implements ManagementFunctions {
         }
 
         // Check data lengths and update column widths
-        for (String[] pet : petData) {
+        for (int i = 0; i < petData.size(); i++) {
+            String[] pet = petData.get(i);
+            String status = petStatuses.get(i);
+
             columnWidths[0] = Math.max(columnWidths[0], pet[0].length()); // ID
             columnWidths[1] = Math.max(columnWidths[1], pet[1].length()); // Name
             columnWidths[2] = Math.max(columnWidths[2], pet[2].length()); // Type
@@ -541,6 +622,7 @@ public class PetManagement extends Pet implements ManagementFunctions {
             columnWidths[5] = Math.max(columnWidths[5], birthday.length());
 
             columnWidths[6] = Math.max(columnWidths[6], pet[8].length()); // Gender
+            columnWidths[7] = Math.max(columnWidths[7], status.length()); // Status
         }
 
         // Add padding to column widths (minimum 2 spaces padding per column)
@@ -590,7 +672,10 @@ public class PetManagement extends Pet implements ManagementFunctions {
         System.out.println("┤");
 
         // Print pet data rows
-        for (String[] pet : petData) {
+        for (int i = 0; i < petData.size(); i++) {
+            String[] pet = petData.get(i);
+            String status = petStatuses.get(i);
+
             System.out.print(padding + "│");
 
             // Print each column with proper formatting
@@ -605,6 +690,17 @@ public class PetManagement extends Pet implements ManagementFunctions {
             System.out.printf(" %-" + (columnWidths[5] - 1) + "s│", birthday);
 
             System.out.printf(" %-" + (columnWidths[6] - 1) + "s│", pet[8]); // Gender
+
+            // Status with color coding
+            final String RED = "\u001B[31m";
+            final String GREEN = "\u001B[32m";
+            final String RESET = "\u001B[0m";
+
+            if (status.equals("Currently Requested")) {
+                System.out.printf(" " + RED + "%-" + (columnWidths[7] - 1) + "s" + RESET + "│", status);
+            } else {
+                System.out.printf(" " + GREEN + "%-" + (columnWidths[7] - 1) + "s" + RESET + "│", status);
+            }
 
             System.out.println();
         }
@@ -640,8 +736,8 @@ public class PetManagement extends Pet implements ManagementFunctions {
             System.out.println("                                                                      │   ACTIONS   │                                                                           ");
             System.out.println("                                                                      └─────────────┘                                                                           "+RESET);
             System.out.println();
-            System.out.println(GRAY+"                                                            1. Update Customer Details");
-            System.out.println("                                                            2. Remove Customer");
+            System.out.println(GRAY+"                                                            1. Update Pet Details");
+            System.out.println("                                                            2. Remove Pet");
             System.out.println("                                                            3. Exit");
             System.out.println();
             System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");

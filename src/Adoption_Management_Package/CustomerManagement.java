@@ -1,4 +1,3 @@
-
 package Adoption_Management_Package;
 
 import java.io.*;
@@ -12,42 +11,6 @@ import java.util.*;
  * generation and user authentication features. It extends functionality from
  * the Customer class and implements abstract methods defined in the
  * ManagementFunctions interface.
- *
- * Fields:
- * - file: Represents a file object used for file manipulation.
- * - file2: Represents a secondary file object used for account storage.
- * - LOWERCASE, UPPERCASE, DIGITS, SPECIAL_CHARS: Constants used in password
- *   generation to define character types.
- * - ALL_CHARACTERS: Represents a collection of all characters used in password
- *   generation.
- * - random: A Random object used for generating random values.
- *
- * Methods:
- * - add(): Allows adding a new customer record or account.
- * - remove(): Removes customer accounts or data.
- * - update(): Updates customer details or account information.
- * - view(): Allows viewing customer data or account details.
- * - createAccount(): Creates a new customer account by generating a unique
- *   username and secure password and storing it in a file.
- * - generatePassword(int length): Generates a random, secure password with the
- *   specified length.
- * - removeAccount(int customerIdToRemove): Removes a specified customer
- *   account from the stored accounts file, identified by the customer ID.
- * - searchCustomerAccount(String username, String password): Searches for a
- *   customer's account using their username and password. Returns a boolean
- *   indicating whether the account exists.
- * - getCustomerNameByUsername(String username): Retrieves and returns the
- *   full name of a customer based on their username. Returns null if the
- *   username is not found.
- *
- * Inheritance:
- * This class inherits from the Customer class, which provides fields and
- * methods for handling customer-related information such as personal details,
- * address, and account credentials.
- *
- * Interface Implementation:
- * Implements the ManagementFunctions interface, which defines abstract methods
- * for adding, removing, updating, and viewing customer records.
  */
 public class CustomerManagement extends Customer implements ManagementFunctions {
 
@@ -65,15 +28,54 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
     // SecureRandom provides stronger randomness
     private static SecureRandom random = new SecureRandom();
 
+    /**
+     * Check if a customer already exists based on name, email, or contact number
+     */
+    private boolean customerExists(String name, String email, String contactNumber) {
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.trim().isEmpty()) continue;
+
+                String[] customerDetails = line.split(",");
+                if (customerDetails.length >= 13) {
+                    String existingName = customerDetails[1].trim().toLowerCase();
+                    String existingEmail = customerDetails[11].trim().toLowerCase();
+                    String existingContact = customerDetails[12].trim();
+
+                    // Check for duplicates
+                    if (existingName.equals(name.trim().toLowerCase()) ||
+                            existingEmail.equals(email.trim().toLowerCase()) ||
+                            existingContact.equals(contactNumber.trim())) {
+                        return true;
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            // If file doesn't exist, no duplicates exist
+            return false;
+        }
+        return false;
+    }
+
     @Override
     public void add() {
         Scanner scanner = new Scanner(System.in);
         char gender;
-        String nameTemp, addressTemp,homeTypeTemp, occupationTemp, emailTemp, contactNumberTemp;
+        String nameTemp, addressTemp, homeTypeTemp, occupationTemp, emailTemp, contactNumberTemp;
         int ageTemp, birthMonthTemp, birthDayTemp, birthYearTemp;
+        String hasPetsResponse;
+        boolean hasOtherPets;
+
+        // Guardian information variables
+        String guardianNameTemp = "";
+        int guardianAgeTemp = 0;
+        String guardianOccupationTemp = "";
 
         final String RESET = "\u001B[0m";
         final String GRAY = "\u001B[38;2;137;143;156m";
+        final String RED = "\u001B[31m";
+        final String BLUE = "\u001B[38;2;66;103;178m";
 
         try {
             Validation validator = new Validation();
@@ -91,7 +93,6 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                 System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
                 validator.nameValidation(nameTemp);
             } while (!validator.nameValidation(nameTemp));
-            setName(nameTemp);
 
             do {
                 System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
@@ -100,7 +101,6 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                 System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
 
             } while(ageTemp < 18 || ageTemp > 120);
-            setAge(ageTemp);
             scanner.nextLine();
 
             do {
@@ -109,7 +109,6 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                 gender = scanner.next().toUpperCase().charAt(0);
                 System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
             } while (gender != 'M' && gender != 'F');
-            setGender(gender);
             scanner.nextLine();
 
             do {
@@ -118,7 +117,6 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                 addressTemp = scanner.nextLine();
                 System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
             } while (validator.addressValidation(addressTemp));
-            setAddress(addressTemp);
 
             do {
                 System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
@@ -126,7 +124,6 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                 birthMonthTemp = scanner.nextInt();
                 System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
             } while (birthMonthTemp < 1 || birthMonthTemp > 12);
-            setBirthMonth(birthMonthTemp);
             scanner.nextLine();
 
             do {
@@ -135,7 +132,6 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                 birthDayTemp = scanner.nextInt();
                 System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
             } while (birthDayTemp < 1 || birthDayTemp > 31);
-            setBirthDay(birthDayTemp);
             scanner.nextLine();
 
             do {
@@ -144,7 +140,6 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                 birthYearTemp = scanner.nextInt();
                 System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
             } while (birthYearTemp < 1900 || birthYearTemp > 2025);
-            setBirthYear(birthYearTemp);
             scanner.nextLine();
 
             do {
@@ -153,7 +148,49 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                 occupationTemp = scanner.nextLine();
                 System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
             } while (validator.occupationAndHomeTypeValidation(occupationTemp));
-            setOccupation(occupationTemp);
+
+            // Check if occupation is "student" (case-insensitive) and ask for guardian information
+            if (occupationTemp.toLowerCase().trim().equals("student")) {
+                System.out.println();
+                System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+                System.out.println("│                                                                                                                                                          │");
+                System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
+                System.out.println(BLUE+"                                                                 ┌─────────────────────────┐                                                                     ");
+                System.out.println("                                                                 │ GUARDIAN INFORMATION    │                                                                     ");
+                System.out.println("                                                                 └─────────────────────────┘                                                                     "+RESET);
+                System.out.println();
+
+                // Guardian Name
+                do {
+                    System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
+                    System.out.print  ("                                             │ ENTER GUARDIAN'S NAME: ");
+                    guardianNameTemp = scanner.nextLine();
+                    System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+                    validator.nameValidation(guardianNameTemp);
+                } while (!validator.nameValidation(guardianNameTemp));
+
+                // Guardian Age
+                do {
+                    System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                    System.out.print  ("                                             │ ENTER GUARDIAN'S AGE: ");
+                    guardianAgeTemp = scanner.nextInt();
+                    System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+                } while(guardianAgeTemp < 18 || guardianAgeTemp > 120);
+                scanner.nextLine();
+
+                // Guardian Occupation
+                do {
+                    System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                    System.out.print  ("                                             │ ENTER GUARDIAN'S OCCUPATION: ");
+                    guardianOccupationTemp = scanner.nextLine();
+                    System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+                } while (validator.occupationAndHomeTypeValidation(guardianOccupationTemp));
+
+                System.out.println();
+                System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+                System.out.println("│                                                                                                                                                          │");
+                System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
+            }
 
             do {
                 System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
@@ -161,13 +198,16 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                 homeTypeTemp = scanner.nextLine();
                 System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
             } while (validator.occupationAndHomeTypeValidation(homeTypeTemp));
-            setHomeType(homeTypeTemp);
 
-            System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
-            System.out.print  ("                                             │ HAS OTHER PET/S (true/false): ");
-            setHasOtherPets(scanner.nextBoolean());
-            System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
-            scanner.nextLine();
+            // Updated prompt for has other pets - now using yes/no instead of true/false
+            do {
+                System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+                System.out.print  ("                                             │ HAS OTHER PET/S (yes/no): ");
+                hasPetsResponse = scanner.nextLine().toLowerCase().trim();
+                System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+            } while (!hasPetsResponse.equals("yes") && !hasPetsResponse.equals("no"));
+
+            hasOtherPets = hasPetsResponse.equals("yes");
 
             do {
                 System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
@@ -175,7 +215,6 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                 emailTemp = scanner.nextLine();
                 System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
             } while(validator.emailValidation(emailTemp));
-            setEmail(emailTemp);
 
             do {
                 System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
@@ -187,7 +226,34 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                 System.out.println("│                                                                                                                                                          │");
                 System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
             } while(validator.contactNumberValidation(contactNumberTemp));
+
+            // Check for duplicate customer before saving
+            if (customerExists(nameTemp, emailTemp, contactNumberTemp)) {
+                System.out.println(RED + "                                                    ❌ CUSTOMER ALREADY EXISTS!" + RESET);
+                System.out.println(RED + "                                          A customer with this name, email, or contact number already exists." + RESET);
+                return;
+            }
+
+            // Set all the validated values
+            setName(nameTemp);
+            setAge(ageTemp);
+            setGender(gender);
+            setAddress(addressTemp);
+            setBirthMonth(birthMonthTemp);
+            setBirthDay(birthDayTemp);
+            setBirthYear(birthYearTemp);
+            setOccupation(occupationTemp);
+            setHomeType(homeTypeTemp);
+            setHasOtherPets(hasOtherPets);
+            setEmail(emailTemp);
             setContactNumber(contactNumberTemp);
+
+            // Set guardian information if student
+            if (occupationTemp.toLowerCase().trim().equals("student")) {
+                setGuardianName(guardianNameTemp);
+                setGuardianAge(guardianAgeTemp);
+                setGuardianOccupation(guardianOccupationTemp);
+            }
 
         }
         catch (InputMismatchException e) {
@@ -195,9 +261,19 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))){
-            writer.write(getCustomerID() + "," + getName() + "," + getAge() + "," + getGender() + "," + getAddress() +
-                    "," + getBirthMonth() + "," + getBirthDay() + "," + getBirthYear() + "," + getOccupation() + "," +
-                    getHomeType() + "," + getHasOtherPets() + "," + getEmail() + "," + getContactNumber() + "\n");
+            // Updated file write to include guardian information
+            if (getOccupation().toLowerCase().trim().equals("student")) {
+                writer.write(getCustomerID() + "," + getName() + "," + getAge() + "," + getGender() + "," + getAddress() +
+                        "," + getBirthMonth() + "," + getBirthDay() + "," + getBirthYear() + "," + getOccupation() + "," +
+                        getHomeType() + "," + getHasOtherPets() + "," + getEmail() + "," + getContactNumber() + "," +
+                        getGuardianName() + "," + getGuardianAge() + "," + getGuardianOccupation() + "\n");
+            } else {
+                // For non-students, write empty guardian fields to maintain consistency
+                writer.write(getCustomerID() + "," + getName() + "," + getAge() + "," + getGender() + "," + getAddress() +
+                        "," + getBirthMonth() + "," + getBirthDay() + "," + getBirthYear() + "," + getOccupation() + "," +
+                        getHomeType() + "," + getHasOtherPets() + "," + getEmail() + "," + getContactNumber() + "," +
+                        "N/A,N/A,N/A\n");
+            }
             createAccount();
             System.out.println("Customer added successfully!\n");
             System.out.println("User Account: " + getAccount());
@@ -327,8 +403,9 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
         List<String> customerList = new ArrayList<>();
         boolean found = false;
         char gender;
-        String nameTemp, addressTemp,homeTypeTemp, occupationTemp, emailTemp, contactNumberTemp;
+        String nameTemp, addressTemp, homeTypeTemp, occupationTemp, emailTemp, contactNumberTemp;
         int ageTemp, birthMonthTemp, birthDayTemp, birthYearTemp;
+        String hasPetsResponse;
 
         try {
             Scanner fileScanner = new Scanner(file);
@@ -473,11 +550,14 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
                                     setHomeType(homeTypeTemp);
                                 }
                                 case 10 -> {
-                                    System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
-                                    System.out.print  ("                                             │ HAS OTHER PET/S (true/false): ");
-                                    setHasOtherPets(scanner.nextBoolean());
-                                    System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
-                                    scanner.nextLine();
+                                    // Updated to use yes/no instead of true/false
+                                    do {
+                                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
+                                        System.out.print  ("                                             │ HAS OTHER PET/S (yes/no): ");
+                                        hasPetsResponse = scanner.nextLine().toLowerCase().trim();
+                                        System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+                                    } while (!hasPetsResponse.equals("yes") && !hasPetsResponse.equals("no"));
+                                    setHasOtherPets(hasPetsResponse.equals("yes"));
                                 }
                                 case 11 -> {
                                     do {
@@ -549,7 +629,8 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
         try(Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 String[] customerDetails = scanner.nextLine().split(",");
-                if (customerDetails.length == 13) {
+                // Updated to handle both old format (13 fields) and new format (16 fields)
+                if (customerDetails.length == 13 || customerDetails.length == 16) {
                     customerData.add(customerDetails);
                 }
             }
@@ -562,9 +643,9 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
             return;
         }
 
-        // Define table headers
+        // Define table headers - updated to include guardian information
         String[] headers = {"ID", "Name", "Age", "Gender", "Address", "Birthday",
-                "Occupation", "Home Type", "Has Pets", "Email", "Contact"};
+                "Occupation", "Home Type", "Has Pets", "Email", "Contact", "Guardian", "G.Age", "G.Occupation"};
 
         // Calculate column widths
         int[] columnWidths = new int[headers.length];
@@ -591,6 +672,18 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
             columnWidths[8] = Math.max(columnWidths[8], customer[10].length()); // Has Pets
             columnWidths[9] = Math.max(columnWidths[9], customer[11].length()); // Email
             columnWidths[10] = Math.max(columnWidths[10], customer[12].length()); // Contact
+
+            // Guardian information (check if fields exist)
+            if (customer.length > 13) {
+                columnWidths[11] = Math.max(columnWidths[11], customer[13].length()); // Guardian Name
+                columnWidths[12] = Math.max(columnWidths[12], customer[14].length()); // Guardian Age
+                columnWidths[13] = Math.max(columnWidths[13], customer[15].length()); // Guardian Occupation
+            } else {
+                // For old format records without guardian info
+                columnWidths[11] = Math.max(columnWidths[11], 3); // "N/A"
+                columnWidths[12] = Math.max(columnWidths[12], 3); // "N/A"
+                columnWidths[13] = Math.max(columnWidths[13], 3); // "N/A"
+            }
         }
 
         // Add padding to column widths
@@ -650,6 +743,18 @@ public class CustomerManagement extends Customer implements ManagementFunctions 
             System.out.printf(" %-" + (columnWidths[8] - 1) + "s│", customer[10]); // Has Pets
             System.out.printf(" %-" + (columnWidths[9] - 1) + "s│", customer[11]); // Email
             System.out.printf(" %-" + (columnWidths[10] - 1) + "s│", customer[12]); // Contact
+
+            // Guardian information
+            if (customer.length > 13) {
+                System.out.printf(" %-" + (columnWidths[11] - 1) + "s│", customer[13]); // Guardian Name
+                System.out.printf(" %-" + (columnWidths[12] - 1) + "s│", customer[14]); // Guardian Age
+                System.out.printf(" %-" + (columnWidths[13] - 1) + "s│", customer[15]); // Guardian Occupation
+            } else {
+                // For old format records
+                System.out.printf(" %-" + (columnWidths[11] - 1) + "s│", "N/A"); // Guardian Name
+                System.out.printf(" %-" + (columnWidths[12] - 1) + "s│", "N/A"); // Guardian Age
+                System.out.printf(" %-" + (columnWidths[13] - 1) + "s│", "N/A"); // Guardian Occupation
+            }
 
             System.out.println();
         }

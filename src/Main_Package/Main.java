@@ -12,6 +12,8 @@ public class Main {
         System.out.println("\n                                                           STARTING PET HAVEN APPLICATION...");
         System.out.println( );
         LoginPage loginPage = new LoginPage();
+
+
         loginPage.logIn();
 
         String username = loginPage.getCurrentUsername();

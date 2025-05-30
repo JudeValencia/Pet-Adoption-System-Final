@@ -22,6 +22,33 @@ public class Customer extends General_Information {
     String address, email, occupation, homeType, contactNumber, account, password;
     int costumerID;
     boolean hasOtherPets;
+    private String guardianName;
+    private int guardianAge;
+    private String guardianOccupation;
+
+    public String getGuardianName() {
+        return guardianName;
+    }
+
+    public void setGuardianName(String guardianName) {
+        this.guardianName = guardianName;
+    }
+
+    public int getGuardianAge() {
+        return guardianAge;
+    }
+
+    public void setGuardianAge(int guardianAge) {
+        this.guardianAge = guardianAge;
+    }
+
+    public String getGuardianOccupation() {
+        return guardianOccupation;
+    }
+
+    public void setGuardianOccupation(String guardianOccupation) {
+        this.guardianOccupation = guardianOccupation;
+    }
 
     public String getAddress() {
         return address;

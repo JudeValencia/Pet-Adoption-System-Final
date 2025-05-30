@@ -1,2 +1,3 @@
 612336,Sandy,Squirrel,Flying Squirrel,19,11,11,2005,F
-867391,Smallo,Bear,Polar Bear,12,10,10,2012,M
+405111,Cheene,Dog,Golden Retriever,10,10,10,2014,F
+272469,Franz,Cat,Siamese,10,10,10,2014,F

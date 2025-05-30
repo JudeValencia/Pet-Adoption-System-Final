@@ -169,3 +169,136 @@ Pet Information:
 
 Status: Rejected
 --------------------------------------------------
+Request ID: 97823
+Customer Information:
+   Name: Franz
+   Age: 21
+   Contact Number: 0909090909
+   Occupation: racer
+   Home Type: trapal
+   Has Other Pets: false
+Pet Information:
+   Pet ID: 867391
+   Pet Name: Smallo
+   Type: Bear
+   Breed: Polar Bear
+   Pet Age: 12
+   Birthday: 10/10/2012
+   Gender: M
+
+Status: Rejected
+--------------------------------------------------
+Request ID: 757355
+Customer Information:
+   Name: Franz
+   Age: 21
+   Contact Number: 0909090909
+   Occupation: racer
+   Home Type: trapal
+   Has Other Pets: false
+Pet Information:
+   Pet ID: 46322
+   Pet Name: Mozart
+   Type: Pokemon
+   Breed: Charizard
+   Pet Age: 10
+   Birthday: 10/10/2014
+   Gender: F
+
+Status: Approved
+--------------------------------------------------
+Request ID: 464446
+Customer Information:
+   Name: Franz
+   Age: 21
+   Contact Number: 0909090909
+   Occupation: racer
+   Home Type: trapal
+   Has Other Pets: false
+Pet Information:
+   Pet ID: 867391
+   Pet Name: Smallo
+   Type: Bear
+   Breed: Polar Bear
+   Pet Age: 12
+   Birthday: 10/10/2012
+   Gender: M
+
+Status: Rejected
+--------------------------------------------------
+Request ID: 718677
+Customer Information:
+   Name: Jude Martin Garciano
+   Age: 20
+   Contact Number: 09619603980
+   Occupation: Student
+   Home Type: Mansion
+   Has Other Pets: false
+Pet Information:
+   Pet ID: 612336
+   Pet Name: Sandy
+   Type: Squirrel
+   Breed: Flying Squirrel
+   Pet Age: 19
+   Birthday: 11/11/2005
+   Gender: F
+
+Status: Rejected
+--------------------------------------------------
+Request ID: 430907
+Customer Information:
+   Name: Franz
+   Age: 21
+   Contact Number: 0909090909
+   Occupation: racer
+   Home Type: trapal
+   Has Other Pets: false
+Pet Information:
+   Pet ID: 405111
+   Pet Name: Cheene
+   Type: Dog
+   Breed: Golden Retriever
+   Pet Age: 10
+   Birthday: 10/10/2014
+   Gender: F
+
+Status: Rejected
+--------------------------------------------------
+Request ID: 119171
+Customer Information:
+   Name: Franz
+   Age: 21
+   Contact Number: 0909090909
+   Occupation: racer
+   Home Type: trapal
+   Has Other Pets: false
+Pet Information:
+   Pet ID: 272469
+   Pet Name: Franz
+   Type: Cat
+   Breed: Siamese
+   Pet Age: 10
+   Birthday: 10/10/2014
+   Gender: F
+
+Status: Rejected
+--------------------------------------------------
+Request ID: 404116
+Customer Information:
+   Name: Frances Bigail
+   Age: 20
+   Contact Number: 09568342910
+   Occupation: Student
+   Home Type: House
+   Has Other Pets: Yes
+Pet Information:
+   Pet ID: 272469
+   Pet Name: Franz
+   Type: Cat
+   Breed: Siamese
+   Pet Age: 10
+   Birthday: 10/10/2014
+   Gender: F
+
+Status: Rejected
+--------------------------------------------------

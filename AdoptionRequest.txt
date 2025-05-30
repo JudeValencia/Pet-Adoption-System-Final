@@ -1,0 +1,51 @@
+Request ID: 426237
+Customer Information:
+   Name: Franz
+   Age: 21
+   Contact Number: 0909090909
+   Occupation: racer
+   Home Type: trapal
+   Has Other Pets: No
+Pet Information:
+   Pet ID: 867391
+   Pet Name: Smallo
+   Type: Bear
+   Breed: Polar Bear
+   Pet Age: 12
+   Birthday: 10/10/2012
+   Gender: M
+--------------------------------------------------
+Request ID: 695118
+Customer Information:
+   Name: Jude
+   Age: 19
+   Contact Number: 091231445678
+   Occupation: Student
+   Home Type: Iskaba
+   Has Other Pets: No
+Pet Information:
+   Pet ID: 867391
+   Pet Name: Smallo
+   Type: Bear
+   Breed: Polar Bear
+   Pet Age: 12
+   Birthday: 10/10/2012
+   Gender: M
+--------------------------------------------------
+Request ID: 6180
+Customer Information:
+   Name: Frances Bigail
+   Age: 20
+   Contact Number: 09568342910
+   Occupation: Student
+   Home Type: House
+   Has Other Pets: Yes
+Pet Information:
+   Pet ID: 867391
+   Pet Name: Smallo
+   Type: Bear
+   Breed: Polar Bear
+   Pet Age: 12
+   Birthday: 10/10/2012
+   Gender: M
+--------------------------------------------------

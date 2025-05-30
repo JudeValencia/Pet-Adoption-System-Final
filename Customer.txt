@@ -1,2 +1,8 @@
 36461,Francen Anne Valencia Garciano,19,F,Brgy. Cabulihan Ormoc City,3,23,2006,Student,Tiny Home,true,francen@gmail.com,09123456789
 195941,Jude Martin Valencia,20,M,Brgy. Cabulihan Ormoc City,10,26,2004,Student,Mansion,false,judemartingarciano@gmail.com,09619603980
+39942,Mozart,19,M,Ormoc City,4,5,2006,Wala,Wala,false,jahashayadi@gmail.com,0977 713 7588
+130754,Franz,21,M,niger,11,26,2005,racer,trapal,false,gmail@gmail.com,0909090909
+809955,Jude Martin Garciano,20,M,Brgy. Cabulihan Ormoc City,10,26,2004,Student,Mansion,false,judemartingarciano@gmail.com,09619603980
+242128,Jude,19,M,Cabulihan ORmoc,10,10,2010,Student,Iskaba,false,hadskhjd@asjdij.com,091231445678
+484060,Iskaba,19,M,Valencia,10,10,2005,Student,Mansion,true,iskaba@gmail.com,09243135642,Annalin,45,Teacher
+957905,Frances Bigail,20,F,Brgy. Danhug,5,25,2005,Student,House,true,abigailpenaranda25@gmail.com,09568342910,Ruben,57,Driver

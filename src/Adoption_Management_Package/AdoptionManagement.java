@@ -14,37 +14,12 @@ import UI_LogIn_Package.*;
  * class and provides additional functionalities specifically for handling the
  * adoption process, customer management, pet management, and report generation.
  *
- * Fields:
- * - loginPage: Handles user login and authentication.
- * - customerManager: Manages customer-related data and operations.
- * - adoptionReport: File storing adoption reports data.
- * - adoptionRequest: File storing pending adoption requests.
- * - adoptionHistory: File tracking historical data of past adoptions.
- * - requestID: Stores the identification number of the current adoption request.
- *
- * Methods:
- * - Constructor AdoptionManagement(LoginPage loginPage): Initializes the AdoptionManagement class by injecting a LoginPage instance.
- * - nonAdminUserInterface(): Displays the user interface for non-admin users and allows interaction.
- * - adminUserInterface(): Displays the admin interface and provides access to admin-specific functionalities.
- * - customerManagement(): Handles all operations related to customer management.
- * - petManagement(): Manages all operations related to adding, updating, and removing pet records.
- * - reportsManagement(): Handles generation of adoption and pet-related reports.
- * - makeAdoptionRequest(): Facilitates the process for users to make an adoption request.
- * - reviewAdoptionRequest(): Provides a two-step process for reviewing adoption requests (view summaries then details).
- * - viewAdoptionRequestSummaries(): Displays brief summaries of all pending adoption requests.
- * - approveAdoptionRequest(String requestId): Approves a specific adoption request.
- * - rejectAdoptionRequest(String requestId): Rejects a specific adoption request.
- * - removePetFromPetTextFile(int petId): Removes a pet record from the system by pet ID (private method).
- * - searchPetForAdoption(int petID): Searches for a pet available for adoption using the pet's unique ID.
- * - loadCustomerByUsername(String username): Helper method to load customer information by username (private method).
- * - handleAdoptionReport(Report_Management_Package.PDFGenerator pdfGenerator): Handles the generation of an adoption report (private method).
- * - handleRemainingPetsReport(Report_Management_Package.PDFGenerator pdfGenerator): Handles the generation of a report listing remaining pets in the system (private method).
- * - view(): Overrides the view method of the parent UserInterface class to define specific behavior of this class.
- * - setRequestID(int requestID): Sets the request ID for the current adoption request.
- * - getRequestID(): Gets the current request ID.
- * - searchAdoptionRequest(): Searches for a specific adoption request by ID.
+ * Updated with improvements:
+ * - Prevents duplicate customer registration
+ * - Shows proper customer names in adoption requests
+ * - Displays pet status (Available, Currently Requested, etc.)
+ * - Uses Yes/No instead of true/false for "has other pets"
  */
-
 public class AdoptionManagement extends UserInterface {
 
     private final LoginPage loginPage;
@@ -53,7 +28,7 @@ public class AdoptionManagement extends UserInterface {
     private final File adoptionRequest = new File("AdoptionRequest.txt");
     private final File adoptionHistory = new File("AdoptionHistory.txt");
     private final File remainingPetsReport = new File("RemainingPetsReport.txt");
-    private final File  requestedPets = new File("RequestedPets.txt");
+    private final File requestedPets = new File("RequestedPets.txt");
     int requestID;
 
     // Constructor to inject LoginPage
@@ -64,24 +39,8 @@ public class AdoptionManagement extends UserInterface {
     /**
      * Displays the user interface for non-administrative users, allowing them to interact
      * with available features such as viewing pets, making adoption requests, and searching for pets.
-     *
-     * The method checks the current login session using the injected `loginPage` component.
-     * If a session exists, it provides a set of options for the user to choose from within a loop:
-     *
-     * 1. View available pets.
-     * 2. Make an adoption request.
-     * 3. Search for a specific pet.
-     * 4. Log out.
-     *
-     * The loop continues until the user selects the log-out option. Input validation is
-     * applied to handle incorrect menu choices gracefully.
-     *
-     * Note: This method relies on persistent login state and interaction with
-     * other methods (e.g., `view`, `makeAdoptionRequest`, `searchPet`) to execute user-selected operations.
      */
     public void nonAdminUserInterface() {
-
-        // Use the injected loginPage instead of creating a new one
         String currentUsername = loginPage.getCurrentUsername();
         if (currentUsername == null) {
             System.out.println("❌ Error: No active session.");
@@ -97,7 +56,7 @@ public class AdoptionManagement extends UserInterface {
             scanner.nextLine();
 
             switch (choice) {
-                case 1 -> view(); // View pets
+                case 1 -> viewWithStatus(); // View pets with status
                 case 2 -> makeAdoptionRequest(); // Use the persisted login state
                 case 3 -> searchPet();
                 case 4 -> System.out.println("Logging out...");
@@ -107,13 +66,11 @@ public class AdoptionManagement extends UserInterface {
     }
 
     public void adminUserInterface() {
-
         Scanner scanner = new Scanner(System.in);
         int choice;
 
         do {
             adminInterface();
-
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
@@ -124,7 +81,6 @@ public class AdoptionManagement extends UserInterface {
                 case 4 -> System.out.println("Logging out...");
                 default -> System.out.println("Invalid option. Please try again.");
             }
-
         } while (choice != 4);
     }
 
@@ -139,7 +95,7 @@ public class AdoptionManagement extends UserInterface {
             scanner.nextLine();
 
             switch (choice) {
-                case 1 -> customerManager.add();
+                case 1 -> addCustomerWithDuplicateCheck();
                 case 2 -> customerManager.view();
                 case 3 -> reviewAdoptionRequest();
                 case 4 -> {
@@ -148,7 +104,6 @@ public class AdoptionManagement extends UserInterface {
                 }
                 default -> System.out.println("Invalid option. Please try again.");
             }
-
         }
     }
 
@@ -173,7 +128,6 @@ public class AdoptionManagement extends UserInterface {
                 }
                 default -> System.out.println("Invalid option. Please try again.");
             }
-
         }
     }
 
@@ -183,7 +137,6 @@ public class AdoptionManagement extends UserInterface {
 
         boolean isRunning = true;
         while (isRunning) {
-
             reportsMenu();
 
             try {
@@ -196,39 +149,100 @@ public class AdoptionManagement extends UserInterface {
                     case 3 -> isRunning = false;
                     default -> System.out.println("Invalid option");
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 System.err.println("Error: " + e.getMessage());
                 scanner.nextLine(); // Clear invalid input
             }
         }
     }
 
-    public void makeAdoptionRequest() {
-        Scanner scanner = new Scanner(System.in);
+    /**
+     * Enhanced method to add customer with duplicate checking
+     */
+    public void addCustomerWithDuplicateCheck() {
+        final String BLUE = "\u001B[38;2;66;103;178m";
+        final String RESET = "\u001B[0m";
         final String GRAY = "\u001B[38;2;137;143;156m";
-        try {
+        final String RED = "\u001B[31m";
+        final String GREEN = "\u001B[32m";
 
-            view();
+        Scanner scanner = new Scanner(System.in);
 
+        System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+        System.out.println("│                                                                                                                                                          │");
+        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘");
+        System.out.println(BLUE+"                                                                    ┌─────────────────┐                                                                     ");
+        System.out.println("                                                                    │   ADD CUSTOMER   │                                                                     ");
+        System.out.println("                                                                    └─────────────────┘                                                                     "+RESET);
+
+        // Get customer details first
+        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
+        System.out.print  ("                                             │ ENTER CUSTOMER NAME: ");
+        String name = scanner.nextLine();
+        System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+
+        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+        System.out.print  ("                                             │ ENTER EMAIL: ");
+        String email = scanner.nextLine();
+        System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
+
+        System.out.println("                                             ┌──────────────────────────────────────────────────────────────┐");
+        System.out.print  ("                                             │ ENTER CONTACT NUMBER: ");
+        String contactNumber = scanner.nextLine();
+        System.out.println("                                             └──────────────────────────────────────────────────────────────┘"+RESET);
+
+        // Check for duplicates
+        if (isCustomerDuplicate(name, email, contactNumber)) {
             System.out.println();
-            System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
-            System.out.print  ("                                             │ ENTER PET ID TO EDIT: ");
-            int petID = scanner.nextInt();
-            System.out.println("                                             └──────────────────────────────────────────────────────────────┘");
-
-
-            searchPetForAdoption(petID);
-
-        } catch (NumberFormatException e) {
-            System.out.println("❌ Invalid input. Please enter a valid pet ID.");
+            System.out.println(RED+"                                                      ❌ CUSTOMER ALREADY EXISTS!                                                            ");
+            System.out.println("                                          A customer with the same name, email, or contact number already exists."+RESET);
+            System.out.println();
+            System.out.println(GRAY+"┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐");
+            System.out.println("│                                                                                                                                                          │");
+            System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘"+RESET);
+            return;
         }
 
+        // If no duplicates, proceed with adding the customer
+        customerManager.add();
     }
 
-    @Override
-    public void view() {
+    /**
+     * Check if customer already exists based on name, email, or contact number
+     */
+    private boolean isCustomerDuplicate(String name, String email, String contactNumber) {
+        try (Scanner scanner = new Scanner(new File("Customer.txt"))) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.trim().isEmpty()) continue;
+
+                String[] details = line.split(",");
+                if (details.length >= 13) {
+                    String existingName = details[1].trim();
+                    String existingEmail = details[11].trim();
+                    String existingContact = details[12].trim();
+
+                    // Check for duplicates (case-insensitive for name and email)
+                    if (existingName.equalsIgnoreCase(name.trim()) ||
+                            existingEmail.equalsIgnoreCase(email.trim()) ||
+                            existingContact.equals(contactNumber.trim())) {
+                        return true;
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            // If file doesn't exist, no duplicates
+            return false;
+        }
+        return false;
+    }
+
+    /**
+     * Enhanced view method that shows pet status (Available, Currently Requested, etc.)
+     */
+    public void viewWithStatus() {
         List<String[]> petData = new ArrayList<>();
+        List<String> petStatuses = new ArrayList<>();
 
         // Read all pet data first
         try (Scanner scanner = new Scanner(file)) {
@@ -236,10 +250,29 @@ public class AdoptionManagement extends UserInterface {
                 String[] petDetails = scanner.nextLine().split(",");
                 if (petDetails.length == 9) {
                     petData.add(petDetails);
+                    petStatuses.add("Available");
                 }
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
+        }
+
+        // Check for requested pets
+        try (Scanner scanner = new Scanner(requestedPets)) {
+            while (scanner.hasNextLine()) {
+                String[] requestedPetDetails = scanner.nextLine().split(",");
+                if (requestedPetDetails.length >= 1) {
+                    int requestedPetId = Integer.parseInt(requestedPetDetails[0]);
+
+                    // Add requested pets to the list with "Currently Requested" status
+                    if (requestedPetDetails.length == 9) {
+                        petData.add(requestedPetDetails);
+                        petStatuses.add("Currently Requested");
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            // RequestedPets.txt doesn't exist, that's okay
         }
 
         if (petData.isEmpty()) {
@@ -247,8 +280,8 @@ public class AdoptionManagement extends UserInterface {
             return;
         }
 
-        // Define table headers
-        String[] headers = {"ID", "Name", "Type", "Breed", "Age", "Birthday", "Gender"};
+        // Define table headers (added Status column)
+        String[] headers = {"ID", "Name", "Type", "Breed", "Age", "Birthday", "Gender", "Status"};
 
         // Calculate column widths
         int[] columnWidths = new int[headers.length];
@@ -259,7 +292,10 @@ public class AdoptionManagement extends UserInterface {
         }
 
         // Check data lengths and update column widths
-        for (String[] pet : petData) {
+        for (int i = 0; i < petData.size(); i++) {
+            String[] pet = petData.get(i);
+            String status = petStatuses.get(i);
+
             columnWidths[0] = Math.max(columnWidths[0], pet[0].length()); // ID
             columnWidths[1] = Math.max(columnWidths[1], pet[1].length()); // Name
             columnWidths[2] = Math.max(columnWidths[2], pet[2].length()); // Type
@@ -271,26 +307,26 @@ public class AdoptionManagement extends UserInterface {
             columnWidths[5] = Math.max(columnWidths[5], birthday.length());
 
             columnWidths[6] = Math.max(columnWidths[6], pet[8].length()); // Gender
+            columnWidths[7] = Math.max(columnWidths[7], status.length()); // Status
         }
 
-        // Add padding to column widths (minimum 2 spaces padding per column)
+        // Add padding to column widths
         for (int i = 0; i < columnWidths.length; i++) {
-            columnWidths[i] += 4; // Increased padding for better spacing
+            columnWidths[i] += 4;
         }
 
-        // Calculate total table width more accurately
-        int totalWidth = 1; // Left border
+        // Calculate total table width
+        int totalWidth = 1;
         for (int i = 0; i < columnWidths.length; i++) {
-            totalWidth += columnWidths[i] + 1; // Column width + right border
+            totalWidth += columnWidths[i] + 1;
         }
 
         // Calculate left padding to center the table
-        // Using 140 as terminal width to match your ASCII art width
         int terminalWidth = 140;
-        int leftPadding = Math.max(0, (terminalWidth - totalWidth) / 2) + 8; // Added 8 spaces to move right
+        int leftPadding = Math.max(0, (terminalWidth - totalWidth) / 2) + 8;
         String padding = " ".repeat(leftPadding);
 
-        System.out.println(); // Add some space before the table
+        System.out.println();
 
         // Print top border
         System.out.print(padding + "┌");
@@ -320,7 +356,10 @@ public class AdoptionManagement extends UserInterface {
         System.out.println("┤");
 
         // Print pet data rows
-        for (String[] pet : petData) {
+        for (int i = 0; i < petData.size(); i++) {
+            String[] pet = petData.get(i);
+            String status = petStatuses.get(i);
+
             System.out.print(padding + "│");
 
             // Print each column with proper formatting
@@ -336,6 +375,17 @@ public class AdoptionManagement extends UserInterface {
 
             System.out.printf(" %-" + (columnWidths[6] - 1) + "s│", pet[8]); // Gender
 
+            // Status with color coding
+            final String RED = "\u001B[31m";
+            final String GREEN = "\u001B[32m";
+            final String RESET = "\u001B[0m";
+
+            if (status.equals("Currently Requested")) {
+                System.out.printf(" " + RED + "%-" + (columnWidths[7] - 1) + "s" + RESET + "│", status);
+            } else {
+                System.out.printf(" " + GREEN + "%-" + (columnWidths[7] - 1) + "s" + RESET + "│", status);
+            }
+
             System.out.println();
         }
 
@@ -349,12 +399,78 @@ public class AdoptionManagement extends UserInterface {
         }
         System.out.println("┘");
 
-        // Add some space after the table
         System.out.println();
     }
 
-    public void approveAdoptionRequest(String requestIdToApprove) {
+    public void makeAdoptionRequest() {
+        Scanner scanner = new Scanner(System.in);
+        final String GRAY = "\u001B[38;2;137;143;156m";
+        final String RED = "\u001B[31m";
+        final String RESET = "\u001B[0m";
 
+        try {
+            viewWithStatus(); // Show pets with their status
+
+            System.out.println();
+            System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
+            System.out.print  ("                                             │ ENTER PET ID TO REQUEST: ");
+            int petID = scanner.nextInt();
+            System.out.println("                                             └──────────────────────────────────────────────────────────────┘"+RESET);
+
+            // Remove the check that prevents requesting already requested pets
+            // The original code had this check:
+        /*
+        if (isPetCurrentlyRequested(petID)) {
+            System.out.println();
+            System.out.println(RED+"                                                ❌ PET IS CURRENTLY REQUESTED BY ANOTHER USER                                          ");
+            System.out.println("                                              This pet is not available for adoption at the moment."+RESET);
+            System.out.println();
+            return;
+        }
+        */
+
+            // Now directly proceed to create the adoption request
+            searchPetForAdoption(petID);
+
+        } catch (NumberFormatException e) {
+            System.out.println("❌ Invalid input. Please enter a valid pet ID.");
+        }
+    }
+
+    /**
+     * Check if a pet is currently requested
+     */
+    private boolean isPetCurrentlyRequested(int petID) {
+        try (Scanner scanner = new Scanner(requestedPets)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.trim().isEmpty()) continue;
+
+                String[] petDetails = line.split(",");
+                if (petDetails.length >= 1) {
+                    try {
+                        int currentPetId = Integer.parseInt(petDetails[0].trim());
+                        if (currentPetId == petID) {
+                            return true;
+                        }
+                    } catch (NumberFormatException e) {
+                        // Skip invalid lines
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            // RequestedPets.txt doesn't exist, so no pets are currently requested
+            return false;
+        }
+        return false;
+    }
+
+    @Override
+    public void view() {
+        viewWithStatus(); // Use the enhanced view method
+    }
+
+    public void approveAdoptionRequest(String requestIdToApprove) {
         // Variables to store the Pet ID of the approved request
         int adoptedPetId = -1;
 
@@ -365,7 +481,6 @@ public class AdoptionManagement extends UserInterface {
         try (BufferedReader reader = new BufferedReader(new FileReader(adoptionRequest))) {
             String line;
             StringBuilder currentRequest = new StringBuilder();
-
 
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("--------------------------------------------------")) {
@@ -419,7 +534,7 @@ public class AdoptionManagement extends UserInterface {
             return;
         }
 
-        // Remove the adopted pet from Pet.txt (if .Pet ID was found)
+        // Remove the adopted pet from RequestedPets.txt (if Pet ID was found)
         if (adoptedPetId != -1) {
             removeRequestedPet(adoptedPetId);
         }
@@ -538,7 +653,7 @@ public class AdoptionManagement extends UserInterface {
             return;
         }
 
-        // Rewrite Pet.txt without the adopted pet
+        // Rewrite RequestedPets.txt without the adopted pet
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(requestedPets, false))) {
             for (String pet : remainingPets) {
                 writer.write(pet);
@@ -586,7 +701,6 @@ public class AdoptionManagement extends UserInterface {
     }
 
     private void returnPetToPetTextFile(int petId) {
-
         // First find the pet in RequestedPets.txt
         String petRecord = null;
 
@@ -654,7 +768,7 @@ public class AdoptionManagement extends UserInterface {
 
         boolean petExists = false;
 
-        // Read pet details from Pet.txt
+        // First check Pet.txt (available pets)
         try (Scanner fileScanner = new Scanner(new File("Pet.txt"))) {
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
@@ -679,6 +793,32 @@ public class AdoptionManagement extends UserInterface {
             return;
         }
 
+        // If not found in Pet.txt, check RequestedPets.txt (currently requested pets)
+        if (!petExists) {
+            try (Scanner fileScanner = new Scanner(new File("RequestedPets.txt"))) {
+                while (fileScanner.hasNextLine()) {
+                    String line = fileScanner.nextLine();
+                    if (line.trim().isEmpty()) continue;
+
+                    String[] petDetails = line.split(",");
+                    if (petDetails.length == 9 && Integer.parseInt(petDetails[0]) == petID) {
+                        petName = petDetails[1];
+                        petType = petDetails[2];
+                        petBreed = petDetails[3];
+                        petAge = Integer.parseInt(petDetails[4]);
+                        petBirthDay = Integer.parseInt(petDetails[5]);
+                        petBirthMonth = Integer.parseInt(petDetails[6]);
+                        petBirthYear = Integer.parseInt(petDetails[7]);
+                        petGender = petDetails[8].charAt(0);
+                        petExists = true;
+                        break;
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                // RequestedPets.txt doesn't exist, that's okay
+            }
+        }
+
         if (!petExists) {
             System.out.println("Pet with ID " + petID + " not found.");
             return;
@@ -691,7 +831,7 @@ public class AdoptionManagement extends UserInterface {
             return;
         }
 
-        // Load customer data
+        // Load customer data with improved name retrieval
         Customer customer = loadCustomerByUsername(currentUsername);
         if (customer == null) {
             System.out.println("❌ Error: Customer not found.");
@@ -703,18 +843,37 @@ public class AdoptionManagement extends UserInterface {
         int requestId = random.nextInt(1_000_000);
         setRequestID(requestId);
 
-        // Temporarily stores pet data to RequestedData.txt
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(requestedPets, true))) {
-            writer.write(petID + "," + petName + "," + petType + "," + petBreed + "," + petAge + "," + petBirthDay + "," + petBirthMonth + "," + petBirthYear + "," + petGender);
-            writer.newLine();
+        // Only add to RequestedPets.txt if the pet is currently in Pet.txt (available)
+        // If it's already in RequestedPets.txt, don't duplicate it
+        boolean isCurrentlyAvailable = false;
+        try (Scanner fileScanner = new Scanner(new File("Pet.txt"))) {
+            while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
+                if (line.trim().isEmpty()) continue;
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+                String[] petDetails = line.split(",");
+                if (petDetails.length == 9 && Integer.parseInt(petDetails[0]) == petID) {
+                    isCurrentlyAvailable = true;
+                    break;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            // Pet.txt doesn't exist
         }
-        // Temporarily removes pets whenever it is requested to be adopted
-        removePetFromPetTextFile(petID);
 
-        // Write adoption request
+        // Only move pet to RequestedPets.txt if it's currently available
+        if (isCurrentlyAvailable) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(requestedPets, true))) {
+                writer.write(petID + "," + petName + "," + petType + "," + petBreed + "," + petAge + "," + petBirthDay + "," + petBirthMonth + "," + petBirthYear + "," + petGender);
+                writer.newLine();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            // Remove from Pet.txt only if it was available
+            removePetFromPetTextFile(petID);
+        }
+
+        // Write adoption request with proper customer name
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(adoptionRequest, true))) {
             writer.write("--------------------------------------------------");
             writer.newLine();
@@ -722,7 +881,7 @@ public class AdoptionManagement extends UserInterface {
             writer.newLine();
             writer.write("Customer Information:");
             writer.newLine();
-            writer.write("   Name: " + customer.getName());
+            writer.write("   Name: " + customer.getName()); // This will now show the correct customer name
             writer.newLine();
             writer.write("   Age: " + customer.getAge());
             writer.newLine();
@@ -732,7 +891,8 @@ public class AdoptionManagement extends UserInterface {
             writer.newLine();
             writer.write("   Home Type: " + customer.getHomeType());
             writer.newLine();
-            writer.write("   Has Other Pets: " + customer.getHasOtherPets());
+            // Convert boolean to Yes/No format
+            writer.write("   Has Other Pets: " + (customer.getHasOtherPets() ? "Yes" : "No"));
             writer.newLine();
             writer.write("Pet Information:");
             writer.newLine();
@@ -742,13 +902,13 @@ public class AdoptionManagement extends UserInterface {
             writer.newLine();
             writer.write("   Type: " + petType);
             writer.newLine();
-            writer.write("   Breed: " + petBreed);  // Use loaded pet data
+            writer.write("   Breed: " + petBreed);
             writer.newLine();
-            writer.write("   Pet Age: " + petAge);      // Use loaded pet data
+            writer.write("   Pet Age: " + petAge);
             writer.newLine();
-            writer.write("   Birthday: " + petBirthDay + "/" + petBirthMonth + "/" + petBirthYear); // Use loaded pet data
+            writer.write("   Birthday: " + petBirthDay + "/" + petBirthMonth + "/" + petBirthYear);
             writer.newLine();
-            writer.write("   Gender: " + petGender); // Use loaded pet data
+            writer.write("   Gender: " + petGender);
             writer.newLine();
             writer.write("--------------------------------------------------");
             writer.newLine();
@@ -758,7 +918,7 @@ public class AdoptionManagement extends UserInterface {
         }
     }
 
-    // Helper method to load customer data by username ---
+    // Enhanced helper method to load customer data by username
     private Customer loadCustomerByUsername(String username) {
         try (Scanner scanner = new Scanner(new File("Customer.txt"))) {
             while (scanner.hasNextLine()) {
@@ -782,9 +942,10 @@ public class AdoptionManagement extends UserInterface {
                     customer.setEmail(details[11]);
                     customer.setContactNumber(details[12]);
 
-                    // Check if this customer matches the username
-                    if (customerManager.getCustomerNameByUsername(username).equals(customer.getName())) {
-                        return customer; // Return the fully loaded customer
+                    // Check if this customer matches the username by checking the account file
+                    String customerNameFromAccount = customerManager.getCustomerNameByUsername(username);
+                    if (customerNameFromAccount != null && customerNameFromAccount.equals(customer.getName())) {
+                        return customer;
                     }
                 }
             }
@@ -900,7 +1061,7 @@ public class AdoptionManagement extends UserInterface {
 
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("--------------------------------------------------")) {
-                    if (hasRequest) {
+                    if (hasRequest && !currentRequest.toString().trim().isEmpty()) {
                         // Extract and display summary info
                         String[] lines = currentRequest.toString().split("\n");
                         String requestId = "";
@@ -908,39 +1069,77 @@ public class AdoptionManagement extends UserInterface {
                         String petName = "";
 
                         for (String l : lines) {
-                            if (l.trim().startsWith("Request ID:")) {
-                                requestId = l.trim().substring("Request ID:".length()).trim();
-                            } else if (l.trim().startsWith("   Name:")) {
-                                if (l.contains("Customer Information:")) {
-                                    // This is customer name
-                                    customerName = l.trim().substring("Name:".length()).trim();
-                                } else if (l.contains("Pet Information:")) {
-                                    // This is pet name
-                                    petName = l.trim().substring("Name:".length()).trim();
+                            String trimmed = l.trim();
+                            if (trimmed.startsWith("Request ID:")) {
+                                requestId = trimmed.substring("Request ID:".length()).trim();
+                            } else if (trimmed.startsWith("Name:")) {
+                                // Make sure we're getting the customer name, not pet name
+                                if (customerName.isEmpty()) {
+                                    customerName = trimmed.substring("Name:".length()).trim();
                                 }
+                            } else if (trimmed.startsWith("Pet Name:")) {
+                                petName = trimmed.substring("Pet Name:".length()).trim();
                             }
                         }
 
-                        requestCount++;
-                        System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
-                        System.out.printf ("                                             │ " + AQUA_LIGHT + "[%s]" + RESET + GRAY + " %s wants to adopt %s",
-                                requestId, customerName, petName);
+                        // Only display if we have all required information
+                        if (!requestId.isEmpty() && !customerName.isEmpty() && !petName.isEmpty()) {
+                            requestCount++;
+                            System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
+                            System.out.printf ("                                             │ " + AQUA_LIGHT + "[%s]" + RESET + GRAY + " %s wants to adopt %s",
+                                    requestId, customerName, petName);
 
-                        // Calculate padding to align the closing border
-                        int contentLength = String.format("[%s] %s wants to adopt %s", requestId, customerName, petName).length();
-                        int padding = 58 - contentLength; // 58 is the inner width of the box
-                        for (int i = 0; i < padding; i++) {
-                            System.out.print(" ");
+                            // Calculate padding to align the closing border
+                            int contentLength = String.format("[%s] %s wants to adopt %s", requestId, customerName, petName).length();
+                            int padding = 58 - contentLength; // 58 is the inner width of the box
+                            for (int i = 0; i < Math.max(0, padding); i++) {
+                                System.out.print(" ");
+                            }
+                            System.out.println("   │");
+                            System.out.println("                                             └──────────────────────────────────────────────────────────────┘"+RESET);
                         }
-                        System.out.println("   │");
-                        System.out.println("                                             └──────────────────────────────────────────────────────────────┘"+RESET);
-
-                        hasRequest = false;
-                        currentRequest = new StringBuilder();
                     }
+                    hasRequest = false;
+                    currentRequest = new StringBuilder();
                 } else {
                     currentRequest.append(line).append("\n");
                     hasRequest = true;
+                }
+            }
+
+            // Handle the last request if the file doesn't end with separator
+            if (hasRequest && !currentRequest.toString().trim().isEmpty()) {
+                String[] lines = currentRequest.toString().split("\n");
+                String requestId = "";
+                String customerName = "";
+                String petName = "";
+
+                for (String l : lines) {
+                    String trimmed = l.trim();
+                    if (trimmed.startsWith("Request ID:")) {
+                        requestId = trimmed.substring("Request ID:".length()).trim();
+                    } else if (trimmed.startsWith("Name:")) {
+                        if (customerName.isEmpty()) {
+                            customerName = trimmed.substring("Name:".length()).trim();
+                        }
+                    } else if (trimmed.startsWith("Pet Name:")) {
+                        petName = trimmed.substring("Pet Name:".length()).trim();
+                    }
+                }
+
+                if (!requestId.isEmpty() && !customerName.isEmpty() && !petName.isEmpty()) {
+                    requestCount++;
+                    System.out.println(GRAY+"                                             ┌──────────────────────────────────────────────────────────────┐");
+                    System.out.printf ("                                             │ " + AQUA_LIGHT + "[%s]" + RESET + GRAY + " %s wants to adopt %s",
+                            requestId, customerName, petName);
+
+                    int contentLength = String.format("[%s] %s wants to adopt %s", requestId, customerName, petName).length();
+                    int padding = 58 - contentLength;
+                    for (int i = 0; i < Math.max(0, padding); i++) {
+                        System.out.print(" ");
+                    }
+                    System.out.println("   │");
+                    System.out.println("                                             └──────────────────────────────────────────────────────────────┘"+RESET);
                 }
             }
 
